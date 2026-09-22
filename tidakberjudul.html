@@ -6,20 +6,17 @@
 
 <title>YouTube Downloader - NandSki</title>
 
-<meta
-    name="description"
-    content="NandSki YouTube Downloader MP3 dan MP4"
-/>
+<meta name="description" content="NandSki YouTube Downloader MP3 dan MP4">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
 <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-    rel="stylesheet"
->
+href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+rel="stylesheet">
 
 <style>
+
 *{
     box-sizing:border-box;
     margin:0;
@@ -28,13 +25,12 @@
 
 :root{
     --bg:#070707;
-    --bg2:#0d0d0d;
     --card:#111;
     --card2:#161616;
     --border:#292929;
 
     --red:#ff1f1f;
-    --red2:#b90000;
+    --red2:#c80000;
 
     --text:#fff;
     --muted:#999;
@@ -60,7 +56,7 @@ body{
         radial-gradient(
             circle at top,
             #300000 0%,
-            #120000 20%,
+            #120000 18%,
             #070707 55%
         );
 
@@ -68,14 +64,9 @@ body{
 }
 
 button,
-input,
 textarea,
 select{
     font-family:inherit;
-}
-
-button{
-    -webkit-tap-highlight-color:transparent;
 }
 
 .container{
@@ -83,9 +74,7 @@ button{
     margin:auto;
 }
 
-/* =========================
-   HEADER
-========================= */
+/* HEADER */
 
 header{
     position:sticky;
@@ -94,10 +83,9 @@ header{
 
     padding:18px 0;
 
-    background:rgba(0,0,0,.76);
+    background:rgba(0,0,0,.78);
 
-    border-bottom:
-        1px solid #1c1c1c;
+    border-bottom:1px solid #1d1d1d;
 
     backdrop-filter:blur(14px);
     -webkit-backdrop-filter:blur(14px);
@@ -107,7 +95,6 @@ header{
     display:flex;
     align-items:center;
     justify-content:space-between;
-
     gap:15px;
 }
 
@@ -138,13 +125,12 @@ header{
         );
 
     box-shadow:
-        0 0 25px
-        rgba(255,0,0,.20);
+        0 0 25px rgba(255,0,0,.2);
 }
 
 .logo-icon svg{
     width:23px;
-    fill:white;
+    fill:#fff;
 }
 
 .badge{
@@ -152,26 +138,23 @@ header{
 
     border-radius:50px;
 
-    color:#ff6b6b;
+    color:#ff7070;
 
     background:#160909;
 
-    border:
-        1px solid #3a1818;
+    border:1px solid #3a1818;
 
     font-size:11px;
     font-weight:700;
 }
 
-/* =========================
-   HERO
-========================= */
+/* HERO */
 
 .hero{
     text-align:center;
 
     padding:
-        60px 0
+        58px 0
         32px;
 }
 
@@ -183,7 +166,7 @@ header{
             60px
         );
 
-    line-height:1.04;
+    line-height:1.05;
 
     font-weight:800;
 
@@ -204,33 +187,27 @@ header{
     line-height:1.6;
 }
 
-/* =========================
-   MAIN CARD
-========================= */
+/* CARD */
 
 .downloader-card{
     padding:20px;
 
     border-radius:22px;
 
-    border:
-        1px solid var(--border);
+    border:1px solid var(--border);
 
     background:
         linear-gradient(
             145deg,
             #121212,
-            #090909
+            #0a0a0a
         );
 
     box-shadow:
-        0 25px 70px
-        rgba(0,0,0,.45);
+        0 25px 70px rgba(0,0,0,.45);
 }
 
-/* =========================
-   INPUT
-========================= */
+/* INPUT */
 
 .input-wrap{
     position:relative;
@@ -250,14 +227,13 @@ header{
 
     border-radius:15px;
 
-    border:
-        1px solid #303030;
+    border:1px solid #303030;
 
     outline:none;
 
-    background:#080808;
+    color:#fff;
 
-    color:white;
+    background:#080808;
 
     font-size:15px;
 
@@ -299,13 +275,11 @@ header{
 }
 
 .clear-btn:hover{
-    color:white;
+    color:#fff;
     background:#292929;
 }
 
-/* =========================
-   BUTTONS
-========================= */
+/* ACTION */
 
 .action-row{
     display:flex;
@@ -318,8 +292,7 @@ header{
 .btn{
     min-height:48px;
 
-    padding:
-        0 20px;
+    padding:0 20px;
 
     border-radius:13px;
 
@@ -328,6 +301,7 @@ header{
     cursor:pointer;
 
     font-size:14px;
+
     font-weight:700;
 
     transition:.2s;
@@ -341,7 +315,7 @@ header{
 .btn-primary{
     flex:1;
 
-    color:white;
+    color:#fff;
 
     background:
         linear-gradient(
@@ -356,8 +330,8 @@ header{
 }
 
 .btn-primary:hover{
-    filter:brightness(1.08);
     transform:translateY(-1px);
+    filter:brightness(1.08);
 }
 
 .btn-secondary{
@@ -365,17 +339,14 @@ header{
 
     background:#1a1a1a;
 
-    border:
-        1px solid #292929;
+    border:1px solid #292929;
 }
 
 .btn-secondary:hover{
     background:#242424;
 }
 
-/* =========================
-   STATUS
-========================= */
+/* STATUS */
 
 .status{
     display:none;
@@ -386,8 +357,7 @@ header{
 
     border-radius:13px;
 
-    border:
-        1px solid #292929;
+    border:1px solid #292929;
 
     background:#0b0b0b;
 
@@ -424,9 +394,7 @@ header{
     color:#888;
 }
 
-/* =========================
-   RESULT
-========================= */
+/* RESULT */
 
 #result{
     display:none;
@@ -439,15 +407,12 @@ header{
 
     border-radius:20px;
 
-    border:
-        1px solid #292929;
+    border:1px solid #292929;
 
     background:#101010;
 }
 
-/* =========================
-   PREVIEW
-========================= */
+/* PREVIEW */
 
 .preview{
     display:grid;
@@ -494,6 +459,7 @@ header{
 
 .platform{
     display:inline-flex;
+
     align-items:center;
 
     padding:6px 9px;
@@ -504,8 +470,7 @@ header{
 
     background:#1b0808;
 
-    border:
-        1px solid #3c1111;
+    border:1px solid #3c1111;
 
     font-size:10px;
 
@@ -530,6 +495,7 @@ header{
 
 .meta{
     display:flex;
+
     flex-wrap:wrap;
 
     gap:8px;
@@ -539,12 +505,11 @@ header{
 
 .meta span{
     color:#888;
+
     font-size:11px;
 }
 
-/* =========================
-   DOWNLOAD
-========================= */
+/* DOWNLOAD */
 
 .download-grid{
     display:grid;
@@ -565,8 +530,7 @@ header{
 
     background:#0b0b0b;
 
-    border:
-        1px solid #272727;
+    border:1px solid #272727;
 }
 
 .download-box.mp4{
@@ -577,6 +541,7 @@ header{
     display:flex;
 
     align-items:center;
+
     justify-content:space-between;
 
     margin-bottom:14px;
@@ -599,7 +564,9 @@ header{
     height:36px;
 
     display:flex;
+
     align-items:center;
+
     justify-content:center;
 
     border-radius:10px;
@@ -623,13 +590,11 @@ header{
 
     margin-bottom:10px;
 
-    padding:
-        0 11px;
+    padding:0 11px;
 
     border-radius:10px;
 
-    border:
-        1px solid #2a2a2a;
+    border:1px solid #2a2a2a;
 
     outline:none;
 
@@ -644,10 +609,9 @@ header{
 
     border-radius:10px;
 
-    border:
-        1px solid #303030;
+    border:1px solid #303030;
 
-    color:white;
+    color:#fff;
 
     background:#191919;
 
@@ -685,9 +649,7 @@ header{
     filter:brightness(1.1);
 }
 
-/* =========================
-   NOTE
-========================= */
+/* NOTE */
 
 .note{
     margin-top:13px;
@@ -701,9 +663,7 @@ header{
     text-align:center;
 }
 
-/* =========================
-   FOOTER
-========================= */
+/* FOOTER */
 
 footer{
     padding:
@@ -718,9 +678,7 @@ footer{
     text-align:center;
 }
 
-/* =========================
-   LOADER
-========================= */
+/* LOADER */
 
 .loader{
     width:17px;
@@ -735,26 +693,21 @@ footer{
     border:
         2px solid #555;
 
-    border-top-color:white;
+    border-top-color:#fff;
 
     border-radius:50%;
 
     animation:
-        spin .7s
-        linear infinite;
+        spin .7s linear infinite;
 }
 
 @keyframes spin{
-
     to{
         transform:rotate(360deg);
     }
-
 }
 
-/* =========================
-   TOAST
-========================= */
+/* TOAST */
 
 .toast{
     position:fixed;
@@ -766,16 +719,13 @@ footer{
 
     max-width:90%;
 
-    padding:
-        12px
-        16px;
+    padding:12px 16px;
 
     border-radius:12px;
 
-    border:
-        1px solid #343434;
+    border:1px solid #343434;
 
-    color:white;
+    color:#fff;
 
     background:#171717;
 
@@ -798,9 +748,7 @@ footer{
         translate(-50%,0);
 }
 
-/* =========================
-   MOBILE
-========================= */
+/* MOBILE */
 
 @media(max-width:700px){
 
@@ -810,8 +758,7 @@ footer{
 
     .hero{
         padding:
-            40px
-            0
+            40px 0
             24px;
     }
 
@@ -860,6 +807,7 @@ footer{
         display:none;
     }
 }
+
 </style>
 </head>
 
@@ -867,276 +815,281 @@ footer{
 
 <header>
 
-    <div class="container header-inner">
+<div class="container header-inner">
 
-        <div class="logo">
+    <div class="logo">
 
-            <div class="logo-icon">
+        <div class="logo-icon">
 
-                <svg viewBox="0 0 24 24">
-                    <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.9V8.1l6.5 3.9-6.5 3.9Z"/>
-                </svg>
-
-            </div>
-
-            <span>NandSki Downloader</span>
+            <svg viewBox="0 0 24 24">
+                <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.9V8.1l6.5 3.9 6.5 3.9-6.5 3.9Z"/>
+            </svg>
 
         </div>
 
-        <div class="badge">
-            MP3 + MP4
-        </div>
+        <span>NandSki Downloader</span>
 
     </div>
+
+    <div class="badge">
+        MP3 + MP4
+    </div>
+
+</div>
 
 </header>
 
 
 <main class="container">
 
-    <section class="hero">
+<section class="hero">
 
-        <h1>
-            YouTube
-            <span>Downloader</span>
-        </h1>
+    <h1>
+        YouTube <span>Downloader</span>
+    </h1>
 
-        <p>
-            Download video MP4 dan audio MP3
-            langsung dari halaman ini.
-        </p>
+    <p>
+        Download video MP4 dan audio MP3
+        dengan cepat langsung dari halaman ini.
+    </p>
 
-    </section>
-
-
-    <section class="downloader-card">
-
-        <div class="input-wrap">
-
-            <textarea
-                id="urlInput"
-                placeholder="Tempel link YouTube di sini...&#10;Contoh: https://www.youtube.com/watch?v=xxxx"
-                autocomplete="off"
-                spellcheck="false"
-            ></textarea>
-
-            <button
-                id="clearBtn"
-                class="clear-btn"
-                type="button"
-                title="Bersihkan"
-            >
-                ×
-            </button>
-
-        </div>
+</section>
 
 
-        <div class="action-row">
+<section class="downloader-card">
 
-            <button
-                id="checkBtn"
-                class="btn btn-primary"
-                type="button"
-            >
-                <span id="checkText">
-                    Cek Video
-                </span>
-            </button>
+    <div class="input-wrap">
 
-            <button
-                id="pasteBtn"
-                class="btn btn-secondary"
-                type="button"
-            >
-                Tempel
-            </button>
+        <textarea
+            id="urlInput"
+            placeholder="Tempel link YouTube di sini...&#10;Contoh: https://www.youtube.com/watch?v=xxxx"
+            autocomplete="off"
+            spellcheck="false"
+        ></textarea>
 
-        </div>
+        <button
+            id="clearBtn"
+            class="clear-btn"
+            type="button"
+            title="Bersihkan"
+        >
+            ×
+        </button>
 
+    </div>
+
+
+    <div class="action-row">
+
+        <button
+            id="checkBtn"
+            class="btn btn-primary"
+            type="button"
+        >
+            <span id="checkText">
+                Cek Video
+            </span>
+        </button>
+
+        <button
+            id="pasteBtn"
+            class="btn btn-secondary"
+            type="button"
+        >
+            Tempel
+        </button>
+
+    </div>
+
+
+    <div
+        id="status"
+        class="status"
+    ></div>
+
+</section>
+
+
+<section id="result">
+
+<div class="result-card">
+
+<div class="preview">
+
+    <div class="thumbnail-box">
+
+        <img
+            id="thumbnail"
+            alt="Thumbnail video"
+            style="display:none"
+        >
 
         <div
-            id="status"
-            class="status"
-        ></div>
+            id="thumbnailPlaceholder"
+            class="thumbnail-placeholder"
+        >
+            Thumbnail
+        </div>
 
-    </section>
-
-
-    <section id="result">
-
-        <div class="result-card">
-
-            <div class="preview">
-
-                <div class="thumbnail-box">
-
-                    <img
-                        id="thumbnail"
-                        alt="Thumbnail video"
-                        style="display:none"
-                    >
-
-                    <div
-                        id="thumbnailPlaceholder"
-                        class="thumbnail-placeholder"
-                    >
-                        Thumbnail
-                    </div>
-
-                </div>
+    </div>
 
 
-                <div class="info">
+    <div class="info">
 
-                    <div class="platform">
-                        YouTube
-                    </div>
+        <div class="platform">
+            YouTube
+        </div>
 
-                    <div
-                        id="videoTitle"
-                        class="title"
-                    >
-                        -
-                    </div>
+        <div
+            id="videoTitle"
+            class="title"
+        >
+            -
+        </div>
 
-                    <div class="meta">
+        <div class="meta">
 
-                        <span id="videoPlatform">
-                            Platform: YouTube
-                        </span>
+            <span id="videoPlatform">
+                Platform: YouTube
+            </span>
 
-                        <span>•</span>
+            <span>•</span>
 
-                        <span>
-                            MP3
-                        </span>
+            <span>MP3 tersedia</span>
 
-                        <span>•</span>
+            <span>•</span>
 
-                        <span>
-                            MP4
-                        </span>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="download-grid">
-
-                <!-- MP3 -->
-
-                <div class="download-box mp3">
-
-                    <div class="download-top">
-
-                        <div class="download-title">
-
-                            <div class="download-icon">
-                                🎵
-                            </div>
-
-                            <span>
-                                Audio MP3
-                            </span>
-
-                        </div>
-
-                    </div>
-
-                    <div class="download-desc">
-                        Download audio dari video.
-                    </div>
-
-                    <select
-                        id="mp3Quality"
-                        class="quality-select"
-                    >
-                        <option value="320">
-                            MP3 320 kbps
-                        </option>
-
-                        <option value="256">
-                            MP3 256 kbps
-                        </option>
-
-                        <option value="192">
-                            MP3 192 kbps
-                        </option>
-
-                        <option value="128">
-                            MP3 128 kbps
-                        </option>
-                    </select>
-
-                    <button
-                        id="mp3Btn"
-                        class="download-btn"
-                        type="button"
-                    >
-                        Download MP3
-                    </button>
-
-                </div>
-
-
-                <!-- MP4 -->
-
-                <div class="download-box mp4">
-
-                    <div class="download-top">
-
-                        <div class="download-title">
-
-                            <div class="download-icon">
-                                ▶
-                            </div>
-
-                            <span>
-                                Video MP4
-                            </span>
-
-                        </div>
-
-                    </div>
-
-                    <div class="download-desc">
-                        Pilih kualitas video yang tersedia.
-                    </div>
-
-                    <select
-                        id="mp4Quality"
-                        class="quality-select"
-                    >
-                        <option value="">
-                            Kualitas terbaik
-                        </option>
-                    </select>
-
-                    <button
-                        id="mp4Btn"
-                        class="download-btn"
-                        type="button"
-                    >
-                        Download MP4
-                    </button>
-
-                </div>
-
-            </div>
+            <span>MP4 tersedia</span>
 
         </div>
 
+    </div>
 
-        <div class="note">
-            Gunakan hanya untuk konten yang kamu punya
-            hak untuk download.
+</div>
+
+
+<div class="download-grid">
+
+<!-- MP3 -->
+
+<div class="download-box mp3">
+
+    <div class="download-top">
+
+        <div class="download-title">
+
+            <div class="download-icon">
+                🎵
+            </div>
+
+            <span>
+                Audio MP3
+            </span>
+
         </div>
 
-    </section>
+    </div>
+
+
+    <div class="download-desc">
+        Download audio dari video.
+    </div>
+
+
+    <select
+        id="mp3Quality"
+        class="quality-select"
+    >
+
+        <option value="320">
+            MP3 320 kbps
+        </option>
+
+        <option value="256">
+            MP3 256 kbps
+        </option>
+
+        <option value="192">
+            MP3 192 kbps
+        </option>
+
+        <option value="128">
+            MP3 128 kbps
+        </option>
+
+    </select>
+
+
+    <button
+        id="mp3Btn"
+        class="download-btn"
+        type="button"
+    >
+        Download MP3
+    </button>
+
+</div>
+
+
+<!-- MP4 -->
+
+<div class="download-box mp4">
+
+    <div class="download-top">
+
+        <div class="download-title">
+
+            <div class="download-icon">
+                ▶
+            </div>
+
+            <span>
+                Video MP4
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div class="download-desc">
+        Pilih kualitas video yang tersedia.
+    </div>
+
+
+    <select
+        id="mp4Quality"
+        class="quality-select"
+    >
+
+        <option value="">
+            Kualitas terbaik
+        </option>
+
+    </select>
+
+
+    <button
+        id="mp4Btn"
+        class="download-btn"
+        type="button"
+    >
+        Download MP4
+    </button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="note">
+    Gunakan hanya untuk konten yang kamu punya hak
+    untuk download.
+</div>
+
+</section>
 
 </main>
 
@@ -1153,23 +1106,26 @@ footer{
 
 
 <script>
+
 "use strict";
 
-/*
-=========================================================
-CONFIG
-=========================================================
-*/
 
-const API_URL =
-    "https://ahm7xmakki.com/api/alldl";
+/* =====================================================
+   IMPORTANT
+
+   Browser sekarang hanya memanggil:
+
+   /api/alldl
+
+   Bukan:
+
+   https://ahm7xmakki.com/api/alldl
+===================================================== */
+
+const API_URL = "/api/alldl";
 
 
-/*
-=========================================================
-ELEMENT
-=========================================================
-*/
+/* ELEMENT */
 
 const urlInput =
     document.getElementById("urlInput");
@@ -1210,11 +1166,6 @@ const videoPlatform =
         "videoPlatform"
     );
 
-const mp3Quality =
-    document.getElementById(
-        "mp3Quality"
-    );
-
 const mp4Quality =
     document.getElementById(
         "mp4Quality"
@@ -1236,27 +1187,19 @@ const toast =
     );
 
 
-/*
-=========================================================
-STATE
-=========================================================
-*/
+/* STATE */
 
 let currentMedia = {
-    title: "",
-    thumbnail: "",
-    audioUrl: "",
-    videoUrl: "",
-    qualities: [],
-    platform: "YouTube"
+    title:"",
+    thumbnail:"",
+    audioUrl:"",
+    videoUrl:"",
+    qualities:[],
+    platform:"YouTube"
 };
 
 
-/*
-=========================================================
-TOAST
-=========================================================
-*/
+/* TOAST */
 
 let toastTimer;
 
@@ -1264,30 +1207,30 @@ function showToast(message){
 
     clearTimeout(toastTimer);
 
-    toast.textContent = message;
+    toast.textContent =
+        message;
 
     toast.classList.add("show");
 
     toastTimer =
-        setTimeout(() => {
+        setTimeout(
+            () => {
 
-            toast.classList.remove(
-                "show"
-            );
+                toast.classList.remove(
+                    "show"
+                );
 
-        },3000);
+            },
+            3000
+        );
 }
 
 
-/*
-=========================================================
-STATUS
-=========================================================
-*/
+/* STATUS */
 
 function setStatus(
     message,
-    type = "loading"
+    type="loading"
 ){
 
     statusBox.className =
@@ -1307,11 +1250,7 @@ function clearStatus(){
 }
 
 
-/*
-=========================================================
-HTML ESCAPE
-=========================================================
-*/
+/* ESCAPE */
 
 function escapeHtml(value){
 
@@ -1324,11 +1263,7 @@ function escapeHtml(value){
 }
 
 
-/*
-=========================================================
-YOUTUBE URL
-=========================================================
-*/
+/* YOUTUBE URL */
 
 function isYouTubeUrl(value){
 
@@ -1359,11 +1294,7 @@ function isYouTubeUrl(value){
 }
 
 
-/*
-=========================================================
-YOUTUBE ID
-=========================================================
-*/
+/* YOUTUBE ID */
 
 function getYouTubeId(value){
 
@@ -1380,7 +1311,10 @@ function getYouTubeId(value){
                     ""
                 );
 
-        if(host === "youtu.be"){
+
+        if(
+            host === "youtu.be"
+        ){
 
             return (
                 url.pathname
@@ -1389,6 +1323,7 @@ function getYouTubeId(value){
                 || ""
             );
         }
+
 
         if(
             host === "youtube.com" ||
@@ -1402,10 +1337,12 @@ function getYouTubeId(value){
                 return v;
             }
 
+
             const parts =
                 url.pathname
                     .split("/")
                     .filter(Boolean);
+
 
             if(
                 [
@@ -1425,14 +1362,10 @@ function getYouTubeId(value){
 }
 
 
-/*
-=========================================================
-THUMBNAIL
-=========================================================
-*/
+/* THUMBNAIL */
 
 function loadThumbnail(
-    apiThumbnail = ""
+    apiThumbnail=""
 ){
 
     const id =
@@ -1440,13 +1373,17 @@ function loadThumbnail(
             urlInput.value.trim()
         );
 
+
     const candidates = [];
 
+
     if(apiThumbnail){
+
         candidates.push(
             apiThumbnail
         );
     }
+
 
     if(id){
 
@@ -1471,13 +1408,16 @@ function loadThumbnail(
         );
     }
 
+
     thumbnail.style.display =
         "none";
 
     thumbnailPlaceholder.style.display =
         "flex";
 
+
     let index = 0;
+
 
     function next(){
 
@@ -1486,17 +1426,13 @@ function loadThumbnail(
             candidates.length
         ){
 
-            thumbnail.style.display =
-                "none";
-
-            thumbnailPlaceholder.style.display =
-                "flex";
-
             return;
         }
 
+
         const src =
             candidates[index++];
+
 
         thumbnail.onload =
             () => {
@@ -1508,50 +1444,41 @@ function loadThumbnail(
                     "block";
             };
 
+
         thumbnail.onerror =
             () => {
 
                 next();
             };
 
+
         thumbnail.src =
             src;
     }
+
 
     next();
 }
 
 
-/*
-=========================================================
-DIRECT API REQUEST
-=========================================================
-
-IMPORTANT:
-
-Single HTML version means browser directly calls
-AHM7 API.
-
-If the API blocks browser CORS, browser will report:
-
-Failed to fetch
-
-There is no JavaScript trick that can bypass CORS.
-=========================================================
-*/
+/* =====================================================
+   REQUEST OUR VERCEL FUNCTION
+===================================================== */
 
 async function requestAPI(
-    videoUrl
+    youtubeUrl
 ){
 
     const endpoint =
         API_URL +
         "?url=" +
         encodeURIComponent(
-            videoUrl
+            youtubeUrl
         );
 
+
     let response;
+
 
     try{
 
@@ -1561,37 +1488,24 @@ async function requestAPI(
                 {
                     method:"GET",
 
-                    mode:"cors",
-
                     cache:"no-store",
 
                     headers:{
                         "Accept":
                             "application/json"
-                    },
-
-                    signal:
-                        AbortSignal.timeout(
-                            30000
-                        )
+                    }
                 }
             );
 
     }catch(error){
 
-        if(
-            error.name ===
-            "TimeoutError"
-        ){
-
-            throw new Error(
-                "Request API timeout setelah 30 detik."
-            );
-        }
+        console.error(
+            "Vercel API error:",
+            error
+        );
 
         throw new Error(
-            "Browser gagal mengakses API. " +
-            "Kemungkinan besar CORS atau API sedang tidak dapat diakses."
+            "Tidak dapat terhubung ke server Vercel."
         );
     }
 
@@ -1602,6 +1516,7 @@ async function requestAPI(
 
     let data;
 
+
     try{
 
         data =
@@ -1610,17 +1525,19 @@ async function requestAPI(
     }catch{
 
         throw new Error(
-            "API tidak mengembalikan JSON."
+            "Server Vercel tidak mengembalikan JSON."
         );
     }
 
 
-    if(!response.ok){
+    if(
+        !response.ok
+    ){
 
         throw new Error(
-            data.message ||
             data.error ||
-            `API HTTP ${response.status}`
+            data.message ||
+            `HTTP ${response.status}`
         );
     }
 
@@ -1630,8 +1547,8 @@ async function requestAPI(
     ){
 
         throw new Error(
-            data.message ||
             data.error ||
+            data.message ||
             "API menolak URL."
         );
     }
@@ -1641,23 +1558,9 @@ async function requestAPI(
 }
 
 
-/*
-=========================================================
-NORMALIZE AHM7 RESPONSE
-=========================================================
-*/
+/* NORMALIZE */
 
-function normalizeData(
-    data
-){
-
-    if(!data){
-
-        throw new Error(
-            "Response API kosong."
-        );
-    }
-
+function normalizeData(data){
 
     const media =
         data.mediaInfo ||
@@ -1711,36 +1614,38 @@ function normalizeData(
 
     qualities =
         qualities
-            .map(item => {
+            .map(
+                item => {
 
-                if(
-                    typeof item ===
-                    "string"
-                ){
+                    if(
+                        typeof item ===
+                        "string"
+                    ){
+
+                        return {
+                            quality:"Video",
+                            url:item
+                        };
+                    }
+
 
                     return {
-                        quality:"Video",
-                        url:item
+                        quality:
+                            item.quality ||
+                            item.label ||
+                            item.resolution ||
+                            "Video",
+
+                        url:
+                            item.url ||
+                            item.videoUrl ||
+                            ""
                     };
                 }
-
-
-                return {
-                    quality:
-                        item.quality ||
-                        item.label ||
-                        item.resolution ||
-                        "Video",
-
-                    url:
-                        item.url ||
-                        item.videoUrl ||
-                        ""
-                };
-
-            })
+            )
             .filter(
-                item => item.url
+                item =>
+                    item.url
             );
 
 
@@ -1764,11 +1669,7 @@ function normalizeData(
 }
 
 
-/*
-=========================================================
-POPULATE MP4 QUALITY
-=========================================================
-*/
+/* QUALITIES */
 
 function populateQualities(
     media
@@ -1777,52 +1678,47 @@ function populateQualities(
     mp4Quality.innerHTML =
         "";
 
+
     const seen =
         new Set();
 
 
-    if(
-        media.qualities.length
-    ){
+    media.qualities.forEach(
+        (item,index) => {
 
-        media.qualities.forEach(
-            (item,index) => {
-
-                if(!item.url){
-                    return;
-                }
-
-                if(
-                    seen.has(
-                        item.url
-                    )
-                ){
-                    return;
-                }
-
-                seen.add(
-                    item.url
-                );
-
-
-                const option =
-                    document.createElement(
-                        "option"
-                    );
-
-                option.value =
-                    item.url;
-
-                option.textContent =
-                    item.quality ||
-                    `Video ${index + 1}`;
-
-                mp4Quality.appendChild(
-                    option
-                );
+            if(
+                !item.url ||
+                seen.has(item.url)
+            ){
+                return;
             }
-        );
-    }
+
+
+            seen.add(
+                item.url
+            );
+
+
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+
+            option.value =
+                item.url;
+
+
+            option.textContent =
+                item.quality ||
+                `Video ${index + 1}`;
+
+
+            mp4Quality.appendChild(
+                option
+            );
+        }
+    );
 
 
     if(
@@ -1837,11 +1733,14 @@ function populateQualities(
                 "option"
             );
 
+
         option.value =
             media.videoUrl;
 
+
         option.textContent =
             "MP4 - Kualitas terbaik";
+
 
         mp4Quality.insertBefore(
             option,
@@ -1859,11 +1758,14 @@ function populateQualities(
                 "option"
             );
 
+
         option.value =
             "";
 
+
         option.textContent =
             "MP4 tidak tersedia";
+
 
         mp4Quality.appendChild(
             option
@@ -1872,11 +1774,7 @@ function populateQualities(
 }
 
 
-/*
-=========================================================
-CHECK VIDEO
-=========================================================
-*/
+/* CHECK */
 
 async function checkVideo(){
 
@@ -1923,7 +1821,7 @@ async function checkVideo(){
 
 
     setStatus(
-        "Menghubungi API downloader...",
+        "Menghubungi server downloader...",
         "loading"
     );
 
@@ -1949,7 +1847,7 @@ async function checkVideo(){
         ){
 
             throw new Error(
-                "API berhasil merespons tetapi tidak memberikan link media."
+                "Server tidak memberikan link media."
             );
         }
 
@@ -1995,32 +1893,20 @@ async function checkVideo(){
 
     }catch(error){
 
-        console.error(
-            "NandSki API Error:",
-            error
-        );
-
-
-        const message =
-            error.message ||
-            "Unknown error";
+        console.error(error);
 
 
         setStatus(
             `
-            <strong>Gagal menghubungi API.</strong>
+            <strong>Gagal memproses video.</strong>
             <br><br>
-            ${escapeHtml(message)}
-            <br><br>
-            <small>
-            Jika muncul "CORS / Failed to fetch",
-            masalah berada pada akses browser ke API,
-            bukan pada HTTPS Vercel.
-            </small>
+            ${escapeHtml(
+                error.message ||
+                "Unknown error"
+            )}
             `,
             "error"
         );
-
 
     }finally{
 
@@ -2033,109 +1919,29 @@ async function checkVideo(){
 }
 
 
-/*
-=========================================================
-FILENAME
-=========================================================
-*/
+/* OPEN MEDIA */
 
-function safeFilename(
-    name,
-    extension
-){
-
-    let clean =
-        String(
-            name ||
-            "youtube-download"
-        )
-        .replace(
-            /[\\/:*?"<>|]/g,
-            ""
-        )
-        .replace(
-            /\s+/g,
-            " "
-        )
-        .trim();
-
-
-    if(!clean){
-
-        clean =
-            "youtube-download";
-    }
-
-
-    return (
-        clean.substring(
-            0,
-            120
-        ) +
-        "." +
-        extension
-    );
-}
-
-
-/*
-=========================================================
-DIRECT DOWNLOAD
-
-We intentionally DO NOT fetch() the media URL.
-
-Why?
-
-Because the media CDN can have its own CORS rules.
-
-Opening the direct URL is more compatible.
-=========================================================
-*/
-
-function openDownload(
+function openMedia(
     mediaUrl
 ){
 
     if(!mediaUrl){
 
         throw new Error(
-            "Link download kosong."
+            "Link media kosong."
         );
     }
 
 
-    const a =
-        document.createElement(
-            "a"
-        );
-
-
-    a.href =
-        mediaUrl;
-
-    a.target =
-        "_blank";
-
-    a.rel =
-        "noopener noreferrer";
-
-
-    document.body.appendChild(
-        a
+    window.open(
+        mediaUrl,
+        "_blank",
+        "noopener,noreferrer"
     );
-
-
-    a.click();
-
-    a.remove();
 }
 
 
-/*
-=========================================================
-MP3
-=========================================================
-*/
+/* MP3 */
 
 async function downloadMP3(){
 
@@ -2165,7 +1971,7 @@ async function downloadMP3(){
 
     try{
 
-        openDownload(
+        openMedia(
             currentMedia.audioUrl
         );
 
@@ -2177,12 +1983,9 @@ async function downloadMP3(){
 
     }catch(error){
 
-        console.error(error);
-
         showToast(
             "Gagal membuka link MP3."
         );
-
 
     }finally{
 
@@ -2195,11 +1998,7 @@ async function downloadMP3(){
 }
 
 
-/*
-=========================================================
-MP4
-=========================================================
-*/
+/* MP4 */
 
 async function downloadMP4(){
 
@@ -2238,7 +2037,7 @@ async function downloadMP4(){
 
     try{
 
-        openDownload(
+        openMedia(
             selected
         );
 
@@ -2250,12 +2049,9 @@ async function downloadMP4(){
 
     }catch(error){
 
-        console.error(error);
-
         showToast(
             "Gagal membuka link MP4."
         );
-
 
     }finally{
 
@@ -2268,11 +2064,7 @@ async function downloadMP4(){
 }
 
 
-/*
-=========================================================
-CLEAR
-=========================================================
-*/
+/* CLEAR */
 
 clearBtn.addEventListener(
     "click",
@@ -2286,6 +2078,7 @@ clearBtn.addEventListener(
 
         clearStatus();
 
+
         currentMedia = {
             title:"",
             thumbnail:"",
@@ -2295,32 +2088,19 @@ clearBtn.addEventListener(
             platform:"YouTube"
         };
 
+
         urlInput.focus();
     }
 );
 
 
-/*
-=========================================================
-PASTE
-=========================================================
-*/
+/* PASTE */
 
 pasteBtn.addEventListener(
     "click",
     async () => {
 
         try{
-
-            if(
-                !navigator.clipboard
-            ){
-
-                throw new Error(
-                    "Clipboard API tidak tersedia."
-                );
-            }
-
 
             const text =
                 await navigator.clipboard
@@ -2346,7 +2126,7 @@ pasteBtn.addEventListener(
             );
 
 
-        }catch(error){
+        }catch{
 
             showToast(
                 "Clipboard tidak dapat diakses. Tempel manual."
@@ -2356,33 +2136,25 @@ pasteBtn.addEventListener(
 );
 
 
-/*
-=========================================================
-BUTTONS
-=========================================================
-*/
+/* EVENTS */
 
 checkBtn.addEventListener(
     "click",
     checkVideo
 );
 
+
 mp3Btn.addEventListener(
     "click",
     downloadMP3
 );
+
 
 mp4Btn.addEventListener(
     "click",
     downloadMP4
 );
 
-
-/*
-=========================================================
-CTRL + ENTER
-=========================================================
-*/
 
 urlInput.addEventListener(
     "keydown",
@@ -2401,12 +2173,6 @@ urlInput.addEventListener(
 );
 
 
-/*
-=========================================================
-PASTE DETECTION
-=========================================================
-*/
-
 urlInput.addEventListener(
     "paste",
     () => {
@@ -2414,13 +2180,10 @@ urlInput.addEventListener(
         setTimeout(
             () => {
 
-                const value =
-                    urlInput.value.trim();
-
-
                 if(
-                    value &&
-                    isYouTubeUrl(value)
+                    isYouTubeUrl(
+                        urlInput.value.trim()
+                    )
                 ){
 
                     showToast(
@@ -2435,39 +2198,8 @@ urlInput.addEventListener(
 );
 
 
-/*
-=========================================================
-ENTER / MOBILE
-=========================================================
-*/
-
-urlInput.addEventListener(
-    "input",
-    () => {
-
-        if(
-            urlInput.value.length > 0
-        ){
-
-            clearStatus();
-        }
-    }
-);
-
-
-/*
-=========================================================
-START
-=========================================================
-*/
-
 console.log(
-    "NandSki YouTube Downloader loaded."
-);
-
-console.log(
-    "API:",
-    API_URL
+    "NandSki YouTube Downloader ready."
 );
 
 </script>
