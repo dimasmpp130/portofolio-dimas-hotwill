@@ -2383,119 +2383,87 @@
        API REQUEST
     ========================================================= */
 
+    /* =========================================================
+       API REQUEST (SUPER RESILIENT MULTI-PROXY FIX)
+    ========================================================= */
+
     async function requestDownloadAPI() {
-
         if (!currentVideo) {
-
-            throw new Error(
-                "Video belum diproses."
-            );
-
+            throw new Error("Video belum diproses.");
         }
 
+        // Endpoint asli
+        const rawEndpoint = CONFIG.API_URL + "?url=" + encodeURIComponent(currentVideo.url);
 
-        const endpoint =
-            CONFIG.API_URL +
-            "?url=" +
-            encodeURIComponent(
-                currentVideo.url
-            );
-
-
-        const controller =
-            new AbortController();
-
-
-        const timeout =
-            setTimeout(
-                () => {
-                    controller.abort();
-                },
-                90000
-            );
-
-
-        try {
-
-            const response =
-                await fetch(
-                    endpoint,
-                    {
-                        method: "GET",
-
-                        headers: {
-                            "Accept":
-                                "application/json"
-                        },
-
-                        signal:
-                            controller.signal
-                    }
-                );
-
-
-            if (!response.ok) {
-
-                throw new Error(
-                    "HTTP " +
-                    response.status
-                );
-
+        // Daftar jalur akses: Direct -> Proxy 1 -> Proxy 2 -> Proxy 3
+        const fetchRoutes = [
+            { 
+                name: "Direct API", 
+                url: rawEndpoint 
+            },
+            { 
+                name: "CorsProxy", 
+                url: "https://corsproxy.io/?" + encodeURIComponent(rawEndpoint) 
+            },
+            { 
+                name: "CodeTabs", 
+                url: "https://api.codetabs.com/v1/proxy?quest=" + encodeURIComponent(rawEndpoint) 
+            },
+            { 
+                name: "AllOrigins", 
+                url: "https://api.allorigins.win/raw?url=" + encodeURIComponent(rawEndpoint) 
             }
+        ];
 
+        let lastError = null;
 
-            const data =
-                await response.json();
+        // Mencoba menembus block CORS dari berbagai jalur satu per satu
+        for (const route of fetchRoutes) {
+            console.log(`Mencoba mengambil data via: ${route.name}`);
+            
+            try {
+                // Set batas waktu 15 detik per jalur agar tidak freeze
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 15000);
 
+                const response = await fetch(route.url, {
+                    method: "GET",
+                    headers: { "Accept": "application/json" },
+                    signal: controller.signal
+                });
 
-            console.log(
-                "Downloader API:",
-                data
-            );
+                clearTimeout(timeoutId);
 
+                // Jika server merespons error (misal 500, 404), lempar ke catch untuk coba proxy selanjutnya
+                if (!response.ok) {
+                    throw new Error(`HTTP Error: ${response.status}`);
+                }
 
-            if (
-                !data ||
-                data.success !== true
-            ) {
+                const data = await response.json();
 
-                throw new Error(
-                    data &&
-                    (
-                        data.message ||
-                        data.error
-                    )
-                        ? (
-                            data.message ||
-                            data.error
-                        )
-                        : "API gagal mengembalikan download URL."
-                );
+                // Validasi apakah respons berisi data yang kita butuhkan
+                if (data && data.success === true && data.mediaInfo) {
+                    console.log(`Berhasil melewati API menggunakan jalur: ${route.name}`);
+                    return data.mediaInfo;
+                } else if (data && (data.message || data.error)) {
+                    // Error dari internal API itu sendiri (bukan error jaringan)
+                    throw new Error(data.message || data.error);
+                }
 
+            } catch (error) {
+                console.warn(`Jalur ${route.name} diblokir/gagal:`, error.message);
+                lastError = error;
+                // Lanjut ke perulangan berikutnya (mencoba proxy selanjutnya)
+                continue;
             }
-
-
-            if (
-                !data.mediaInfo
-            ) {
-
-                throw new Error(
-                    "Respons API tidak memiliki mediaInfo."
-                );
-
-            }
-
-
-            return data.mediaInfo;
-
-        } finally {
-
-            clearTimeout(
-                timeout
-            );
-
         }
 
+        // Jika semua jalur di atas sudah dicoba dan tetap gagal
+        if (lastError && lastError.name === 'AbortError') {
+            throw new Error("Koneksi sangat lambat atau API sedang sibuk (Timeout).");
+        } else {
+            throw new Error("Semua server perantara gagal merespons. API pusat kemungkinan sedang down.");
+        }
     }
 
 
