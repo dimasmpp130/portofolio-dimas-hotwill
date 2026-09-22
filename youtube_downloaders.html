@@ -1,0 +1,1815 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>YouTube Downloader - NandSki</title>
+
+<meta name="description" content="YouTube Downloader MP3 dan MP4">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+:root{
+    --bg:#070707;
+    --bg2:#0d0d0d;
+    --card:#111111;
+    --card2:#161616;
+    --border:#292929;
+    --red:#ff1f1f;
+    --red2:#c90000;
+    --text:#fff;
+    --muted:#999;
+    --green:#25d366;
+}
+
+body{
+    min-height:100vh;
+    font-family:Inter,Arial,sans-serif;
+    background:
+        radial-gradient(circle at top,#250000 0%,#0d0000 18%,#070707 48%);
+    color:var(--text);
+}
+
+button,
+input,
+textarea{
+    font-family:inherit;
+}
+
+.container{
+    width:min(1050px,94%);
+    margin:auto;
+}
+
+/* HEADER */
+
+header{
+    padding:22px 0;
+    border-bottom:1px solid #1b1b1b;
+    background:rgba(0,0,0,.72);
+    backdrop-filter:blur(12px);
+    position:sticky;
+    top:0;
+    z-index:20;
+}
+
+.header-inner{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    font-weight:800;
+    font-size:19px;
+}
+
+.logo-icon{
+    width:42px;
+    height:42px;
+    border-radius:13px;
+    background:linear-gradient(145deg,#ff2b2b,#a90000);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 0 25px rgba(255,0,0,.2);
+}
+
+.logo-icon svg{
+    width:23px;
+    fill:#fff;
+}
+
+.badge{
+    padding:7px 11px;
+    border:1px solid #3a1818;
+    border-radius:50px;
+    color:#ff6b6b;
+    background:#160909;
+    font-size:11px;
+    font-weight:700;
+}
+
+/* HERO */
+
+.hero{
+    text-align:center;
+    padding:55px 0 30px;
+}
+
+.hero h1{
+    font-size:clamp(32px,7vw,58px);
+    line-height:1.05;
+    font-weight:800;
+    letter-spacing:-2px;
+}
+
+.hero h1 span{
+    color:var(--red);
+}
+
+.hero p{
+    color:var(--muted);
+    margin-top:15px;
+    font-size:14px;
+}
+
+/* INPUT */
+
+.downloader-card{
+    background:linear-gradient(145deg,#121212,#0b0b0b);
+    border:1px solid var(--border);
+    border-radius:22px;
+    padding:20px;
+    box-shadow:
+        0 25px 70px rgba(0,0,0,.4),
+        inset 0 1px rgba(255,255,255,.02);
+}
+
+.input-wrap{
+    position:relative;
+}
+
+#urlInput{
+    width:100%;
+    min-height:92px;
+    resize:vertical;
+    padding:18px 50px 18px 18px;
+    border-radius:15px;
+    border:1px solid #303030;
+    outline:none;
+    background:#080808;
+    color:#fff;
+    font-size:15px;
+    line-height:1.5;
+    transition:.2s;
+}
+
+#urlInput:focus{
+    border-color:#8e1616;
+    box-shadow:0 0 0 3px rgba(255,0,0,.07);
+}
+
+#urlInput::placeholder{
+    color:#686868;
+}
+
+.clear-btn{
+    position:absolute;
+    right:12px;
+    top:12px;
+    width:32px;
+    height:32px;
+    border:0;
+    border-radius:9px;
+    background:#1d1d1d;
+    color:#aaa;
+    cursor:pointer;
+}
+
+.clear-btn:hover{
+    color:#fff;
+    background:#292929;
+}
+
+.action-row{
+    display:flex;
+    gap:10px;
+    margin-top:12px;
+}
+
+.btn{
+    border:0;
+    border-radius:13px;
+    min-height:48px;
+    padding:0 20px;
+    cursor:pointer;
+    font-size:14px;
+    font-weight:700;
+    transition:.2s;
+}
+
+.btn-primary{
+    flex:1;
+    color:#fff;
+    background:linear-gradient(135deg,#ff2929,#b50000);
+    box-shadow:0 8px 25px rgba(255,0,0,.15);
+}
+
+.btn-primary:hover{
+    transform:translateY(-1px);
+    filter:brightness(1.08);
+}
+
+.btn-primary:disabled{
+    opacity:.55;
+    cursor:not-allowed;
+    transform:none;
+}
+
+.btn-secondary{
+    background:#1a1a1a;
+    color:#ddd;
+    border:1px solid #292929;
+}
+
+/* STATUS */
+
+.status{
+    display:none;
+    margin-top:14px;
+    padding:14px 16px;
+    border-radius:13px;
+    border:1px solid #292929;
+    background:#0b0b0b;
+    font-size:13px;
+    line-height:1.5;
+}
+
+.status.show{
+    display:block;
+}
+
+.status.loading{
+    color:#ddd;
+    border-color:#353535;
+}
+
+.status.success{
+    color:#70e89a;
+    border-color:#173e26;
+    background:#07130b;
+}
+
+.status.error{
+    color:#ff7777;
+    border-color:#481919;
+    background:#150707;
+}
+
+/* RESULT */
+
+#result{
+    display:none;
+    margin-top:22px;
+}
+
+.result-card{
+    background:#101010;
+    border:1px solid #292929;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.preview{
+    display:grid;
+    grid-template-columns:300px 1fr;
+    gap:0;
+}
+
+.thumbnail-box{
+    min-height:185px;
+    background:#080808;
+    position:relative;
+}
+
+.thumbnail-box img{
+    width:100%;
+    height:100%;
+    min-height:185px;
+    object-fit:cover;
+    display:block;
+}
+
+.thumbnail-placeholder{
+    min-height:185px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#555;
+    font-size:13px;
+}
+
+.info{
+    padding:22px;
+}
+
+.platform{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:6px 9px;
+    border-radius:7px;
+    background:#1b0808;
+    border:1px solid #3c1111;
+    color:#ff6b6b;
+    font-size:10px;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:.5px;
+}
+
+.title{
+    margin-top:13px;
+    font-size:20px;
+    line-height:1.4;
+    font-weight:700;
+}
+
+.meta{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:13px;
+}
+
+.meta span{
+    color:#888;
+    font-size:11px;
+}
+
+/* DOWNLOAD */
+
+.download-grid{
+    padding:20px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:13px;
+}
+
+.download-box{
+    background:#0b0b0b;
+    border:1px solid #272727;
+    border-radius:15px;
+    padding:17px;
+}
+
+.download-box.mp3{
+    border-color:#292929;
+}
+
+.download-box.mp4{
+    border-color:#3a1616;
+}
+
+.download-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:14px;
+}
+
+.download-title{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:15px;
+    font-weight:700;
+}
+
+.download-icon{
+    width:36px;
+    height:36px;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#191919;
+    color:#ff3b3b;
+}
+
+.download-desc{
+    color:#777;
+    font-size:11px;
+    margin-bottom:14px;
+}
+
+.quality-select{
+    width:100%;
+    height:43px;
+    border-radius:10px;
+    border:1px solid #2a2a2a;
+    background:#151515;
+    color:#ddd;
+    padding:0 11px;
+    outline:none;
+    margin-bottom:10px;
+}
+
+.download-btn{
+    width:100%;
+    height:45px;
+    border:0;
+    border-radius:10px;
+    color:#fff;
+    background:#191919;
+    border:1px solid #303030;
+    cursor:pointer;
+    font-weight:700;
+    font-size:13px;
+    transition:.2s;
+}
+
+.download-btn:hover{
+    background:#242424;
+    border-color:#444;
+}
+
+.mp4 .download-btn{
+    background:linear-gradient(135deg,#ed2020,#9c0000);
+    border:0;
+}
+
+.mp4 .download-btn:hover{
+    filter:brightness(1.1);
+}
+
+/* INFO */
+
+.note{
+    margin-top:13px;
+    color:#666;
+    font-size:11px;
+    line-height:1.6;
+    text-align:center;
+}
+
+/* FOOTER */
+
+footer{
+    text-align:center;
+    color:#555;
+    font-size:11px;
+    padding:40px 0 25px;
+}
+
+/* LOADER */
+
+.loader{
+    width:17px;
+    height:17px;
+    border:2px solid #555;
+    border-top-color:#fff;
+    border-radius:50%;
+    display:inline-block;
+    vertical-align:middle;
+    margin-right:7px;
+    animation:spin .7s linear infinite;
+}
+
+@keyframes spin{
+    to{transform:rotate(360deg)}
+}
+
+/* TOAST */
+
+.toast{
+    position:fixed;
+    left:50%;
+    bottom:22px;
+    transform:translate(-50%,120px);
+    opacity:0;
+    background:#171717;
+    border:1px solid #343434;
+    color:#fff;
+    padding:12px 16px;
+    border-radius:12px;
+    font-size:12px;
+    z-index:99;
+    transition:.25s;
+    max-width:90%;
+    text-align:center;
+}
+
+.toast.show{
+    transform:translate(-50%,0);
+    opacity:1;
+}
+
+/* MOBILE */
+
+@media(max-width:700px){
+
+    header{
+        padding:15px 0;
+    }
+
+    .hero{
+        padding:38px 0 23px;
+    }
+
+    .hero h1{
+        letter-spacing:-1px;
+    }
+
+    .downloader-card{
+        padding:13px;
+        border-radius:17px;
+    }
+
+    .action-row{
+        flex-direction:column;
+    }
+
+    .preview{
+        grid-template-columns:1fr;
+    }
+
+    .thumbnail-box{
+        min-height:auto;
+    }
+
+    .thumbnail-box img{
+        min-height:200px;
+        max-height:260px;
+    }
+
+    .info{
+        padding:17px;
+    }
+
+    .title{
+        font-size:17px;
+    }
+
+    .download-grid{
+        grid-template-columns:1fr;
+        padding:13px;
+    }
+
+    .badge{
+        display:none;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="container header-inner">
+
+        <div class="logo">
+            <div class="logo-icon">
+                <svg viewBox="0 0 24 24">
+                    <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.9V8.1l6.5 3.9-6.5 3.9Z"/>
+                </svg>
+            </div>
+
+            <span>NandSki Downloader</span>
+        </div>
+
+        <div class="badge">
+            MP3 + MP4
+        </div>
+
+    </div>
+</header>
+
+<main class="container">
+
+    <section class="hero">
+        <h1>YouTube <span>Downloader</span></h1>
+        <p>Download video MP4 dan audio MP3 dengan cepat langsung dari halaman ini.</p>
+    </section>
+
+    <section class="downloader-card">
+
+        <div class="input-wrap">
+
+            <textarea
+                id="urlInput"
+                placeholder="Tempel link YouTube di sini...&#10;Contoh: https://www.youtube.com/watch?v=xxxx"
+                autocomplete="off"
+                spellcheck="false"
+            ></textarea>
+
+            <button
+                class="clear-btn"
+                id="clearBtn"
+                title="Bersihkan"
+            >×</button>
+
+        </div>
+
+        <div class="action-row">
+
+            <button
+                class="btn btn-primary"
+                id="checkBtn"
+            >
+                <span id="checkText">Cek Video</span>
+            </button>
+
+            <button
+                class="btn btn-secondary"
+                id="pasteBtn"
+            >
+                Tempel
+            </button>
+
+        </div>
+
+        <div id="status" class="status"></div>
+
+    </section>
+
+    <section id="result">
+
+        <div class="result-card">
+
+            <div class="preview">
+
+                <div class="thumbnail-box">
+
+                    <img
+                        id="thumbnail"
+                        alt="Thumbnail video"
+                        style="display:none"
+                    >
+
+                    <div
+                        id="thumbnailPlaceholder"
+                        class="thumbnail-placeholder"
+                    >
+                        Thumbnail
+                    </div>
+
+                </div>
+
+                <div class="info">
+
+                    <div class="platform">
+                        YouTube
+                    </div>
+
+                    <div
+                        id="videoTitle"
+                        class="title"
+                    >
+                        -
+                    </div>
+
+                    <div class="meta">
+                        <span id="videoPlatform">Platform: YouTube</span>
+                        <span>•</span>
+                        <span>MP3 tersedia</span>
+                        <span>•</span>
+                        <span>MP4 tersedia</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="download-grid">
+
+                <!-- MP3 -->
+
+                <div class="download-box mp3">
+
+                    <div class="download-top">
+
+                        <div class="download-title">
+
+                            <div class="download-icon">
+                                🎵
+                            </div>
+
+                            <span>Audio MP3</span>
+
+                        </div>
+
+                    </div>
+
+                    <div class="download-desc">
+                        Download audio dari video.
+                    </div>
+
+                    <select
+                        id="mp3Quality"
+                        class="quality-select"
+                    >
+                        <option value="320">MP3 320 kbps</option>
+                        <option value="256">MP3 256 kbps</option>
+                        <option value="192">MP3 192 kbps</option>
+                        <option value="128">MP3 128 kbps</option>
+                    </select>
+
+                    <button
+                        class="download-btn"
+                        id="mp3Btn"
+                    >
+                        Download MP3
+                    </button>
+
+                </div>
+
+                <!-- MP4 -->
+
+                <div class="download-box mp4">
+
+                    <div class="download-top">
+
+                        <div class="download-title">
+
+                            <div class="download-icon">
+                                ▶
+                            </div>
+
+                            <span>Video MP4</span>
+
+                        </div>
+
+                    </div>
+
+                    <div class="download-desc">
+                        Pilih kualitas video yang tersedia.
+                    </div>
+
+                    <select
+                        id="mp4Quality"
+                        class="quality-select"
+                    >
+                        <option value="">Kualitas terbaik</option>
+                    </select>
+
+                    <button
+                        class="download-btn"
+                        id="mp4Btn"
+                    >
+                        Download MP4
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="note">
+            Gunakan hanya untuk konten yang kamu punya hak untuk download.
+        </div>
+
+    </section>
+
+</main>
+
+<footer>
+    NandSki Downloader • Simple • Fast • Mobile Friendly
+</footer>
+
+<div id="toast" class="toast"></div>
+
+<script>
+"use strict";
+
+/* =========================================================
+   CONFIG
+========================================================= */
+
+const API_URL = "https://ahm7xmakki.com/api/alldl";
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const urlInput = document.getElementById("urlInput");
+const clearBtn = document.getElementById("clearBtn");
+const pasteBtn = document.getElementById("pasteBtn");
+const checkBtn = document.getElementById("checkBtn");
+const checkText = document.getElementById("checkText");
+
+const statusBox = document.getElementById("status");
+const resultBox = document.getElementById("result");
+
+const thumbnail = document.getElementById("thumbnail");
+const thumbnailPlaceholder =
+    document.getElementById("thumbnailPlaceholder");
+
+const videoTitle =
+    document.getElementById("videoTitle");
+
+const videoPlatform =
+    document.getElementById("videoPlatform");
+
+const mp3Quality =
+    document.getElementById("mp3Quality");
+
+const mp4Quality =
+    document.getElementById("mp4Quality");
+
+const mp3Btn =
+    document.getElementById("mp3Btn");
+
+const mp4Btn =
+    document.getElementById("mp4Btn");
+
+const toast =
+    document.getElementById("toast");
+
+/* =========================================================
+   STATE
+========================================================= */
+
+let currentMedia = {
+    title: "",
+    thumbnail: "",
+    audioUrl: "",
+    videoUrl: "",
+    qualities: []
+};
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+let toastTimer = null;
+
+function showToast(message){
+
+    clearTimeout(toastTimer);
+
+    toast.textContent = message;
+    toast.classList.add("show");
+
+    toastTimer = setTimeout(() => {
+        toast.classList.remove("show");
+    }, 3000);
+}
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+function setStatus(message, type = "loading"){
+
+    statusBox.className =
+        "status show " + type;
+
+    statusBox.innerHTML = message;
+}
+
+function clearStatus(){
+
+    statusBox.className = "status";
+    statusBox.innerHTML = "";
+}
+
+/* =========================================================
+   YOUTUBE URL
+========================================================= */
+
+function isYouTubeUrl(value){
+
+    try{
+
+        const url = new URL(value);
+
+        const host =
+            url.hostname
+                .toLowerCase()
+                .replace(/^www\./, "");
+
+        return (
+            host === "youtube.com" ||
+            host === "m.youtube.com" ||
+            host === "youtu.be" ||
+            host === "youtube-nocookie.com"
+        );
+
+    }catch(e){
+
+        return false;
+
+    }
+}
+
+/* =========================================================
+   VIDEO ID
+========================================================= */
+
+function getYouTubeId(value){
+
+    try{
+
+        const url = new URL(value);
+
+        const host =
+            url.hostname
+                .toLowerCase()
+                .replace(/^www\./, "");
+
+        if(host === "youtu.be"){
+            return url.pathname
+                .split("/")
+                .filter(Boolean)[0] || "";
+        }
+
+        if(
+            host === "youtube.com" ||
+            host === "m.youtube.com"
+        ){
+
+            const id =
+                url.searchParams.get("v");
+
+            if(id) return id;
+
+            const parts =
+                url.pathname.split("/").filter(Boolean);
+
+            if(
+                parts[0] === "shorts" ||
+                parts[0] === "embed" ||
+                parts[0] === "live"
+            ){
+                return parts[1] || "";
+            }
+        }
+
+    }catch(e){}
+
+    return "";
+}
+
+/* =========================================================
+   THUMBNAIL
+========================================================= */
+
+function loadThumbnail(urlFromApi){
+
+    const id = getYouTubeId(urlInput.value.trim());
+
+    const candidates = [];
+
+    if(urlFromApi){
+        candidates.push(urlFromApi);
+    }
+
+    if(id){
+
+        candidates.push(
+            `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`
+        );
+
+        candidates.push(
+            `https://i.ytimg.com/vi/${id}/hqdefault.jpg`
+        );
+
+        candidates.push(
+            `https://i.ytimg.com/vi/${id}/sddefault.jpg`
+        );
+
+        candidates.push(
+            `https://i.ytimg.com/vi/${id}/mqdefault.jpg`
+        );
+
+        candidates.push(
+            `https://i.ytimg.com/vi/${id}/default.jpg`
+        );
+    }
+
+    let index = 0;
+
+    thumbnail.style.display = "none";
+    thumbnailPlaceholder.style.display = "flex";
+
+    function next(){
+
+        if(index >= candidates.length){
+
+            thumbnail.style.display = "none";
+            thumbnailPlaceholder.style.display = "flex";
+
+            return;
+        }
+
+        const src = candidates[index++];
+
+        thumbnail.onload = function(){
+
+            thumbnailPlaceholder.style.display = "none";
+            thumbnail.style.display = "block";
+
+        };
+
+        thumbnail.onerror = function(){
+
+            next();
+
+        };
+
+        thumbnail.src = src;
+    }
+
+    next();
+}
+
+/* =========================================================
+   API REQUEST
+========================================================= */
+
+async function requestAPI(videoUrl){
+
+    const endpoint =
+        API_URL +
+        "?url=" +
+        encodeURIComponent(videoUrl);
+
+    /*
+      Jangan gunakan proxy eksternal di sini.
+      Kita ingin mengetahui apakah API aslinya
+      dapat dipanggil langsung dari browser.
+    */
+
+    const response = await fetch(endpoint, {
+
+        method: "GET",
+
+        mode: "cors",
+
+        cache: "no-store",
+
+        headers: {
+            "Accept": "application/json"
+        }
+
+    });
+
+    if(!response.ok){
+
+        throw new Error(
+            "API HTTP " + response.status
+        );
+    }
+
+    const text =
+        await response.text();
+
+    let data;
+
+    try{
+
+        data = JSON.parse(text);
+
+    }catch(e){
+
+        throw new Error(
+            "API mengembalikan data yang bukan JSON."
+        );
+    }
+
+    return data;
+}
+
+/* =========================================================
+   NORMALIZE RESPONSE
+========================================================= */
+
+function normalizeData(data){
+
+    if(!data){
+        throw new Error("Response API kosong.");
+    }
+
+    if(data.success === false){
+
+        throw new Error(
+            data.message ||
+            data.error ||
+            "API menolak URL."
+        );
+    }
+
+    const media =
+        data.mediaInfo ||
+        data.data ||
+        data.result ||
+        data;
+
+    const title =
+        media.title ||
+        media.name ||
+        "YouTube Video";
+
+    const thumbnailUrl =
+        media.thumbnail ||
+        media.thumbnailUrl ||
+        media.cover ||
+        "";
+
+    const audioUrl =
+        media.audioUrl ||
+        media.audio ||
+        media.mp3 ||
+        "";
+
+    const videoUrl =
+        media.videoUrl ||
+        media.video ||
+        media.mp4 ||
+        "";
+
+    let qualities =
+        Array.isArray(media.qualities)
+            ? media.qualities
+            : [];
+
+    qualities = qualities
+        .map(item => {
+
+            if(typeof item === "string"){
+
+                return {
+                    quality: "Video",
+                    url: item
+                };
+
+            }
+
+            return {
+                quality:
+                    item.quality ||
+                    item.label ||
+                    item.resolution ||
+                    "Video",
+                url:
+                    item.url ||
+                    item.videoUrl ||
+                    ""
+            };
+
+        })
+        .filter(item => item.url);
+
+    return {
+        title,
+        thumbnail: thumbnailUrl,
+        audioUrl,
+        videoUrl,
+        qualities
+    };
+}
+
+/* =========================================================
+   QUALITY LIST
+========================================================= */
+
+function populateQualities(media){
+
+    mp4Quality.innerHTML = "";
+
+    const seen = new Set();
+
+    if(media.qualities.length){
+
+        media.qualities.forEach((item, index) => {
+
+            if(!item.url) return;
+
+            if(seen.has(item.url)) return;
+
+            seen.add(item.url);
+
+            const option =
+                document.createElement("option");
+
+            option.value = item.url;
+
+            option.textContent =
+                item.quality ||
+                `Video ${index + 1}`;
+
+            mp4Quality.appendChild(option);
+
+        });
+
+    }
+
+    if(media.videoUrl){
+
+        if(!seen.has(media.videoUrl)){
+
+            const option =
+                document.createElement("option");
+
+            option.value = media.videoUrl;
+            option.textContent =
+                "MP4 - Kualitas terbaik";
+
+            mp4Quality.insertBefore(
+                option,
+                mp4Quality.firstChild
+            );
+        }
+
+    }
+
+    if(!mp4Quality.options.length){
+
+        const option =
+            document.createElement("option");
+
+        option.value = "";
+        option.textContent =
+            "MP4 tidak tersedia";
+
+        mp4Quality.appendChild(option);
+
+    }
+
+}
+
+/* =========================================================
+   CHECK VIDEO
+========================================================= */
+
+async function checkVideo(){
+
+    const videoUrl =
+        urlInput.value.trim();
+
+    if(!videoUrl){
+
+        setStatus(
+            "Masukkan link YouTube terlebih dahulu.",
+            "error"
+        );
+
+        urlInput.focus();
+
+        return;
+    }
+
+    if(!isYouTubeUrl(videoUrl)){
+
+        setStatus(
+            "Link tidak terlihat seperti URL YouTube yang valid.",
+            "error"
+        );
+
+        return;
+    }
+
+    checkBtn.disabled = true;
+
+    checkText.innerHTML =
+        '<span class="loader"></span>Memproses...';
+
+    resultBox.style.display = "none";
+
+    setStatus(
+        "Menghubungi server downloader...",
+        "loading"
+    );
+
+    try{
+
+        const data =
+            await requestAPI(videoUrl);
+
+        const media =
+            normalizeData(data);
+
+        currentMedia = media;
+
+        if(
+            !media.audioUrl &&
+            !media.videoUrl &&
+            !media.qualities.length
+        ){
+
+            throw new Error(
+                "API berhasil dihubungi tetapi tidak memberikan link media."
+            );
+        }
+
+        videoTitle.textContent =
+            media.title || "YouTube Video";
+
+        videoPlatform.textContent =
+            "Platform: YouTube";
+
+        loadThumbnail(media.thumbnail);
+
+        populateQualities(media);
+
+        resultBox.style.display = "block";
+
+        setStatus(
+            "Video berhasil ditemukan. Pilih MP3 atau MP4 untuk mulai download.",
+            "success"
+        );
+
+        resultBox.scrollIntoView({
+            behavior:"smooth",
+            block:"start"
+        });
+
+    }catch(error){
+
+        console.error(error);
+
+        setStatus(
+            `
+            <strong>Gagal menghubungi API.</strong><br>
+            ${escapeHtml(error.message || "Unknown error")}<br><br>
+            <small>
+            Pastikan halaman dibuka melalui HTTPS/hosting,
+            bukan mode preview yang memblokir request.
+            </small>
+            `,
+            "error"
+        );
+
+    }finally{
+
+        checkBtn.disabled = false;
+
+        checkText.textContent =
+            "Cek Video";
+
+    }
+}
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHtml(value){
+
+    return String(value)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
+
+/* =========================================================
+   SAFE FILENAME
+========================================================= */
+
+function safeFilename(name, extension){
+
+    let clean =
+        String(name || "youtube-download")
+            .replace(/[\\/:*?"<>|]/g,"")
+            .replace(/\s+/g," ")
+            .trim();
+
+    if(!clean){
+        clean = "youtube-download";
+    }
+
+    return clean.substring(0,120) +
+        "." +
+        extension;
+}
+
+/* =========================================================
+   DOWNLOAD ENGINE
+========================================================= */
+
+async function downloadMedia(mediaUrl, filename){
+
+    if(!mediaUrl){
+
+        throw new Error(
+            "Link download tidak tersedia."
+        );
+    }
+
+    /*
+      METODE 1
+      Ambil sebagai Blob.
+
+      Jika CDN mengizinkan CORS,
+      browser akan benar-benar menyimpan
+      file tanpa membuka halaman baru.
+    */
+
+    try{
+
+        const response =
+            await fetch(mediaUrl, {
+                method:"GET",
+                mode:"cors",
+                cache:"no-store"
+            });
+
+        if(!response.ok){
+
+            throw new Error(
+                "Media HTTP " + response.status
+            );
+        }
+
+        const blob =
+            await response.blob();
+
+        if(!blob.size){
+
+            throw new Error(
+                "File kosong."
+            );
+        }
+
+        const objectUrl =
+            URL.createObjectURL(blob);
+
+        const a =
+            document.createElement("a");
+
+        a.href = objectUrl;
+        a.download = filename;
+        a.style.display = "none";
+
+        document.body.appendChild(a);
+
+        a.click();
+
+        setTimeout(() => {
+
+            a.remove();
+            URL.revokeObjectURL(objectUrl);
+
+        }, 1500);
+
+        return true;
+
+    }catch(error){
+
+        console.warn(
+            "Blob download gagal:",
+            error
+        );
+
+    }
+
+    /*
+      METODE 2
+
+      Gunakan anchor download langsung.
+
+      Browser tertentu masih mengizinkan
+      download cross-origin jika server
+      mendukungnya.
+    */
+
+    try{
+
+        const a =
+            document.createElement("a");
+
+        a.href = mediaUrl;
+        a.download = filename;
+        a.target = "_blank";
+        a.rel = "noopener";
+
+        document.body.appendChild(a);
+
+        a.click();
+
+        setTimeout(() => {
+            a.remove();
+        }, 1000);
+
+        return true;
+
+    }catch(error){
+
+        console.warn(
+            "Anchor download gagal:",
+            error
+        );
+
+    }
+
+    return false;
+}
+
+/* =========================================================
+   MP3
+========================================================= */
+
+async function downloadMP3(){
+
+    if(!currentMedia.audioUrl){
+
+        showToast(
+            "Link MP3 tidak tersedia dari API."
+        );
+
+        return;
+    }
+
+    mp3Btn.disabled = true;
+
+    const oldText =
+        mp3Btn.textContent;
+
+    mp3Btn.innerHTML =
+        '<span class="loader"></span>Menyiapkan...';
+
+    try{
+
+        const filename =
+            safeFilename(
+                currentMedia.title,
+                "mp3"
+            );
+
+        const ok =
+            await downloadMedia(
+                currentMedia.audioUrl,
+                filename
+            );
+
+        if(ok){
+
+            showToast(
+                "Download MP3 dimulai."
+            );
+
+        }else{
+
+            throw new Error(
+                "Browser memblokir download otomatis."
+            );
+        }
+
+    }catch(error){
+
+        console.error(error);
+
+        showToast(
+            "Browser memblokir download otomatis. Coba tekan tombol sekali lagi."
+        );
+
+        /*
+          Last resort:
+          buka direct media URL.
+        */
+
+        try{
+
+            window.open(
+                currentMedia.audioUrl,
+                "_blank",
+                "noopener"
+            );
+
+        }catch(e){}
+
+    }finally{
+
+        mp3Btn.disabled = false;
+        mp3Btn.textContent = oldText;
+
+    }
+}
+
+/* =========================================================
+   MP4
+========================================================= */
+
+async function downloadMP4(){
+
+    let selected =
+        mp4Quality.value;
+
+    if(!selected){
+
+        selected =
+            currentMedia.videoUrl;
+    }
+
+    if(!selected){
+
+        showToast(
+            "Link MP4 tidak tersedia."
+        );
+
+        return;
+    }
+
+    mp4Btn.disabled = true;
+
+    const oldText =
+        mp4Btn.textContent;
+
+    mp4Btn.innerHTML =
+        '<span class="loader"></span>Menyiapkan...';
+
+    try{
+
+        const filename =
+            safeFilename(
+                currentMedia.title,
+                "mp4"
+            );
+
+        const ok =
+            await downloadMedia(
+                selected,
+                filename
+            );
+
+        if(ok){
+
+            showToast(
+                "Download MP4 dimulai."
+            );
+
+        }else{
+
+            throw new Error(
+                "Browser memblokir download otomatis."
+            );
+        }
+
+    }catch(error){
+
+        console.error(error);
+
+        showToast(
+            "Browser memblokir download otomatis. Coba tekan tombol sekali lagi."
+        );
+
+        try{
+
+            window.open(
+                selected,
+                "_blank",
+                "noopener"
+            );
+
+        }catch(e){}
+
+    }finally{
+
+        mp4Btn.disabled = false;
+        mp4Btn.textContent = oldText;
+
+    }
+}
+
+/* =========================================================
+   CLEAR
+========================================================= */
+
+clearBtn.addEventListener(
+    "click",
+    () => {
+
+        urlInput.value = "";
+
+        resultBox.style.display = "none";
+
+        clearStatus();
+
+        urlInput.focus();
+
+    }
+);
+
+/* =========================================================
+   PASTE
+========================================================= */
+
+pasteBtn.addEventListener(
+    "click",
+    async () => {
+
+        try{
+
+            const text =
+                await navigator.clipboard.readText();
+
+            if(!text){
+
+                showToast(
+                    "Clipboard kosong."
+                );
+
+                return;
+            }
+
+            urlInput.value = text;
+
+            showToast(
+                "Link berhasil ditempel."
+            );
+
+        }catch(error){
+
+            showToast(
+                "Clipboard tidak dapat diakses. Tempel manual."
+            );
+
+        }
+
+    }
+);
+
+/* =========================================================
+   CHECK BUTTON
+========================================================= */
+
+checkBtn.addEventListener(
+    "click",
+    checkVideo
+);
+
+/* =========================================================
+   DOWNLOAD BUTTONS
+========================================================= */
+
+mp3Btn.addEventListener(
+    "click",
+    downloadMP3
+);
+
+mp4Btn.addEventListener(
+    "click",
+    downloadMP4
+);
+
+/* =========================================================
+   CTRL + ENTER
+========================================================= */
+
+urlInput.addEventListener(
+    "keydown",
+    event => {
+
+        if(
+            event.ctrlKey &&
+            event.key === "Enter"
+        ){
+
+            checkVideo();
+
+        }
+
+    }
+);
+
+/* =========================================================
+   AUTO DETECT PASTE
+========================================================= */
+
+urlInput.addEventListener(
+    "paste",
+    () => {
+
+        setTimeout(() => {
+
+            const value =
+                urlInput.value.trim();
+
+            if(
+                value &&
+                isYouTubeUrl(value)
+            ){
+
+                showToast(
+                    "Link YouTube terdeteksi."
+                );
+
+            }
+
+        },100);
+
+    }
+);
+
+/* =========================================================
+   START
+========================================================= */
+
+console.log(
+    "NandSki YouTube Downloader ready."
+);
+
+</script>
+
+</body>
+</html>
