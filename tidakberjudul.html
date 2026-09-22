@@ -1773,6 +1773,7 @@
 
 
     let currentVideo = null;
+
     let currentMedia = null;
 
 
@@ -1780,42 +1781,108 @@
        DOM
     ========================================================= */
 
-    const urlInput = document.getElementById("youtubeUrl");
-    const processBtn = document.getElementById("processBtn");
-    const result = document.getElementById("result");
-    const message = document.getElementById("message");
-    const thumbnail = document.getElementById("thumbnail");
-    const thumbnailLoading = document.getElementById("thumbnailLoading");
-    const videoTitle = document.getElementById("videoTitle");
-    const normalizedUrl = document.getElementById("normalizedUrl");
-    const videoIdText = document.getElementById("videoIdText");
-    const mp3Btn = document.getElementById("mp3Btn");
-    const mp4Btn = document.getElementById("mp4Btn");
+    const urlInput =
+        document.getElementById(
+            "youtubeUrl"
+        );
+
+    const processBtn =
+        document.getElementById(
+            "processBtn"
+        );
+
+    const result =
+        document.getElementById(
+            "result"
+        );
+
+    const message =
+        document.getElementById(
+            "message"
+        );
+
+    const thumbnail =
+        document.getElementById(
+            "thumbnail"
+        );
+
+    const thumbnailLoading =
+        document.getElementById(
+            "thumbnailLoading"
+        );
+
+    const videoTitle =
+        document.getElementById(
+            "videoTitle"
+        );
+
+    const normalizedUrl =
+        document.getElementById(
+            "normalizedUrl"
+        );
+
+    const videoIdText =
+        document.getElementById(
+            "videoIdText"
+        );
+
+    const mp3Btn =
+        document.getElementById(
+            "mp3Btn"
+        );
+
+    const mp4Btn =
+        document.getElementById(
+            "mp4Btn"
+        );
 
 
     /* =========================================================
        ENTER
     ========================================================= */
 
-    urlInput.addEventListener("keydown", function(event) {
-        if (event.key === "Enter") {
-            processVideo();
+    urlInput.addEventListener(
+        "keydown",
+        function(event) {
+
+            if (
+                event.key === "Enter"
+            ) {
+
+                processVideo();
+
+            }
+
         }
-    });
+    );
 
 
     /* =========================================================
        MESSAGE
     ========================================================= */
 
-    function showMessage(text, type = "error") {
-        message.textContent = text;
-        message.className = "show " + type;
+    function showMessage(
+        text,
+        type = "error"
+    ) {
+
+        message.textContent =
+            text;
+
+        message.className =
+            "show " + type;
+
     }
 
+
     function hideMessage() {
-        message.textContent = "";
-        message.className = "";
+
+        message.textContent =
+            "";
+
+        message.className =
+            "";
+
     }
 
 
@@ -1823,30 +1890,107 @@
        EXTRACT YOUTUBE ID
     ========================================================= */
 
-    function extractYouTubeId(url) {
-        if (!url) return null;
-        url = url.trim();
+    function extractYouTubeId(
+        url
+    ) {
+
+        if (!url) {
+            return null;
+        }
+
+        url =
+            url.trim();
+
+
         let match;
 
-        match = url.match(/(?:youtube\.com\/watch\?[^#\s]*v=)([a-zA-Z0-9_-]{11})/);
-        if (match) return match[1];
 
-        match = url.match(/youtu\.be\/([a-zA-Z0-9_-]{11})/);
-        if (match) return match[1];
+        /*
+         * watch?v=
+         */
 
-        match = url.match(/youtube\.com\/shorts\/([a-zA-Z0-9_-]{11})/);
-        if (match) return match[1];
+        match =
+            url.match(
+                /(?:youtube\.com\/watch\?[^#\s]*v=)([a-zA-Z0-9_-]{11})/
+            );
 
-        match = url.match(/youtube\.com\/embed\/([a-zA-Z0-9_-]{11})/);
-        if (match) return match[1];
+        if (match) {
+            return match[1];
+        }
 
-        match = url.match(/youtube\.com\/live\/([a-zA-Z0-9_-]{11})/);
-        if (match) return match[1];
 
-        match = url.match(/[?&]v=([a-zA-Z0-9_-]{11})/);
-        if (match) return match[1];
+        /*
+         * youtu.be
+         */
+
+        match =
+            url.match(
+                /youtu\.be\/([a-zA-Z0-9_-]{11})/
+            );
+
+        if (match) {
+            return match[1];
+        }
+
+
+        /*
+         * shorts
+         */
+
+        match =
+            url.match(
+                /youtube\.com\/shorts\/([a-zA-Z0-9_-]{11})/
+            );
+
+        if (match) {
+            return match[1];
+        }
+
+
+        /*
+         * embed
+         */
+
+        match =
+            url.match(
+                /youtube\.com\/embed\/([a-zA-Z0-9_-]{11})/
+            );
+
+        if (match) {
+            return match[1];
+        }
+
+
+        /*
+         * live
+         */
+
+        match =
+            url.match(
+                /youtube\.com\/live\/([a-zA-Z0-9_-]{11})/
+            );
+
+        if (match) {
+            return match[1];
+        }
+
+
+        /*
+         * generic v=
+         */
+
+        match =
+            url.match(
+                /[?&]v=([a-zA-Z0-9_-]{11})/
+            );
+
+        if (match) {
+            return match[1];
+        }
+
 
         return null;
+
     }
 
 
@@ -1854,8 +1998,15 @@
        NORMALIZE URL
     ========================================================= */
 
-    function normalizeYouTubeUrl(id) {
-        return "https://www.youtube.com/watch?v=" + id;
+    function normalizeYouTubeUrl(
+        id
+    ) {
+
+        return (
+            "https://www.youtube.com/watch?v=" +
+            id
+        );
+
     }
 
 
@@ -1863,16 +2014,50 @@
        OEMBED
     ========================================================= */
 
-    async function getYouTubeOEmbed(url) {
+    async function getYouTubeOEmbed(
+        url
+    ) {
+
         try {
-            const endpoint = "https://www.youtube.com/oembed?url=" + encodeURIComponent(url) + "&format=json";
-            const response = await fetch(endpoint, { method: "GET" });
-            if (!response.ok) throw new Error("oEmbed failed");
+
+            const endpoint =
+                "https://www.youtube.com/oembed" +
+                "?url=" +
+                encodeURIComponent(url) +
+                "&format=json";
+
+
+            const response =
+                await fetch(
+                    endpoint,
+                    {
+                        method: "GET"
+                    }
+                );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "oEmbed failed"
+                );
+
+            }
+
+
             return await response.json();
+
         } catch (error) {
-            console.warn("oEmbed:", error);
+
+            console.warn(
+                "oEmbed:",
+                error
+            );
+
             return null;
+
         }
+
     }
 
 
@@ -1880,50 +2065,143 @@
        THUMBNAIL
     ========================================================= */
 
-    async function loadThumbnail(id, oembed = null) {
-        thumbnail.classList.remove("loaded");
-        thumbnailLoading.style.display = "flex";
+    async function loadThumbnail(
+        id,
+        oembed = null
+    ) {
+
+        thumbnail.classList.remove(
+            "loaded"
+        );
+
+        thumbnailLoading.style.display =
+            "flex";
+
         thumbnailLoading.innerHTML = `
             <i class="fa-solid fa-image"></i>
             <span>Memuat thumbnail...</span>
         `;
 
+
         const candidates = [];
-        if (oembed && oembed.thumbnail_url) {
-            candidates.push(oembed.thumbnail_url);
+
+
+        /*
+         * oEmbed thumbnail
+         */
+
+        if (
+            oembed &&
+            oembed.thumbnail_url
+        ) {
+
+            candidates.push(
+                oembed.thumbnail_url
+            );
+
         }
 
-        CONFIG.THUMBNAILS.forEach(builder => {
-            candidates.push(builder(id));
-        });
 
-        const unique = [...new Set(candidates)];
+        /*
+         * Fallback
+         */
 
-        for (const imageUrl of unique) {
-            const valid = await testImage(imageUrl);
-            if (valid) {
-                thumbnail.onload = function() {
-                    thumbnailLoading.style.display = "none";
-                    thumbnail.classList.add("loaded");
-                };
-                thumbnail.src = imageUrl;
-                return;
+        CONFIG.THUMBNAILS.forEach(
+            builder => {
+
+                candidates.push(
+                    builder(id)
+                );
+
             }
+        );
+
+
+        const unique =
+            [
+                ...new Set(
+                    candidates
+                )
+            ];
+
+
+        for (
+            const imageUrl
+            of unique
+        ) {
+
+            const valid =
+                await testImage(
+                    imageUrl
+                );
+
+
+            if (valid) {
+
+                thumbnail.onload =
+                    function() {
+
+                        thumbnailLoading.style.display =
+                            "none";
+
+                        thumbnail.classList.add(
+                            "loaded"
+                        );
+
+                    };
+
+
+                thumbnail.src =
+                    imageUrl;
+
+
+                return;
+
+            }
+
         }
+
 
         thumbnailLoading.innerHTML = `
             <i class="fa-solid fa-image"></i>
             <span>Thumbnail tidak tersedia</span>
         `;
+
     }
 
-    function testImage(url) {
-        return new Promise(resolve => {
-            const image = new Image();
-            image.onload = () => resolve(true);
-            image.onerror = () => resolve(false);
-            image.src = url + (url.includes("?") ? "&" : "?") + "_=" + Date.now();
-        });
+
+    function testImage(
+        url
+    ) {
+
+        return new Promise(
+            resolve => {
+
+                const image =
+                    new Image();
+
+
+                image.onload =
+                    () => resolve(true);
+
+
+                image.onerror =
+                    () => resolve(false);
+
+
+                image.src =
+                    url +
+                    (
+                        url.includes("?")
+                            ? "&"
+                            : "?"
+                    ) +
+                    "_=" +
+                    Date.now();
+
+            }
+        );
+
     }
 
 
@@ -1932,113 +2210,292 @@
     ========================================================= */
 
     async function processVideo() {
+
         hideMessage();
-        const input = urlInput.value.trim();
+
+
+        const input =
+            urlInput.value.trim();
+
 
         if (!input) {
-            showMessage("Masukkan link YouTube terlebih dahulu.");
+
+            showMessage(
+                "Masukkan link YouTube terlebih dahulu."
+            );
+
             urlInput.focus();
+
             return;
+
         }
 
-        const id = extractYouTubeId(input);
+
+        const id =
+            extractYouTubeId(
+                input
+            );
+
 
         if (!id) {
-            showMessage("Link YouTube tidak valid. Contoh: https://www.youtube.com/watch?v=XXXXXXXXXXX");
+
+            showMessage(
+                "Link YouTube tidak valid. Contoh: https://www.youtube.com/watch?v=XXXXXXXXXXX"
+            );
+
             return;
+
         }
 
-        processBtn.classList.add("loading");
+
+        processBtn.classList.add(
+            "loading"
+        );
+
+
         processBtn.innerHTML = `
             <span class="spinner"></span>
             <span>MEMPROSES...</span>
         `;
 
+
         try {
-            const normalized = normalizeYouTubeUrl(id);
-            const oembed = await getYouTubeOEmbed(normalized);
-            const title = oembed && oembed.title ? oembed.title : "YouTube Video";
+
+            const normalized =
+                normalizeYouTubeUrl(
+                    id
+                );
+
+
+            /*
+             * Metadata
+             */
+
+            const oembed =
+                await getYouTubeOEmbed(
+                    normalized
+                );
+
+
+            const title =
+                oembed &&
+                oembed.title
+                    ? oembed.title
+                    : "YouTube Video";
+
 
             currentVideo = {
+
                 id: id,
+
                 url: normalized,
+
                 title: title,
-                thumbnail: oembed ? oembed.thumbnail_url : null
+
+                thumbnail:
+                    oembed
+                        ? oembed.thumbnail_url
+                        : null
+
             };
 
-            videoTitle.textContent = title;
-            normalizedUrl.textContent = normalized;
-            videoIdText.textContent = "ID: " + id;
-            result.classList.add("show");
 
-            loadThumbnail(id, oembed);
+            /*
+             * UI
+             */
 
-            setTimeout(() => {
-                result.scrollIntoView({ behavior: "smooth", block: "start" });
-            }, 100);
+            videoTitle.textContent =
+                title;
 
-            showMessage("Video ditemukan. Pilih MP3 atau MP4 untuk mulai download kualitas terbaik.", "success");
+            normalizedUrl.textContent =
+                normalized;
+
+            videoIdText.textContent =
+                "ID: " + id;
+
+
+            result.classList.add(
+                "show"
+            );
+
+
+            /*
+             * Thumbnail
+             */
+
+            loadThumbnail(
+                id,
+                oembed
+            );
+
+
+            /*
+             * Scroll
+             */
+
+            setTimeout(
+                () => {
+
+                    result.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
+
+                },
+                100
+            );
+
+
+            showMessage(
+                "Video ditemukan. Pilih MP3 atau MP4 untuk mulai download kualitas terbaik.",
+                "success"
+            );
+
 
         } catch (error) {
-            console.error(error);
-            showMessage("Gagal memproses video.");
+
+            console.error(
+                error
+            );
+
+            showMessage(
+                "Gagal memproses video."
+            );
+
         } finally {
-            processBtn.classList.remove("loading");
+
+            processBtn.classList.remove(
+                "loading"
+            );
+
+
             processBtn.innerHTML = `
                 <i class="fa-solid fa-magnifying-glass"></i>
                 <span>PROSES VIDEO</span>
             `;
+
         }
+
     }
 
 
     /* =========================================================
-       API REQUEST (WITH CORS FIX)
+       API REQUEST
     ========================================================= */
 
     async function requestDownloadAPI() {
+
         if (!currentVideo) {
-            throw new Error("Video belum diproses.");
+
+            throw new Error(
+                "Video belum diproses."
+            );
+
         }
 
-        // Endpoint asli dari API anda
-        const rawEndpoint = CONFIG.API_URL + "?url=" + encodeURIComponent(currentVideo.url);
 
-        // MENGGUNAKAN CORS PROXY UNTUK MENGHINDARI "FAILED TO FETCH" DI CHROME
-        const proxyEndpoint = "https://api.allorigins.win/raw?url=" + encodeURIComponent(rawEndpoint);
+        const endpoint =
+            CONFIG.API_URL +
+            "?url=" +
+            encodeURIComponent(
+                currentVideo.url
+            );
 
-        const controller = new AbortController();
-        const timeout = setTimeout(() => { controller.abort(); }, 90000);
+
+        const controller =
+            new AbortController();
+
+
+        const timeout =
+            setTimeout(
+                () => {
+                    controller.abort();
+                },
+                90000
+            );
+
 
         try {
-            const response = await fetch(proxyEndpoint, {
-                method: "GET",
-                headers: {
-                    "Accept": "application/json"
-                },
-                signal: controller.signal
-            });
+
+            const response =
+                await fetch(
+                    endpoint,
+                    {
+                        method: "GET",
+
+                        headers: {
+                            "Accept":
+                                "application/json"
+                        },
+
+                        signal:
+                            controller.signal
+                    }
+                );
+
 
             if (!response.ok) {
-                throw new Error("HTTP " + response.status);
+
+                throw new Error(
+                    "HTTP " +
+                    response.status
+                );
+
             }
 
-            const data = await response.json();
-            console.log("Downloader API Result:", data);
 
-            if (!data || data.success !== true) {
-                throw new Error(data && (data.message || data.error) ? (data.message || data.error) : "API gagal mengembalikan download URL.");
+            const data =
+                await response.json();
+
+
+            console.log(
+                "Downloader API:",
+                data
+            );
+
+
+            if (
+                !data ||
+                data.success !== true
+            ) {
+
+                throw new Error(
+                    data &&
+                    (
+                        data.message ||
+                        data.error
+                    )
+                        ? (
+                            data.message ||
+                            data.error
+                        )
+                        : "API gagal mengembalikan download URL."
+                );
+
             }
 
-            if (!data.mediaInfo) {
-                throw new Error("Respons API tidak memiliki mediaInfo.");
+
+            if (
+                !data.mediaInfo
+            ) {
+
+                throw new Error(
+                    "Respons API tidak memiliki mediaInfo."
+                );
+
             }
+
 
             return data.mediaInfo;
 
         } finally {
-            clearTimeout(timeout);
+
+            clearTimeout(
+                timeout
+            );
+
         }
+
     }
 
 
@@ -2046,61 +2503,200 @@
        PICK URL (BEST QUALITY AUTO SELECT)
     ========================================================= */
 
-    function getMediaUrl(media, format) {
-        if (format === "mp3") {
-            if (media.audioUrl) return media.audioUrl;
+    function getMediaUrl(
+        media,
+        format
+    ) {
+
+        /*
+         * MP3
+         */
+
+        if (
+            format === "mp3"
+        ) {
+
+            if (
+                media.audioUrl
+            ) {
+
+                return media.audioUrl;
+
+            }
+
+            /*
+             * fallback kalau API
+             * hanya menyediakan videoUrl
+             */
+
             return null;
+
         }
 
-        if (format === "mp4") {
-            if (Array.isArray(media.qualities) && media.qualities.length > 0) {
-                const validQualities = media.qualities.filter(item => item && item.url);
+
+        /*
+         * MP4
+         */
+
+        if (
+            format === "mp4"
+        ) {
+
+            /*
+             * Otomatis pilih resolusi tertinggi dari array qualities 
+             * jika tersedia URL aktif untuk diunduh.
+             */
+
+            if (
+                Array.isArray(
+                    media.qualities
+                ) && media.qualities.length > 0
+            ) {
+
+                const validQualities = media.qualities.filter(
+                    item => item && item.url
+                );
+
                 if (validQualities.length > 0) {
+                    
+                    // Sort descending (dari yang tertinggi ke terendah) berdasarkan angka kualitas
                     validQualities.sort((a, b) => {
                         const resA = parseInt(String(a.quality).replace(/\D/g, '')) || 0;
                         const resB = parseInt(String(b.quality).replace(/\D/g, '')) || 0;
                         return resB - resA;
                     });
+
                     return validQualities[0].url;
+
                 }
+
             }
-            if (media.videoUrl) return media.videoUrl;
+
+            /*
+             * fallback otomatis ke videoUrl bawaan (biasanya otomatis kualitas terbaik)
+             */
+
+            if (
+                media.videoUrl
+            ) {
+
+                return media.videoUrl;
+
+            }
+
+
             return null;
+
         }
+
+
         return null;
+
     }
 
 
     /* =========================================================
-       FORCE / START DOWNLOAD (IMPROVED)
+       FORCE / START DOWNLOAD
     ========================================================= */
 
-    async function startDownload(url, filename) {
-        if (!url) throw new Error("URL download kosong.");
+    async function startDownload(
+        url,
+        filename
+    ) {
+
+        if (!url) {
+
+            throw new Error(
+                "URL download kosong."
+            );
+
+        }
+
+
+        /*
+         * Cara pertama:
+         * anchor download
+         */
+
+        const anchor =
+            document.createElement(
+                "a"
+            );
+
+
+        anchor.href =
+            url;
+
+        anchor.download =
+            filename;
+
+        anchor.rel =
+            "noopener";
+
+
+        document.body.appendChild(
+            anchor
+        );
+
 
         try {
-            // Pendekatan 1: Mencoba membuat elemen anchor dan memaksa download
-            const a = document.createElement("a");
-            a.href = url;
-            a.download = filename;
-            a.target = "_blank"; // Buka di tab baru jika tetap diblokir
-            a.rel = "noopener noreferrer";
-            
-            document.body.appendChild(a);
-            a.click();
-            a.remove();
-            
-            // Pendekatan 2: Fallback eksekusi langsung jika browser diam saja
-            setTimeout(() => {
-                if (document.visibilityState === "visible") {
-                    window.open(url, "_blank", "noopener,noreferrer");
-                }
-            }, 800);
+
+            anchor.click();
 
         } catch (error) {
-            console.warn("Gagal mendownload secara senyap:", error);
-            window.open(url, "_blank", "noopener,noreferrer");
+
+            console.warn(
+                "Anchor download gagal:",
+                error
+            );
+
         }
+
+
+        anchor.remove();
+
+
+        /*
+         * Banyak CDN pihak ketiga tidak
+         * mengizinkan download attribute
+         * lintas-origin.
+         *
+         * Kalau itu terjadi, browser akan
+         * membuka URL file.
+         */
+
+        setTimeout(
+            () => {
+
+                /*
+                 * Jangan paksa tab baru kalau
+                 * browser sudah menerima download.
+                 */
+
+                if (
+                    document.visibilityState ===
+                    "visible"
+                ) {
+
+                    /*
+                     * Untuk direct CDN URL,
+                     * location.href sering lebih
+                     * efektif dibanding anchor
+                     * lintas-origin.
+                     */
+
+                    window.open(
+                        url,
+                        "_blank",
+                        "noopener,noreferrer"
+                    );
+
+                }
+
+            },
+            800
+        );
+
     }
 
 
@@ -2109,38 +2705,123 @@
     ========================================================= */
 
     async function downloadMP3() {
+
         if (!currentVideo) {
-            showMessage("Proses video terlebih dahulu.");
+
+            showMessage(
+                "Proses video terlebih dahulu."
+            );
+
             return;
+
         }
 
-        setButtonLoading(mp3Btn, true);
+
+        setButtonLoading(
+            mp3Btn,
+            true
+        );
+
+
         hideMessage();
 
+
         try {
-            showMessage("Sedang mengambil link MP3...", "success");
 
-            const media = await requestDownloadAPI();
-            currentMedia = media;
+            showMessage(
+                "Sedang mengambil link MP3...",
+                "success"
+            );
 
-            const audioUrl = getMediaUrl(media, "mp3");
+
+            /*
+             * Request API
+             */
+
+            const media =
+                await requestDownloadAPI();
+
+
+            currentMedia =
+                media;
+
+
+            /*
+             * Ambil audioUrl
+             */
+
+            const audioUrl =
+                getMediaUrl(
+                    media,
+                    "mp3"
+                );
+
 
             if (!audioUrl) {
-                throw new Error("API tidak mengembalikan link MP3 untuk video ini.");
+
+                throw new Error(
+                    "API tidak mengembalikan link MP3 untuk video ini."
+                );
+
             }
 
-            const safeTitle = sanitizeFilename(currentVideo.title);
-            const filename = safeTitle + ".mp3";
 
-            await startDownload(audioUrl, filename);
-            showMessage("MP3 berhasil ditarik dan diproses oleh browser.", "success");
+            /*
+             * Nama file
+             */
+
+            const safeTitle =
+                sanitizeFilename(
+                    currentVideo.title
+                );
+
+
+            const filename =
+                safeTitle +
+                ".mp3";
+
+
+            /*
+             * Mulai download
+             */
+
+            await startDownload(
+                audioUrl,
+                filename
+            );
+
+
+            showMessage(
+                "MP3 sudah dikirim ke proses download browser.",
+                "success"
+            );
+
 
         } catch (error) {
-            console.error("MP3 error:", error);
-            showMessage("MP3 gagal: " + (error.message || "Pastikan koneksi aman, server menolak permintaan."));
+
+            console.error(
+                "MP3 error:",
+                error
+            );
+
+
+            showMessage(
+                "MP3 gagal: " +
+                (
+                    error.message ||
+                    "server downloader tidak mengembalikan file."
+                )
+            );
+
         } finally {
-            setButtonLoading(mp3Btn, false);
+
+            setButtonLoading(
+                mp3Btn,
+                false
+            );
+
         }
+
     }
 
 
@@ -2149,38 +2830,122 @@
     ========================================================= */
 
     async function downloadMP4() {
+
         if (!currentVideo) {
-            showMessage("Proses video terlebih dahulu.");
+
+            showMessage(
+                "Proses video terlebih dahulu."
+            );
+
             return;
+
         }
 
-        setButtonLoading(mp4Btn, true);
+
+        setButtonLoading(
+            mp4Btn,
+            true
+        );
+
+
         hideMessage();
 
+
         try {
-            showMessage("Sedang mengambil link MP4 terbaik...", "success");
 
-            const media = await requestDownloadAPI();
-            currentMedia = media;
+            showMessage(
+                "Sedang mengambil link MP4 terbaik...",
+                "success"
+            );
 
-            const videoUrl = getMediaUrl(media, "mp4");
+
+            /*
+             * Request API
+             */
+
+            const media =
+                await requestDownloadAPI();
+
+
+            currentMedia =
+                media;
+
+
+            /*
+             * Ambil URL MP4
+             */
+
+            const videoUrl =
+                getMediaUrl(
+                    media,
+                    "mp4"
+                );
+
 
             if (!videoUrl) {
-                throw new Error("API tidak mengembalikan link MP4 untuk video ini.");
+
+                throw new Error(
+                    "API tidak mengembalikan link MP4 untuk video ini."
+                );
+
             }
 
-            const safeTitle = sanitizeFilename(currentVideo.title);
-            const filename = safeTitle + "-BestQuality.mp4";
 
-            await startDownload(videoUrl, filename);
-            showMessage("MP4 berhasil ditarik dan diproses oleh browser.", "success");
+            /*
+             * Nama file
+             */
+
+            const safeTitle =
+                sanitizeFilename(
+                    currentVideo.title
+                );
+
+            const filename =
+                safeTitle +
+                "-BestQuality.mp4";
+
+
+            /*
+             * Mulai download
+             */
+
+            await startDownload(
+                videoUrl,
+                filename
+            );
+
+
+            showMessage(
+                "MP4 sudah dikirim ke proses download browser.",
+                "success"
+            );
+
 
         } catch (error) {
-            console.error("MP4 error:", error);
-            showMessage("MP4 gagal: " + (error.message || "Pastikan koneksi aman, server menolak permintaan."));
+
+            console.error(
+                "MP4 error:",
+                error
+            );
+
+
+            showMessage(
+                "MP4 gagal: " +
+                (
+                    error.message ||
+                    "server downloader tidak mengembalikan file."
+                )
+            );
+
         } finally {
-            setButtonLoading(mp4Btn, false);
+
+            setButtonLoading(
+                mp4Btn,
+                false
+            );
+
         }
+
     }
 
 
@@ -2188,20 +2953,45 @@
        BUTTON LOADING
     ========================================================= */
 
-    function setButtonLoading(button, loading) {
+    function setButtonLoading(
+        button,
+        loading
+    ) {
+
         if (loading) {
-            button.dataset.original = button.innerHTML;
-            button.classList.add("loading");
+
+            button.dataset.original =
+                button.innerHTML;
+
+
+            button.classList.add(
+                "loading"
+            );
+
+
             button.innerHTML = `
                 <span class="spinner"></span>
                 MEMPROSES...
             `;
+
         } else {
-            button.classList.remove("loading");
-            if (button.dataset.original) {
-                button.innerHTML = button.dataset.original;
+
+            button.classList.remove(
+                "loading"
+            );
+
+
+            if (
+                button.dataset.original
+            ) {
+
+                button.innerHTML =
+                    button.dataset.original;
+
             }
+
         }
+
     }
 
 
@@ -2209,14 +2999,38 @@
        SANITIZE FILENAME
     ========================================================= */
 
-    function sanitizeFilename(name) {
-        if (!name) return "youtube-download";
+    function sanitizeFilename(
+        name
+    ) {
+
+        if (!name) {
+
+            return "youtube-download";
+
+        }
+
+
         return name
-            .replace(/[<>:"/\\|?*\x00-\x1F]/g, "")
-            .replace(/\s+/g, " ")
+
+            .replace(
+                /[<>:"/\\|?*\x00-\x1F]/g,
+                ""
+            )
+
+            .replace(
+                /\s+/g,
+                " "
+            )
+
             .trim()
-            .slice(0, 150)
+
+            .slice(
+                0,
+                150
+            )
+
             || "youtube-download";
+
     }
 
 
@@ -2224,16 +3038,45 @@
        AUTO PASTE
     ========================================================= */
 
-    urlInput.addEventListener("dblclick", async function() {
-        try {
-            const text = await navigator.clipboard.readText();
-            if (text && /youtube\.com|youtu\.be/i.test(text)) {
-                urlInput.value = text;
+    /*
+     * Jika browser mengizinkan clipboard,
+     * klik input dua kali akan mencoba paste.
+     */
+
+    urlInput.addEventListener(
+        "dblclick",
+        async function() {
+
+            try {
+
+                const text =
+                    await navigator.clipboard.readText();
+
+
+                if (
+                    text &&
+                    /youtube\.com|youtu\.be/i.test(
+                        text
+                    )
+                ) {
+
+                    urlInput.value =
+                        text;
+
+                }
+
+            } catch (error) {
+
+                /*
+                 * Clipboard bisa ditolak browser.
+                 * Tidak perlu menampilkan error.
+                 */
+
             }
-        } catch (error) {
-            // Abaikan jika browser menolak akses clipboard
+
         }
-    });
+    );
+
 
 </script>
 
