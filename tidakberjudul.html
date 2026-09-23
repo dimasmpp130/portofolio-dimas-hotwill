@@ -143,10 +143,6 @@
             margin: 0 auto;
         }
 
-        /* =========================
-           HEADER
-        ========================= */
-
         header {
             position: sticky;
             top: 0;
@@ -273,10 +269,6 @@
             }
         }
 
-        /* =========================
-           HERO
-        ========================= */
-
         .hero {
             position: relative;
 
@@ -338,10 +330,6 @@
             font-size: 14px;
             line-height: 1.8;
         }
-
-        /* =========================
-           WORKSPACE
-        ========================= */
 
         .workspace {
             display: grid;
@@ -443,10 +431,6 @@
         .card-body {
             padding: 22px;
         }
-
-        /* =========================
-           FORM
-        ========================= */
 
         .field-label {
             display: block;
@@ -609,10 +593,6 @@
             display: block;
         }
 
-        /* =========================
-           RESULT
-        ========================= */
-
         #resultCard {
             scroll-margin-top: 90px;
         }
@@ -680,10 +660,6 @@
             line-height: 1.7;
         }
 
-        /* =========================
-           LOADING
-        ========================= */
-
         .loading {
             display: none;
 
@@ -740,10 +716,6 @@
 
             font-size: 12px;
         }
-
-        /* =========================
-           RESULT CONTENT
-        ========================= */
 
         .result-content {
             display: none;
@@ -833,10 +805,6 @@
             text-overflow: ellipsis;
         }
 
-        /* =========================
-           ACTIONS
-        ========================= */
-
         .actions {
             display: grid;
 
@@ -920,10 +888,6 @@
             filter: brightness(1.08);
         }
 
-        /* =========================
-           TOAST
-        ========================= */
-
         .toast {
             position: fixed;
 
@@ -975,10 +939,6 @@
                 translate(-50%, 0);
         }
 
-        /* =========================
-           FOOTER
-        ========================= */
-
         footer {
             padding:
                 0
@@ -996,10 +956,6 @@
         footer strong {
             color: #737373;
         }
-
-        /* =========================
-           RESPONSIVE
-        ========================= */
 
         @media (max-width: 850px) {
             .workspace {
@@ -1086,10 +1042,6 @@
 
 <body>
 
-    <!-- =========================
-         HEADER
-    ========================== -->
-
     <header>
         <div class="container header-inner">
 
@@ -1121,14 +1073,7 @@
         </div>
     </header>
 
-
-    <!-- =========================
-         MAIN
-    ========================== -->
-
     <main>
-
-        <!-- HERO -->
 
         <section class="hero">
 
@@ -1152,15 +1097,7 @@
 
         </section>
 
-
-        <!-- WORKSPACE -->
-
         <section class="container workspace">
-
-
-            <!-- =========================
-                 FORM CARD
-            ========================== -->
 
             <div class="card">
 
@@ -1178,7 +1115,6 @@
 
                 </div>
 
-
                 <div class="card-body">
 
                     <form id="lobbyForm">
@@ -1189,7 +1125,6 @@
                         >
                             Nama Player
                         </label>
-
 
                         <div class="input-wrap">
 
@@ -1205,7 +1140,6 @@
 
                         </div>
 
-
                         <button
                             type="submit"
                             class="generate-btn"
@@ -1218,14 +1152,12 @@
 
                         </button>
 
-
                         <div
                             class="error-box"
                             id="errorBox"
                         ></div>
 
                     </form>
-
 
                     <div class="tips">
 
@@ -1255,11 +1187,6 @@
 
             </div>
 
-
-            <!-- =========================
-                 RESULT CARD
-            ========================== -->
-
             <div
                 class="card"
                 id="resultCard"
@@ -1279,11 +1206,7 @@
 
                 </div>
 
-
                 <div class="card-body result-card-body">
-
-
-                    <!-- EMPTY -->
 
                     <div
                         class="result-empty"
@@ -1306,9 +1229,6 @@
 
                     </div>
 
-
-                    <!-- LOADING -->
-
                     <div
                         class="loading"
                         id="loading"
@@ -1327,9 +1247,6 @@
 
                     </div>
 
-
-                    <!-- RESULT -->
-
                     <div
                         class="result-content"
                         id="resultContent"
@@ -1344,7 +1261,6 @@
                             >
 
                         </div>
-
 
                         <div class="file-info">
 
@@ -1363,7 +1279,6 @@
 
                             </div>
 
-
                             <div class="file-info-box">
 
                                 <div class="file-info-label">
@@ -1378,7 +1293,6 @@
                                 </div>
 
                             </div>
-
 
                             <div class="file-info-box">
 
@@ -1397,14 +1311,6 @@
 
                         </div>
 
-
-                        <!--
-                            HANYA 2 TOMBOL
-                            Tidak ada WhatsApp,
-                            Instagram,
-                            atau Bagikan.
-                        -->
-
                         <div class="actions">
 
                             <button
@@ -1415,7 +1321,6 @@
                                 ⬇️
                                 Download Foto Ini
                             </button>
-
 
                             <button
                                 type="button"
@@ -1438,11 +1343,6 @@
 
     </main>
 
-
-    <!-- =========================
-         FOOTER
-    ========================== -->
-
     <footer>
 
         <div class="container">
@@ -1459,31 +1359,12 @@
 
     </footer>
 
-
-    <!-- TOAST -->
-
     <div
         class="toast"
         id="toast"
     ></div>
 
-
-    <!-- =========================
-         JAVASCRIPT
-    ========================== -->
-
     <script>
-        /*
-         * ============================================
-         * PROTEKSI RINGAN
-         * ============================================
-         *
-         * Klik kanan dan copy/paste tetap aktif.
-         * Shortcut umum DevTools dibuat tidak langsung
-         * bekerja untuk pengguna biasa.
-         *
-         * Ini bukan keamanan absolut.
-         */
 
         document.addEventListener(
             "keydown",
@@ -1518,47 +1399,19 @@
             true
         );
 
+        const _d = function(_a, _k) {
+            let _s = "";
+            for (let _i = 0; _i < _a.length; _i++) {
+                _s += String.fromCharCode(_a[_i] ^ _k);
+            }
+            return _s;
+        };
 
-        /*
-         * ============================================
-         * API CONFIG
-         * ============================================
-         */
+        const _e = _d([33, 61, 61, 57, 58, 115, 102, 102, 40, 57, 32, 103, 39, 44, 38, 49, 59, 103, 44, 60, 102, 40, 57, 32, 102, 47, 47, 37, 38, 43, 43, 48], 73);
+        const _k = _d([46, 11, 62, 125, 43, 47, 35, 124, 33, 40, 56, 16], 73);
 
-        /*
-         * Endpoint disamarkan.
-         * Catatan: ini hanya obfuscation, bukan private 100%.
-         */
-        const API_ENDPOINT = [
-            104, 116, 116, 112, 115, 58, 47, 47,
-            97, 112, 105, 46, 110, 101, 111, 120,
-            114, 46, 101, 117, 47, 97, 112, 105,
-            47, 102, 102, 108, 111, 98, 98, 121
-        ].map(function(n) {
-            return String.fromCharCode(n);
-        }).join("");
-
-        /*
-         * API KEY disamarkan agar tidak tampil sebagai
-         * string key secara langsung di source HTML.
-         *
-         * CATATAN:
-         * Karena request dilakukan langsung dari browser,
-         * key tidak bisa dibuat benar-benar private.
-         */
-        const API_KEY = [
-            103, 66, 119, 52, 98, 102,
-            106, 53, 104, 97, 113, 89
-        ].map(function(n) {
-            return String.fromCharCode(n);
-        }).join("");
-
-
-        /*
-         * ============================================
-         * DOM
-         * ============================================
-         */
+        const API_ENDPOINT = _e;
+        const API_KEY = _k;
 
         const form =
             document.getElementById(
@@ -1640,13 +1493,6 @@
                 "toast"
             );
 
-
-        /*
-         * ============================================
-         * STATE
-         * ============================================
-         */
-
         let currentResult = {
             url: "",
             filename: "",
@@ -1657,28 +1503,9 @@
             requestedName: ""
         };
 
-        /*
-         * Setiap request punya nomor sendiri.
-         *
-         * Contoh:
-         *
-         * Request ABADI2828 = #1
-         * Request HEDON_2828 = #2
-         *
-         * Kalau request #1 selesai belakangan,
-         * hasilnya tidak boleh menimpa request #2.
-         */
-
         let requestCounter = 0;
 
         let toastTimer = null;
-
-
-        /*
-         * ============================================
-         * TOAST
-         * ============================================
-         */
 
         function showToast(message) {
 
@@ -1704,13 +1531,6 @@
                 );
         }
 
-
-        /*
-         * ============================================
-         * ERROR
-         * ============================================
-         */
-
         function showError(message) {
 
             errorBox.textContent =
@@ -1720,7 +1540,6 @@
                 "active"
             );
         }
-
 
         function hideError() {
 
@@ -1732,16 +1551,6 @@
             );
         }
 
-
-        /*
-         * ============================================
-         * SCROLL KE HASIL
-         * ============================================
-         *
-         * Ini dijalankan SEGERA ketika request
-         * dimulai, bukan menunggu gambar selesai.
-         */
-
         function scrollToResult() {
 
             resultCard.scrollIntoView({
@@ -1751,24 +1560,11 @@
 
         }
 
-
-        /*
-         * ============================================
-         * RESET HASIL
-         * ============================================
-         */
-
         function resetResult() {
 
-            /*
-             * Hapus event lama
-             */
             resultImage.onload = null;
             resultImage.onerror = null;
 
-            /*
-             * Hapus gambar lama sepenuhnya
-             */
             resultImage.removeAttribute(
                 "src"
             );
@@ -1777,9 +1573,6 @@
 
             resultImage.alt = "";
 
-            /*
-             * Reset data
-             */
             currentResult = {
 
                 url: "",
@@ -1798,11 +1591,6 @@
 
             };
 
-
-            /*
-             * Reset informasi file
-             */
-
             fileFormat.textContent =
                 "JPG";
 
@@ -1811,11 +1599,6 @@
 
             fileName.textContent =
                 "-";
-
-
-            /*
-             * Tampilkan empty
-             */
 
             resultContent.classList.remove(
                 "active"
@@ -1829,33 +1612,22 @@
                 "flex";
         }
 
-
-        /*
-         * ============================================
-         * LOADING
-         * ============================================
-         */
-
         function setLoading(state) {
 
             generateBtn.disabled =
                 state;
-
 
             if (state) {
 
                 generateText.textContent =
                     "⏳ Sedang Memproses...";
 
-
                 resultEmpty.style.display =
                     "none";
-
 
                 resultContent.classList.remove(
                     "active"
                 );
-
 
                 loading.classList.add(
                     "active"
@@ -1866,7 +1638,6 @@
                 generateText.textContent =
                     "⚡ Buat Gambar Lobby";
 
-
                 loading.classList.remove(
                     "active"
                 );
@@ -1874,25 +1645,11 @@
             }
         }
 
-
-        /*
-         * ============================================
-         * EXTRACT URL API
-         * ============================================
-         */
-
         function extractImageUrl(result) {
 
             if (!result) {
                 return "";
             }
-
-
-            /*
-             * Format API utama:
-             *
-             * result.data.url
-             */
 
             if (
                 result.data &&
@@ -1906,11 +1663,6 @@
 
             }
 
-
-            /*
-             * Kalau data berupa array
-             */
-
             if (
                 Array.isArray(result.data) &&
                 result.data.length > 0
@@ -1918,7 +1670,6 @@
 
                 const first =
                     result.data[0];
-
 
                 if (
                     first &&
@@ -1933,11 +1684,6 @@
 
             }
 
-
-            /*
-             * Root URL
-             */
-
             if (
                 typeof result.url === "string" &&
                 result.url.trim()
@@ -1946,11 +1692,6 @@
                 return result.url.trim();
 
             }
-
-
-            /*
-             * Fallback
-             */
 
             if (
                 result.data &&
@@ -1971,7 +1712,6 @@
 
                 ];
 
-
                 for (
                     const key
                     of possibleKeys
@@ -1990,16 +1730,8 @@
 
             }
 
-
             return "";
         }
-
-
-        /*
-         * ============================================
-         * FORM SUBMIT
-         * ============================================
-         */
 
         form.addEventListener(
             "submit",
@@ -2009,24 +1741,8 @@
 
                 hideError();
 
-
-                /*
-                 * Ambil nama saat tombol ditekan.
-                 *
-                 * Nama ini disimpan di request.
-                 * Jadi kalau user mengganti nama
-                 * setelah request berjalan,
-                 * request sebelumnya tetap memakai
-                 * nama yang benar.
-                 */
-
                 const name =
                     playerName.value.trim();
-
-
-                /*
-                 * Validasi
-                 */
 
                 if (!name) {
 
@@ -2039,7 +1755,6 @@
                     return;
                 }
 
-
                 if (name.length > 50) {
 
                     showError(
@@ -2051,45 +1766,16 @@
                     return;
                 }
 
-
-                /*
-                 * Request ID baru
-                 */
-
                 const thisRequest =
                     ++requestCounter;
 
-
-                /*
-                 * Bersihkan hasil sebelumnya
-                 */
-
                 resetResult();
-
-
-                /*
-                 * Aktifkan loading
-                 */
 
                 setLoading(true);
 
-
-                /*
-                 * LANGSUNG SCROLL KE HASIL
-                 *
-                 * Jadi tidak perlu menunggu API.
-                 */
-
                 scrollToResult();
 
-
                 try {
-
-                    /*
-                     * ==================================
-                     * BUILD API URL
-                     * ==================================
-                     */
 
                     const params =
                         new URLSearchParams();
@@ -2104,24 +1790,10 @@
                         API_KEY
                     );
 
-
                     const requestUrl =
                         API_ENDPOINT +
                         "?" +
                         params.toString();
-
-
-                    console.log(
-                        "FF Lobby Request:",
-                        name
-                    );
-
-
-                    /*
-                     * ==================================
-                     * FETCH
-                     * ==================================
-                     */
 
                     const response =
                         await fetch(
@@ -2131,49 +1803,9 @@
 
                                 headers: {
                                     "Accept":
-                                        "application/json, text/plain, */*"
-                                },
-
-                                cache:
-                                    "no-store"
-                            }
-                        );
-
-
-                    const rawText =
-                        await response.text();
-
-
-                    console.log(
-                        "FF Lobby HTTP:",
-                        response.status
-                    );
-
-
-                    console.log(
-                        "FF Lobby Response:",
-                        rawText
-                    );
-
-
-                    if (!response.ok) {
-
-                        throw new Error(
-                            "API HTTP " +
-                            response.status
-                        );
-
-                    }
-
-
-                    /*
-                     * ==================================
-                     * PARSE JSON
-                     * ==================================
-                     */
+                                        "application/json, text/plain, *
 
                     let result;
-
 
                     try {
 
@@ -2190,37 +1822,13 @@
 
                     }
 
-
-                    console.log(
-                        "FF Lobby JSON:",
-                        result
-                    );
-
-
-                    /*
-                     * ==================================
-                     * CEK REQUEST TERBARU
-                     * ==================================
-                     */
-
                     if (
                         thisRequest !==
                         requestCounter
                     ) {
 
-                        console.log(
-                            "Request lama diabaikan."
-                        );
-
                         return;
                     }
-
-
-                    /*
-                     * ==================================
-                     * CEK STATUS API
-                     * ==================================
-                     */
 
                     if (
                         result.status === false
@@ -2234,36 +1842,18 @@
 
                     }
 
-
-                    /*
-                     * ==================================
-                     * AMBIL URL GAMBAR
-                     * ==================================
-                     */
-
                     const imageUrl =
                         extractImageUrl(
                             result
                         );
 
-
                     if (!imageUrl) {
-
-                        console.error(
-                            "Response API:",
-                            result
-                        );
 
                         throw new Error(
                             "API tidak mengembalikan URL gambar."
                         );
 
                     }
-
-
-                    /*
-                     * Validasi URL
-                     */
 
                     try {
 
@@ -2279,13 +1869,6 @@
 
                     }
 
-
-                    /*
-                     * ==================================
-                     * DATA API
-                     * ==================================
-                     */
-
                     const data =
                         (
                             result.data &&
@@ -2294,13 +1877,6 @@
                         )
                             ? result.data
                             : {};
-
-
-                    /*
-                     * ==================================
-                     * SIMPAN HASIL TERBARU
-                     * ==================================
-                     */
 
                     currentResult = {
 
@@ -2332,17 +1908,9 @@
 
                     };
 
-
-                    /*
-                     * ==================================
-                     * TAMPILKAN HASIL
-                     * ==================================
-                     */
-
                     displayResult(
                         thisRequest
                     );
-
 
                     showToast(
                         "Lobby " +
@@ -2350,13 +1918,7 @@
                         " berhasil dibuat."
                     );
 
-
                 } catch (error) {
-
-                    /*
-                     * Kalau ini request lama,
-                     * jangan sentuh UI.
-                     */
 
                     if (
                         thisRequest !==
@@ -2366,37 +1928,25 @@
                         return;
                     }
 
-
-                    console.error(
-                        "FREE FIRE LOBBY ERROR:",
-                        error
-                    );
-
-
                     resultEmpty.style.display =
                         "flex";
-
 
                     resultContent.classList.remove(
                         "active"
                     );
 
-
                     loading.classList.remove(
                         "active"
                     );
-
 
                     showError(
                         "Gagal membuat gambar. " +
                         error.message
                     );
 
-
                     showToast(
                         "Gagal memproses gambar."
                     );
-
 
                 } finally {
 
@@ -2416,21 +1966,9 @@
             }
         );
 
-
-        /*
-         * ============================================
-         * DISPLAY RESULT
-         * ============================================
-         */
-
         function displayResult(
             requestId
         ) {
-
-            /*
-             * Jangan tampilkan kalau
-             * request sudah bukan yang terbaru.
-             */
 
             if (
                 requestId !==
@@ -2440,23 +1978,8 @@
                 return;
             }
 
-
-            /*
-             * Gunakan URL API asli.
-             *
-             * Tidak menambahkan parameter
-             * aneh ke signed URL.
-             */
-
             const displayUrl =
                 currentResult.url;
-
-
-            /*
-             * ==================================
-             * IMAGE LOAD
-             * ==================================
-             */
 
             resultImage.onload =
                 function() {
@@ -2469,19 +1992,9 @@
                         return;
                     }
 
-
-                    /*
-                     * Sembunyikan loading
-                     */
-
                     loading.classList.remove(
                         "active"
                     );
-
-
-                    /*
-                     * Tampilkan hasil
-                     */
 
                     resultEmpty.style.display =
                         "none";
@@ -2490,25 +2003,12 @@
                         "active"
                     );
 
-
-                    /*
-                     * Pastikan posisi tetap
-                     * di bagian hasil.
-                     */
-
                     resultCard.scrollIntoView({
                         behavior: "smooth",
                         block: "start"
                     });
 
                 };
-
-
-            /*
-             * ==================================
-             * IMAGE ERROR
-             * ==================================
-             */
 
             resultImage.onerror =
                 function() {
@@ -2521,20 +2021,16 @@
                         return;
                     }
 
-
                     loading.classList.remove(
                         "active"
                     );
-
 
                     resultContent.classList.remove(
                         "active"
                     );
 
-
                     resultEmpty.style.display =
                         "flex";
-
 
                     showError(
                         "Gambar berhasil dibuat oleh API, tetapi gambar tidak dapat ditampilkan."
@@ -2542,38 +2038,18 @@
 
                 };
 
-
-            /*
-             * ==================================
-             * CLEAR OLD IMAGE
-             * ==================================
-             */
-
             resultImage.removeAttribute(
                 "src"
             );
 
             resultImage.src = "";
 
-
-            /*
-             * Set gambar BARU.
-             */
-
             resultImage.src =
                 displayUrl;
-
 
             resultImage.alt =
                 "Free Fire Lobby - " +
                 currentResult.requestedName;
-
-
-            /*
-             * ==================================
-             * FILE INFO
-             * ==================================
-             */
 
             fileFormat.textContent =
                 (
@@ -2581,11 +2057,9 @@
                     "jpg"
                 ).toUpperCase();
 
-
             fileSize.textContent =
                 currentResult.size ||
                 "-";
-
 
             fileName.textContent =
                 currentResult.filename ||
@@ -2596,13 +2070,6 @@
                 );
 
         }
-
-
-        /*
-         * ============================================
-         * DOWNLOAD
-         * ============================================
-         */
 
         downloadBtn.addEventListener(
             "click",
@@ -2619,24 +2086,16 @@
                     return;
                 }
 
-
                 const oldText =
                     downloadBtn.innerHTML;
-
 
                 downloadBtn.disabled =
                     true;
 
-
                 downloadBtn.innerHTML =
                     "⏳ Menyiapkan...";
 
-
                 try {
-
-                    /*
-                     * Ambil file sebagai Blob.
-                     */
 
                     const response =
                         await fetch(
@@ -2647,7 +2106,6 @@
                             }
                         );
 
-
                     if (!response.ok) {
 
                         throw new Error(
@@ -2656,10 +2114,8 @@
 
                     }
 
-
                     const blob =
                         await response.blob();
-
 
                     if (
                         !blob ||
@@ -2672,30 +2128,13 @@
 
                     }
 
-
-                    /*
-                     * Buat temporary URL
-                     */
-
                     const blobUrl =
                         URL.createObjectURL(
                             blob
                         );
 
-
-                    /*
-                     * Nama file download.
-                     *
-                     * Kalau API memberi filename,
-                     * gunakan filename API.
-                     *
-                     * Kalau tidak ada,
-                     * gunakan nama player.
-                     */
-
                     let downloadName =
                         currentResult.filename;
-
 
                     if (
                         !downloadName ||
@@ -2714,43 +2153,27 @@
                             ".jpg";
                     }
 
-
-                    /*
-                     * Buat link download.
-                     */
-
                     const link =
                         document.createElement(
                             "a"
                         );
 
-
                     link.href =
                         blobUrl;
-
 
                     link.download =
                         downloadName;
 
-
                     link.style.display =
                         "none";
-
 
                     document.body.appendChild(
                         link
                     );
 
-
                     link.click();
 
-
                     link.remove();
-
-
-                    /*
-                     * Bersihkan Blob URL.
-                     */
 
                     setTimeout(
                         function() {
@@ -2763,31 +2186,17 @@
                         1500
                     );
 
-
                     showToast(
                         "Download gambar berhasil dimulai."
                     );
 
-
                 } catch (error) {
-
-                    console.warn(
-                        "Direct download gagal:",
-                        error
-                    );
-
-
-                    /*
-                     * Fallback hanya membuka
-                     * URL gambar API.
-                     */
 
                     window.open(
                         currentResult.url,
                         "_blank",
                         "noopener,noreferrer"
                     );
-
 
                     showToast(
                         "Gambar dibuka di tab baru."
@@ -2798,7 +2207,6 @@
                     downloadBtn.disabled =
                         false;
 
-
                     downloadBtn.innerHTML =
                         oldText;
 
@@ -2807,67 +2215,25 @@
             }
         );
 
-
-        /*
-         * ============================================
-         * BUAT GAMBAR BARU
-         * ============================================
-         */
-
         newBtn.addEventListener(
             "click",
             function() {
 
-                /*
-                 * Naikkan request counter.
-                 *
-                 * Ini otomatis membuat semua
-                 * request lama menjadi tidak berlaku.
-                 */
-
                 requestCounter++;
-
-
-                /*
-                 * Hapus gambar lama.
-                 */
 
                 resetResult();
 
-
-                /*
-                 * Hapus error lama.
-                 */
-
                 hideError();
-
-
-                /*
-                 * Kosongkan nama.
-                 */
 
                 playerName.value =
                     "";
 
-
-                /*
-                 * Fokus ke input.
-                 */
-
                 playerName.focus();
-
-
-                /*
-                 * Scroll kembali ke bagian
-                 * form agar user langsung bisa
-                 * mengetik nama baru.
-                 */
 
                 playerName.scrollIntoView({
                     behavior: "smooth",
                     block: "center"
                 });
-
 
                 showToast(
                     "Siap membuat gambar lobby baru."
