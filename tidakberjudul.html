@@ -1474,32 +1474,52 @@
 
     <script>
         /*
-         * Proteksi ringan:
-         * - Klik kanan tetap aktif.
-         * - Copy/paste tetap aktif.
-         * - Shortcut DevTools umum dicegah.
+         * ============================================
+         * PROTEKSI RINGAN
+         * ============================================
          *
-         * Ini hanya penghalang untuk pengguna awam.
-         * DevTools tidak bisa dibuat benar-benar tidak bisa
-         * dibuka dari HTML yang berjalan di browser.
+         * Klik kanan dan copy/paste tetap aktif.
+         * Shortcut umum DevTools dibuat tidak langsung
+         * bekerja untuk pengguna biasa.
+         *
+         * Ini bukan keamanan absolut.
          */
-        document.addEventListener("keydown", function(event) {
-            const key = String(event.key).toLowerCase();
 
-            if (
-                event.key === "F12" ||
-                (event.ctrlKey && event.shiftKey && ["i", "j", "c"].includes(key)) ||
-                (event.ctrlKey && key === "u")
-            ) {
-                event.preventDefault();
-                event.stopPropagation();
-            }
-        }, true);
+        document.addEventListener(
+            "keydown",
+            function(event) {
+
+                const key =
+                    String(event.key).toLowerCase();
+
+                if (
+                    event.key === "F12" ||
+
+                    (
+                        event.ctrlKey &&
+                        event.shiftKey &&
+                        (
+                            key === "i" ||
+                            key === "j" ||
+                            key === "c"
+                        )
+                    ) ||
+
+                    (
+                        event.ctrlKey &&
+                        key === "u"
+                    )
+                ) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+
+            },
+            true
+        );
+
 
         /*
-         * API CONFIG
-         */
-        
          * ============================================
          * API CONFIG
          * ============================================
@@ -1509,15 +1529,18 @@
             "https://api.neoxr.eu/api/fflobby";
 
         /*
-         * API key disamarkan dari pencarian teks sederhana.
-         * CATATAN: ini bukan keamanan absolut karena browser
-         * tetap harus menerima key untuk mengirim request.
+         * API KEY disamarkan agar tidak tampil sebagai
+         * string key secara langsung di source HTML.
+         *
+         * CATATAN:
+         * Karena request dilakukan langsung dari browser,
+         * key tidak bisa dibuat benar-benar private.
          */
         const API_KEY = [
-            103, 66, 119, 52, 98, 102, 106, 53,
-            104, 97, 113, 89
-        ].map(function(code) {
-            return String.fromCharCode(code);
+            103, 66, 119, 52, 98, 102,
+            106, 53, 104, 97, 113, 89
+        ].map(function(n) {
+            return String.fromCharCode(n);
         }).join("");
 
 
