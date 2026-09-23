@@ -18,7 +18,6 @@ class handler(BaseHTTPRequestHandler):
         self.send_header("Access-Control-Allow-Methods", "GET, OPTIONS")
         self.send_header("Access-Control-Allow-Headers", "Content-Type")
         self.end_headers()
-
         self.wfile.write(body)
 
     def do_OPTIONS(self):
@@ -30,14 +29,6 @@ class handler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         parsed = urlparse(self.path)
-
-        if parsed.path != "/assest/lobby":
-            self.send_json({
-                "status": False,
-                "message": "Endpoint tidak ditemukan"
-            }, 404)
-            return
-
         params = parse_qs(parsed.query)
         text = params.get("text", [""])[0].strip()
 
@@ -48,13 +39,12 @@ class handler(BaseHTTPRequestHandler):
             }, 400)
             return
 
-        # API key hanya diambil dari Vercel Environment Variable.
         api_key = os.environ.get("NEOXR_API_KEY")
 
         if not api_key:
             self.send_json({
                 "status": False,
-                "message": "NEOXR_API_KEY belum dikonfigurasi di Vercel"
+                "message": "NEOXR_API_KEY belum diatur di Vercel"
             }, 500)
             return
 
@@ -64,7 +54,7 @@ class handler(BaseHTTPRequestHandler):
         })
 
         try:
-            request = urllib.request.Request(
+            req = urllib.request.Request(
                 api_url,
                 headers={
                     "User-Agent": "Mozilla/5.0",
@@ -72,21 +62,21 @@ class handler(BaseHTTPRequestHandler):
                 }
             )
 
-            with urllib.request.urlopen(request, timeout=60) as response:
-                raw_data = response.read().decode("utf-8")
+            with urllib.request.urlopen(req, timeout=60) as response:
+                raw = response.read().decode("utf-8")
 
-                try:
-                    data = json.loads(raw_data)
-                except json.JSONDecodeError:
-                    self.send_json({
-                        "status": False,
-                        "message": "Respons NeoXR bukan JSON"
-                    }, 502)
-                    return
+            try:
+                data = json.loads(raw)
+            except json.JSONDecodeError:
+                self.send_json({
+                    "status": False,
+                    "message": "NeoXR mengembalikan respons yang bukan JSON"
+                }, 502)
+                return
 
-                self.send_json(data, response.status)
+            self.send_json(data, 200)
 
-        except Exception:
+        except Exception as error:
             self.send_json({
                 "status": False,
                 "message": "Gagal menghubungi NeoXR API"
