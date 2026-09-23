@@ -1,1581 +1,2830 @@
 <!DOCTYPE html>
 <html lang="id">
- <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#050505">
-  <meta name="description" content="YouTube Downloader MP3 dan MP4 gratis.">
-  <title>YouTube Downloader - DIMMZZZSUM_ENAK</title>
-  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-  <style>
-   * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-   }
-
-   :root {
-    --red: #ff2020;
-    --red-dark: #c90000;
-    --red-soft: rgba(255, 32, 32, .11);
-    --black: #050505;
-    --black-2: #090909;
-    --black-3: #101010;
-    --black-4: #171717;
-    --white: #f5f5f5;
-    --gray: #888;
-    --gray-2: #bdbdbd;
-    --border: rgba(255, 255, 255, .09);
-    --shadow:
-     0 25px 70px rgba(0, 0, 0, .55);
-   }
-
-   html {
-    scroll-behavior: smooth;
-   }
-
-   body {
-    min-height: 100vh;
-    background:
-     radial-gradient(circle at 90% 0%,
-      rgba(255, 32, 32, .08),
-      transparent 30%),
-     radial-gradient(circle at 0% 100%,
-      rgba(255, 32, 32, .045),
-      transparent 35%),
-     var(--black);
-    color: var(--white);
-    font-family:
-     Arial,
-     Helvetica,
-     sans-serif;
-    padding: 0;
-   }
-
-   body::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background:
-     linear-gradient(90deg,
-      var(--red-dark),
-      var(--red),
-      var(--red-dark));
-    z-index: 9999;
-   }
-
-   button,
-   input {
-    font-family: inherit;
-   }
-
-   button {
-    -webkit-tap-highlight-color: transparent;
-   }
-
-   .container {
-    width: 100%;
-    max-width: 1080px;
-    margin: auto;
-    padding:
-     40px 0 70px;
-   }
-
-   .header {
-    display: flex;
-    align-items: center;
-    gap: 17px;
-    padding:
-     0 18px 30px;
-   }
-
-   .brand-icon {
-    width: 55px;
-    height: 39px;
-    flex: 0 0 55px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    background:
-     linear-gradient(145deg,
-      #ff3030,
-      #c90000);
-    box-shadow:
-     0 12px 30px rgba(255, 32, 32, .22);
-   }
-
-   .brand-icon::before {
-    content: "";
-    position: absolute;
-    left: 21px;
-    top: 11px;
-    width: 0;
-    height: 0;
-    border-top:
-     9px solid transparent;
-    border-bottom:
-     9px solid transparent;
-    border-left:
-     14px solid white;
-   }
-
-   .brand-icon i {
-    display: none;
-   }
-
-   .brand-text {
-    min-width: 0;
-   }
-
-   .header h1 {
-    font-size: clamp(20px, 3vw, 27px);
-    line-height: 1.15;
-    font-weight: 900;
-    letter-spacing: -.7px;
-   }
-
-   .header h1 span {
-    color: var(--red);
-   }
-
-   .subtitle {
-    color: var(--gray);
-    margin-top: 5px;
-    font-size: 12px;
-   }
-
-   .creator {
-    margin-left: auto;
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    padding:
-     8px 12px;
-    border-radius: 999px;
-    color: var(--gray-2);
-    background:
-     rgba(255, 255, 255, .035);
-    border:
-     1px solid var(--border);
-    font-size: 11px;
-    white-space: nowrap;
-   }
-
-   .creator i {
-    color: var(--red);
-   }
-
-   .main-card {
-    background:
-     linear-gradient(145deg,
-      rgba(255, 255, 255, .035),
-      rgba(255, 255, 255, .012)),
-     var(--black-2);
-    border:
-     1px solid var(--border);
-    border-radius: 24px;
-    overflow: hidden;
-    box-shadow:
-     var(--shadow);
-   }
-
-   .section-title {
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    padding:
-     25px 28px 13px;
-    font-size: 15px;
-    font-weight: 800;
-   }
-
-   .section-title::before {
-    content: "";
-    width: 7px;
-    height: 7px;
-    flex: 0 0 7px;
-    border-radius: 50%;
-    background: var(--red);
-    box-shadow:
-     0 0 12px rgba(255, 32, 32, .65);
-   }
-
-   .section-title i {
-    display: none;
-   }
-
-   .input-wrapper {
-    display: grid;
-    grid-template-columns:
-     minmax(0, 1fr) 175px;
-    gap: 10px;
-    padding:
-     0 28px;
-   }
-
-   .input-wrapper:focus-within {
-    box-shadow: none;
-   }
-
-   #youtubeUrl {
-    width: 100%;
-    min-width: 0;
-    height: 72px;
-    border:
-     1px solid var(--border);
-    outline: none;
-    border-radius: 15px;
-    background:
-     var(--black-3);
-    color: var(--white);
-    padding:
-     0 18px;
-    font-size: 14px;
-    transition:
-     border-color .2s,
-     box-shadow .2s;
-   }
-
-   #youtubeUrl:focus {
-    border-color:
-     rgba(255, 32, 32, .55);
-    box-shadow:
-     0 0 0 3px rgba(255, 32, 32, .07);
-   }
-
-   #youtubeUrl::placeholder {
-    color: #626262;
-   }
-
-   #processBtn {
-    border: none;
-    outline: none;
-    cursor: pointer;
-    min-height: 72px;
-    border-radius: 15px;
-    background:
-     linear-gradient(135deg,
-      var(--red),
-      var(--red-dark));
-    color: white;
-    font-weight: 900;
-    font-size: 12px;
-    letter-spacing: .4px;
-    box-shadow:
-     0 12px 30px rgba(255, 32, 32, .16);
-    transition:
-     transform .2s,
-     opacity .2s,
-     box-shadow .2s;
-   }
-
-   #processBtn:hover {
-    transform: translateY(-2px);
-    box-shadow:
-     0 16px 35px rgba(255, 32, 32, .24);
-   }
-
-   #processBtn:disabled {
-    opacity: .55;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
-   }
-
-   .input-hint {
-    color: #686868;
-    font-size: 11px;
-    margin:
-     10px 28px 25px;
-   }
-
-   #message {
-    display: none;
-    margin:
-     0 28px 20px;
-    padding:
-     13px 15px;
-    border-radius: 12px;
-    font-size: 12px;
-    line-height: 1.5;
-    border:
-     1px solid var(--border);
-    background:
-     var(--black-3);
-   }
-
-   #message.show {
-    display: block;
-   }
-
-   #message.success {
-    border-color:
-     rgba(32, 212, 123, .25);
-    color: #8ff0bd;
-    background:
-     rgba(32, 212, 123, .055);
-   }
-
-   #message.error {
-    border-color:
-     rgba(255, 32, 32, .3);
-    color: #ff9c9c;
-    background:
-     rgba(255, 32, 32, .06);
-   }
-
-   #message.info {
-    border-color:
-     rgba(255, 255, 255, .1);
-    color: #d5d5d5;
-   }
-
-   #result {
-    display: none;
-    margin-top: 0;
-   }
-
-   #result.show {
-    display: block;
-   }
-
-   .result-card {
-    overflow: hidden;
-    background:
-     linear-gradient(145deg,
-      rgba(255, 255, 255, .025),
-      rgba(255, 255, 255, .01)),
-     var(--black-3);
-    border-top:
-     1px solid var(--border);
-   }
-
-   .result-head {
-    display: grid;
-    grid-template-columns:
-     330px minmax(0, 1fr);
-    gap: 28px;
-    padding:
-     28px;
-   }
-
-   .thumbnail-box {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    border-radius: 16px;
-    overflow: hidden;
-    background: #060606;
-    border:
-     1px solid var(--border);
-    box-shadow:
-     0 15px 40px rgba(0, 0, 0, .35);
-   }
-
-   #thumbnail {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    opacity: 0;
-    transition:
-     opacity .3s;
-   }
-
-   #thumbnail.loaded {
-    opacity: 1;
-   }
-
-   .thumbnail-loading {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    gap: 9px;
-    color: #666;
-    font-size: 11px;
-   }
-
-   .thumbnail-loading i {
-    font-size: 24px;
-    color: var(--red);
-   }
-
-   .video-info {
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-   }
-
-   .video-info h2 {
-    font-size:
-     clamp(19px, 3vw, 27px);
-    line-height: 1.3;
-    margin-bottom: 15px;
-    color: var(--white);
-   }
-
-   .url-display {
-    padding:
-     11px 12px;
-    background:
-     var(--black-2);
-    border:
-     1px solid var(--border);
-    border-radius: 11px;
-    color: #818181;
-    font-size: 11px;
-    word-break: break-all;
-   }
-
-   .url-display i {
-    color: var(--red);
-    margin-right: 5px;
-   }
-
-   .video-stats {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 7px;
-    margin-top: 13px;
-   }
-
-   .stat {
-    padding:
-     7px 10px;
-    border-radius: 9px;
-    background:
-     rgba(255, 255, 255, .025);
-    border:
-     1px solid var(--border);
-    color: #aaa;
-    font-size: 10px;
-   }
-
-   .stat i {
-    color: var(--red);
-    margin-right: 5px;
-   }
-
-   .download-section {
-    border-top:
-     1px solid var(--border);
-    padding:
-     25px 28px 28px;
-   }
-
-   .download-label {
-    font-weight: 800;
-    font-size: 13px;
-    margin-bottom: 14px;
-    color: #ddd;
-   }
-
-   .download-label i {
-    color: var(--red);
-    margin-right: 7px;
-   }
-
-   .download-grid {
-    display: grid;
-    grid-template-columns:
-     repeat(2, minmax(0, 1fr));
-    gap: 14px;
-   }
-
-   .download-option {
-    position: relative;
-    padding: 18px;
-    border-radius: 15px;
-    background:
-     linear-gradient(145deg,
-      rgba(255, 255, 255, .025),
-      rgba(255, 255, 255, .01)),
-     var(--black-2);
-    border:
-     1px solid var(--border);
-    overflow: hidden;
-    transition:
-     border-color .2s,
-     transform .2s;
-   }
-
-   .download-option::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 3px;
-    height: 100%;
-    background:
-     linear-gradient(180deg,
-      var(--red),
-      var(--red-dark));
-   }
-
-   .download-option:hover {
-    border-color:
-     rgba(255, 32, 32, .24);
-    transform:
-     translateY(-1px);
-   }
-
-   .option-top {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 14px;
-   }
-
-   .option-icon {
-    width: 44px;
-    height: 44px;
-    flex: 0 0 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 12px;
-    background:
-     var(--red-soft);
-    color: var(--red);
-   }
-
-   .option-title {
-    font-size: 14px;
-    font-weight: 800;
-   }
-
-   .option-desc {
-    color: #777;
-    font-size: 10px;
-    margin-top: 3px;
-   }
-
-   .download-btn {
-    width: 100%;
-    border: none;
-    cursor: pointer;
-    min-height: 46px;
-    border-radius: 11px;
-    background:
-     linear-gradient(135deg,
-      var(--red),
-      var(--red-dark));
-    color: white;
-    font-weight: 800;
-    font-size: 12px;
-    transition:
-     transform .2s,
-     opacity .2s,
-     box-shadow .2s;
-   }
-
-   .download-btn:hover {
-    transform:
-     translateY(-1px);
-    box-shadow:
-     0 10px 25px rgba(255, 32, 32, .16);
-   }
-
-   .download-btn:disabled {
-    opacity: .5;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
-   }
-
-   .download-btn i {
-    margin-right: 7px;
-   }
-
-   .quality-box {
-    display: none;
-    margin-top: 14px;
-    padding: 14px;
-    border-radius: 13px;
-    background:
-     var(--black);
-    border:
-     1px solid var(--border);
-    animation:
-     qualityIn .2s ease;
-   }
-
-   .quality-box.show {
-    display: block;
-   }
-
-   @keyframes qualityIn {
-    from {
-     opacity: 0;
-     transform:
-      translateY(5px);
-    }
-
-    to {
-     opacity: 1;
-     transform:
-      translateY(0);
-    }
-   }
-
-   .quality-title {
-    color: #999;
-    font-size: 10px;
-    margin-bottom: 9px;
-   }
-
-   .quality-list {
-    display: grid;
-    grid-template-columns:
-     repeat(3, minmax(0, 1fr));
-    gap: 7px;
-   }
-
-   .quality-btn {
-    border:
-     1px solid rgba(255, 255, 255, .11);
-    background:
-     #151515;
-    color: #ccc;
-    padding:
-     10px 8px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 11px;
-    transition:
-     background .2s,
-     border-color .2s,
-     transform .2s;
-   }
-
-   .quality-btn:hover {
-    transform:
-     translateY(-1px);
-    border-color:
-     var(--red);
-    background:
-     var(--red-soft);
-   }
-
-   .quality-btn.active {
-    background:
-     rgba(255, 32, 32, .16);
-    border-color:
-     var(--red);
-    color: white;
-   }
-
-   .quality-btn small {
-    display: block;
-    color: #777;
-    margin-top: 3px;
-    font-size: 9px;
-   }
-
-   .quality-btn.active small {
-    color: #aaa;
-   }
-
-   .bottom-info {
-    display: grid;
-    grid-template-columns:
-     repeat(2, minmax(0, 1fr));
-    gap: 14px;
-    margin-top: 18px;
-   }
-
-   .info-box {
-    background:
-     linear-gradient(145deg,
-      rgba(255, 255, 255, .025),
-      rgba(255, 255, 255, .01)),
-     var(--black-2);
-    border:
-     1px solid var(--border);
-    border-radius: 16px;
-    padding: 18px;
-   }
-
-   .info-box h3 {
-    font-size: 13px;
-    margin-bottom: 9px;
-   }
-
-   .info-box h3 i {
-    color: var(--red);
-    margin-right: 6px;
-   }
-
-   .info-box p {
-    color: #777;
-    font-size: 11px;
-    line-height: 1.7;
-   }
-
-   .info-box strong {
-    color: #aaa;
-   }
-
-   .footer {
-    text-align: center;
-    color: #555;
-    font-size: 10px;
-    padding:
-     25px 10px 10px;
-   }
-
-   .footer span {
-    color: #aaa;
-   }
-
-   .footer .creator {
-    margin: 0;
-    padding: 0;
-    border: none;
-    background: none;
-    font-size: inherit;
-    display: inline;
-    color: #aaa;
-   }
-
-   .spinner {
-    display: inline-block;
-    width: 15px;
-    height: 15px;
-    border:
-     2px solid rgba(255, 255, 255, .3);
-    border-top-color:
-     white;
-    border-radius: 50%;
-    animation:
-     spin .7s linear infinite;
-    vertical-align: -3px;
-    margin-right: 6px;
-   }
-
-   @keyframes spin {
-    to {
-     transform:
-      rotate(360deg);
-    }
-   }
-
-   @media (max-width: 800px) {
-    .container {
-     padding:
-      25px 15px 50px;
-    }
-
-    .header {
-     padding:
-      0 5px 25px;
-    }
-
-    .result-head {
-     grid-template-columns:
-      280px minmax(0, 1fr);
-    }
-   }
-
-   @media (max-width: 720px) {
-    .container {
-     padding:
-      25px 10px 45px;
-    }
-
-    .header {
-     align-items: flex-start;
-     flex-wrap: wrap;
-     gap: 12px;
-     padding:
-      0 5px 22px;
-    }
-
-    .brand-icon {
-     width: 48px;
-     height: 34px;
-     flex-basis: 48px;
-     border-radius: 10px;
-    }
-
-    .brand-icon::before {
-     left: 18px;
-     top: 9px;
-     border-top-width: 8px;
-     border-bottom-width: 8px;
-     border-left-width: 12px;
-    }
-
-    .header h1 {
-     font-size: 21px;
-    }
-
-    .subtitle {
-     font-size: 11px;
-    }
-
-    .creator {
-     margin-left: 0;
-     width: 100%;
-     justify-content: center;
-     order: 3;
-    }
-
-    .main-card {
-     border-radius: 19px;
-    }
-
-    .section-title {
-     padding:
-      20px 18px 12px;
-    }
-
-    .input-wrapper {
-     grid-template-columns: 1fr;
-     padding:
-      0 18px;
-    }
-
-    #youtubeUrl {
-     height: 58px;
-    }
-
-    #processBtn {
-     min-height: 52px;
-    }
-
-    .input-hint {
-     margin:
-      9px 18px 20px;
-    }
-
-    #message {
-     margin:
-      0 18px 18px;
-    }
-
-    .result-head {
-     grid-template-columns: 1fr;
-     gap: 18px;
-     padding: 18px;
-    }
-
-    .download-section {
-     padding:
-      20px 18px 20px;
-    }
-
-    .download-grid {
-     grid-template-columns: 1fr;
-    }
-
-    .bottom-info {
-     grid-template-columns: 1fr;
-    }
-
-    .quality-list {
-     grid-template-columns:
-      repeat(3, minmax(0, 1fr));
-    }
-   }
-
-   @media (max-width: 520px) {
-    .header {
-     align-items: center;
-    }
-
-    .brand-text {
-     flex: 1;
-    }
-
-    .creator {
-     font-size: 10px;
-    }
-
-    .video-info h2 {
-     font-size: 20px;
-    }
-
-    .quality-list {
-     grid-template-columns:
-      repeat(3, minmax(0, 1fr));
-    }
-   }
-
-   @media (max-width: 390px) {
-    .quality-list {
-     grid-template-columns: 1fr;
-    }
-   }
-  </style>
- </head>
- <body>
-  <div class="container">
-   <!-- ==============================
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#080808"
+    >
+
+    <meta
+        name="description"
+        content="Free Fire Lobby Maker - Buat gambar lobby Free Fire dengan nama pilihanmu."
+    >
+
+    <title>Free Fire Lobby Maker - DIMMZZZSUM_ENAK</title>
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #080808;
+            --bg-soft: #101010;
+            --card: #111111;
+            --card-2: #151515;
+
+            --red: #ff2020;
+            --red-dark: #b90000;
+            --orange: #ff6a00;
+            --yellow: #ffc400;
+
+            --white: #ffffff;
+            --text: #eeeeee;
+            --muted: #999999;
+            --border: rgba(255, 255, 255, 0.08);
+
+            --success: #20d47b;
+            --danger: #ff4545;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            background:
+                radial-gradient(
+                    circle at 50% -10%,
+                    rgba(255, 40, 0, 0.16),
+                    transparent 38%
+                ),
+                linear-gradient(
+                    180deg,
+                    #080808 0%,
+                    #0d0d0d 50%,
+                    #080808 100%
+                );
+
+            color: var(--text);
+            font-family: "Roboto", sans-serif;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0.12;
+
+            background-image:
+                linear-gradient(
+                    115deg,
+                    transparent 0%,
+                    rgba(255, 40, 0, 0.35) 48%,
+                    transparent 50%
+                ),
+                linear-gradient(
+                    65deg,
+                    transparent 0%,
+                    rgba(255, 130, 0, 0.18) 48%,
+                    transparent 50%
+                );
+
+            background-size:
+                700px 700px,
+                900px 900px;
+
+            animation: backgroundMove 18s linear infinite;
+        }
+
+        @keyframes backgroundMove {
+            0% {
+                background-position:
+                    0 0,
+                    0 0;
+            }
+
+            100% {
+                background-position:
+                    700px 700px,
+                    -900px 900px;
+            }
+        }
+
+        button,
+        input {
+            font-family: inherit;
+        }
+
+        button {
+            border: none;
+        }
+
+        .container {
+            width: min(1180px, calc(100% - 32px));
+            margin: 0 auto;
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+
+            height: 70px;
+
+            background: rgba(8, 8, 8, 0.92);
+            border-bottom: 1px solid var(--border);
+
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+        }
+
+        .header-inner {
+            height: 100%;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo {
+            width: 42px;
+            height: 42px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--red),
+                    var(--orange)
+                );
+
+            color: #ffffff;
+
+            font-family: "Rajdhani", sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+
+            clip-path: polygon(
+                12% 0,
+                88% 0,
+                100% 15%,
+                100% 85%,
+                88% 100%,
+                12% 100%,
+                0 85%,
+                0 15%
+            );
+
+            box-shadow:
+                0 0 20px rgba(255, 45, 0, 0.25);
+        }
+
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1;
+        }
+
+        .brand-title {
+            color: #ffffff;
+
+            font-family: "Rajdhani", sans-serif;
+            font-size: 21px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+        }
+
+        .brand-subtitle {
+            margin-top: 4px;
+
+            color: var(--muted);
+
+            font-size: 9px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .online-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            color: #bcbcbc;
+
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .online-dot {
+            width: 8px;
+            height: 8px;
+
+            border-radius: 50%;
+            background: var(--success);
+
+            box-shadow:
+                0 0 8px rgba(32, 212, 123, 0.75);
+
+            animation: onlinePulse 1.8s ease-in-out infinite;
+        }
+
+        @keyframes onlinePulse {
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.35;
+            }
+        }
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .hero {
+            position: relative;
+
+            padding:
+                75px
+                0
+                50px;
+
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            padding:
+                7px
+                13px;
+
+            border: 1px solid rgba(255, 55, 0, 0.28);
+            border-radius: 999px;
+
+            background: rgba(255, 45, 0, 0.07);
+
+            color: #ffad8a;
+
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            margin-top: 18px;
+
+            color: #ffffff;
+
+            font-family: "Rajdhani", sans-serif;
+            font-size: clamp(46px, 8vw, 82px);
+            font-weight: 700;
+            line-height: 0.9;
+            letter-spacing: 3px;
+
+            text-shadow:
+                0 0 30px rgba(255, 40, 0, 0.16);
+        }
+
+        .hero h1 span {
+            color: var(--red);
+        }
+
+        .hero p {
+            width: min(650px, 100%);
+            margin: 22px auto 0;
+
+            color: var(--muted);
+
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        /* =========================
+           WORKSPACE
+        ========================= */
+
+        .workspace {
+            display: grid;
+            grid-template-columns:
+                minmax(0, 0.82fr)
+                minmax(0, 1.18fr);
+
+            gap: 20px;
+
+            padding-bottom: 70px;
+        }
+
+        .card {
+            position: relative;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    rgba(255,255,255,0.025),
+                    rgba(255,255,255,0.008)
+                ),
+                var(--card);
+
+            border: 1px solid var(--border);
+            border-radius: 18px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 15px 45px rgba(0, 0, 0, 0.28);
+        }
+
+        .card::before {
+            content: "";
+
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+
+            height: 2px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    var(--red),
+                    var(--orange),
+                    transparent
+                );
+
+            opacity: 0.8;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding:
+                22px
+                22px
+                18px;
+
+            border-bottom: 1px solid var(--border);
+        }
+
+        .card-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            color: #ffffff;
+
+            font-family: "Rajdhani", sans-serif;
+            font-size: 21px;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+        }
+
+        .card-title-icon {
+            width: 31px;
+            height: 31px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 9px;
+
+            background:
+                rgba(255, 35, 0, 0.12);
+
+            color: var(--red);
+
+            font-size: 14px;
+        }
+
+        .card-body {
+            padding: 22px;
+        }
+
+        /* =========================
+           FORM
+        ========================= */
+
+        .field-label {
+            display: block;
+
+            margin-bottom: 9px;
+
+            color: #dddddd;
+
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+        }
+
+        .input-wrap {
+            position: relative;
+        }
+
+        .input-wrap input {
+            width: 100%;
+            height: 54px;
+
+            padding:
+                0
+                15px;
+
+            outline: none;
+
+            background: #090909;
+
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 11px;
+
+            color: #ffffff;
+
+            font-family: "Rajdhani", sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+
+            transition:
+                border-color 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .input-wrap input::placeholder {
+            color: #666666;
+        }
+
+        .input-wrap input:focus {
+            border-color: rgba(255, 45, 0, 0.65);
+
+            box-shadow:
+                0 0 0 3px rgba(255, 45, 0, 0.08);
+        }
+
+        .generate-btn {
+            width: 100%;
+            min-height: 54px;
+
+            margin-top: 17px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+
+            border-radius: 11px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--red),
+                    var(--orange)
+                );
+
+            color: #ffffff;
+
+            cursor: pointer;
+
+            font-family: "Rajdhani", sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 0.7px;
+
+            box-shadow:
+                0 9px 25px rgba(255, 35, 0, 0.18);
+
+            transition:
+                transform 0.18s ease,
+                filter 0.18s ease,
+                opacity 0.18s ease;
+        }
+
+        .generate-btn:hover {
+            transform: translateY(-1px);
+            filter: brightness(1.08);
+        }
+
+        .generate-btn:active {
+            transform: translateY(1px);
+        }
+
+        .generate-btn:disabled {
+            opacity: 0.55;
+            cursor: wait;
+            transform: none;
+        }
+
+        .tips {
+            margin-top: 20px;
+            padding: 14px;
+
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 11px;
+
+            background:
+                rgba(255,255,255,0.018);
+        }
+
+        .tips-title {
+            margin-bottom: 8px;
+
+            color: #eeeeee;
+
+            font-family: "Rajdhani", sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .tips ul {
+            padding-left: 17px;
+
+            color: #858585;
+
+            font-size: 11px;
+            line-height: 1.8;
+        }
+
+        .error-box {
+            display: none;
+
+            margin-top: 15px;
+            padding: 12px 14px;
+
+            border:
+                1px solid rgba(255, 50, 50, 0.25);
+
+            border-radius: 10px;
+
+            background:
+                rgba(255, 40, 40, 0.07);
+
+            color: #ff8585;
+
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .error-box.active {
+            display: block;
+        }
+
+        /* =========================
+           RESULT
+        ========================= */
+
+        #resultCard {
+            scroll-margin-top: 90px;
+        }
+
+        .result-card-body {
+            min-height: 480px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .result-empty {
+            min-height: 430px;
+
+            width: 100%;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            text-align: center;
+        }
+
+        .empty-icon {
+            width: 78px;
+            height: 78px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            margin-bottom: 18px;
+
+            border:
+                1px solid rgba(255, 45, 0, 0.15);
+
+            border-radius: 20px;
+
+            background:
+                rgba(255, 45, 0, 0.055);
+
+            color: #742518;
+
+            font-size: 32px;
+        }
+
+        .result-empty h3 {
+            color: #dddddd;
+
+            font-family: "Rajdhani", sans-serif;
+            font-size: 21px;
+            font-weight: 700;
+        }
+
+        .result-empty p {
+            width: min(360px, 100%);
+
+            margin-top: 8px;
+
+            color: #686868;
+
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        /* =========================
+           LOADING
+        ========================= */
+
+        .loading {
+            display: none;
+
+            width: 100%;
+            min-height: 430px;
+
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            text-align: center;
+        }
+
+        .loading.active {
+            display: flex;
+        }
+
+        .loader {
+            width: 55px;
+            height: 55px;
+
+            margin-bottom: 20px;
+
+            border:
+                3px solid rgba(255,255,255,0.08);
+
+            border-top-color: var(--red);
+            border-right-color: var(--orange);
+
+            border-radius: 50%;
+
+            animation:
+                spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loading h3 {
+            color: #eeeeee;
+
+            font-family: "Rajdhani", sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .loading p {
+            margin-top: 7px;
+
+            color: #707070;
+
+            font-size: 12px;
+        }
+
+        /* =========================
+           RESULT CONTENT
+        ========================= */
+
+        .result-content {
+            display: none;
+
+            width: 100%;
+        }
+
+        .result-content.active {
+            display: block;
+        }
+
+        .image-preview {
+            width: 100%;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 5px;
+
+            border-radius: 14px;
+
+            background:
+                #080808;
+
+            border:
+                1px solid rgba(255,255,255,0.06);
+
+            overflow: hidden;
+        }
+
+        .image-preview img {
+            display: block;
+
+            width: 100%;
+            max-height: 580px;
+
+            object-fit: contain;
+
+            border-radius: 10px;
+        }
+
+        .file-info {
+            display: grid;
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 9px;
+
+            margin-top: 13px;
+        }
+
+        .file-info-box {
+            min-width: 0;
+
+            padding: 11px;
+
+            border:
+                1px solid rgba(255,255,255,0.055);
+
+            border-radius: 9px;
+
+            background:
+                rgba(255,255,255,0.018);
+        }
+
+        .file-info-label {
+            color: #666666;
+
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+        }
+
+        .file-info-value {
+            margin-top: 4px;
+
+            overflow: hidden;
+
+            color: #d5d5d5;
+
+            font-size: 11px;
+            font-weight: 600;
+
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        /* =========================
+           ACTIONS
+        ========================= */
+
+        .actions {
+            display: grid;
+
+            grid-template-columns:
+                1fr
+                1fr;
+
+            gap: 10px;
+
+            margin-top: 13px;
+        }
+
+        .action-btn {
+            min-height: 48px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+
+            padding:
+                0
+                12px;
+
+            border:
+                1px solid rgba(255,255,255,0.09);
+
+            border-radius: 10px;
+
+            background:
+                rgba(255,255,255,0.025);
+
+            color: #dddddd;
+
+            cursor: pointer;
+
+            font-family: "Rajdhani", sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.4px;
+
+            transition:
+                background 0.18s ease,
+                border-color 0.18s ease,
+                transform 0.18s ease;
+        }
+
+        .action-btn:hover {
+            background:
+                rgba(255,255,255,0.06);
+
+            border-color:
+                rgba(255,255,255,0.16);
+
+            transform: translateY(-1px);
+        }
+
+        .action-btn:disabled {
+            opacity: 0.55;
+            cursor: wait;
+            transform: none;
+        }
+
+        .action-btn.primary {
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--red),
+                    var(--orange)
+                );
+
+            border-color: transparent;
+
+            color: #ffffff;
+
+            box-shadow:
+                0 8px 20px rgba(255, 35, 0, 0.14);
+        }
+
+        .action-btn.primary:hover {
+            filter: brightness(1.08);
+        }
+
+        /* =========================
+           TOAST
+        ========================= */
+
+        .toast {
+            position: fixed;
+
+            left: 50%;
+            bottom: 22px;
+
+            z-index: 100;
+
+            max-width:
+                calc(100% - 30px);
+
+            padding:
+                12px
+                16px;
+
+            border:
+                1px solid rgba(255,255,255,0.1);
+
+            border-radius: 10px;
+
+            background:
+                rgba(20,20,20,0.96);
+
+            color: #eeeeee;
+
+            font-size: 12px;
+            line-height: 1.4;
+
+            box-shadow:
+                0 12px 35px rgba(0,0,0,0.4);
+
+            transform:
+                translate(-50%, 25px);
+
+            opacity: 0;
+            visibility: hidden;
+
+            transition:
+                opacity 0.25s ease,
+                transform 0.25s ease,
+                visibility 0.25s ease;
+        }
+
+        .toast.show {
+            opacity: 1;
+            visibility: visible;
+
+            transform:
+                translate(-50%, 0);
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            padding:
+                0
+                0
+                35px;
+
+            text-align: center;
+
+            color: #4f4f4f;
+
+            font-size: 10px;
+            line-height: 1.7;
+        }
+
+        footer strong {
+            color: #737373;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 850px) {
+            .workspace {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                padding-top: 60px;
+            }
+
+            .result-card-body {
+                min-height: 400px;
+            }
+
+            .result-empty,
+            .loading {
+                min-height: 350px;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .container {
+                width:
+                    min(
+                        100% - 22px,
+                        1180px
+                    );
+            }
+
+            header {
+                height: 62px;
+            }
+
+            .brand-title {
+                font-size: 18px;
+            }
+
+            .brand-subtitle {
+                font-size: 8px;
+            }
+
+            .online-status {
+                font-size: 10px;
+            }
+
+            .hero {
+                padding:
+                    48px
+                    0
+                    35px;
+            }
+
+            .hero h1 {
+                font-size: 52px;
+                letter-spacing: 2px;
+            }
+
+            .hero p {
+                font-size: 12px;
+            }
+
+            .card-header,
+            .card-body {
+                padding:
+                    17px;
+            }
+
+            .result-card-body {
+                padding: 17px;
+                min-height: 360px;
+            }
+
+            .actions {
+                grid-template-columns: 1fr;
+            }
+
+            .file-info {
+                grid-template-columns:
+                    repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================
          HEADER
-    ============================== -->
-   <header class="header">
-    <div class="brand-icon">
-     <i class="fa-brands fa-youtube"></i>
-    </div>
-    <div class="brand-text">
-     <h1> YouTube <span>Downloader</span>
-     </h1>
-     <p class="subtitle"> Fast media converter · MP3 & MP4 </p>
-    </div>
-    <div class="creator">
-     <i class="fa-solid fa-code"></i> Created by DIMMZZZSUM_ENAK
-    </div>
-   </header>
-   <!-- ==============================
-         MAIN CARD
-    ============================== -->
-   <main class="main-card">
-    <div class="section-title">
-     <i class="fa-solid fa-link"></i> Masukkan URL YouTube
-    </div>
-    <div class="input-wrapper">
-     <input id="youtubeUrl" type="url" autocomplete="off" spellcheck="false" placeholder="Tempel link YouTube di sini...">
-     <button id="processBtn" type="button">
-      <i class="fa-solid fa-magnifying-glass"></i> DOWNLOAD </button>
-    </div>
-    <div class="input-hint"> Mendukung youtube.com, youtu.be, Shorts, Embed dan Live. </div>
-    <!-- MESSAGE -->
-    <div id="message"></div>
-    <!-- ==============================
-             RESULT
-        ============================== -->
-    <section id="result">
-     <div class="result-card">
-      <div class="result-head">
-       <!-- THUMBNAIL -->
-       <div class="thumbnail-box">
-        <div class="thumbnail-loading" id="thumbnailLoading">
-         <i class="fa-solid fa-image"></i>
-         <span>Memuat thumbnail...</span>
+    ========================== -->
+
+    <header>
+        <div class="container header-inner">
+
+            <div class="brand">
+
+                <div class="logo">
+                    FF
+                </div>
+
+                <div class="brand-text">
+
+                    <div class="brand-title">
+                        LOBBY MAKER
+                    </div>
+
+                    <div class="brand-subtitle">
+                        Free Fire Creative Tool
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="online-status">
+                <span class="online-dot"></span>
+                Online
+            </div>
+
         </div>
-        <img id="thumbnail" alt="YouTube Thumbnail">
-       </div>
-       <!-- INFO -->
-       <div class="video-info">
-        <h2 id="videoTitle"> YouTube Video </h2>
-        <div class="url-display">
-         <i class="fa-solid fa-link"></i>
-         <span id="normalizedUrl"></span>
+    </header>
+
+
+    <!-- =========================
+         MAIN
+    ========================== -->
+
+    <main>
+
+        <!-- HERO -->
+
+        <section class="hero">
+
+            <div class="container">
+
+                <div class="hero-badge">
+                    🔥 Free Fire Creative Tool
+                </div>
+
+                <h1>
+                    LOBBY <span>MAKER</span>
+                </h1>
+
+                <p>
+                    Buat gambar lobby Free Fire menggunakan
+                    nama pilihanmu. Masukkan nama player,
+                    proses gambar, lalu download hasilnya.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- WORKSPACE -->
+
+        <section class="container workspace">
+
+
+            <!-- =========================
+                 FORM CARD
+            ========================== -->
+
+            <div class="card">
+
+                <div class="card-header">
+
+                    <div class="card-title">
+
+                        <div class="card-title-icon">
+                            ✦
+                        </div>
+
+                        Buat Lobby
+
+                    </div>
+
+                </div>
+
+
+                <div class="card-body">
+
+                    <form id="lobbyForm">
+
+                        <label
+                            class="field-label"
+                            for="playerName"
+                        >
+                            Nama Player
+                        </label>
+
+
+                        <div class="input-wrap">
+
+                            <input
+                                type="text"
+                                id="playerName"
+                                name="playerName"
+                                maxlength="50"
+                                autocomplete="off"
+                                placeholder="Contoh: DIMMZZZSUM_ENAK"
+                                required
+                            >
+
+                        </div>
+
+
+                        <button
+                            type="submit"
+                            class="generate-btn"
+                            id="generateBtn"
+                        >
+
+                            <span id="generateText">
+                                ⚡ Buat Gambar Lobby
+                            </span>
+
+                        </button>
+
+
+                        <div
+                            class="error-box"
+                            id="errorBox"
+                        ></div>
+
+                    </form>
+
+
+                    <div class="tips">
+
+                        <div class="tips-title">
+                            Tips
+                        </div>
+
+                        <ul>
+                            <li>
+                                Gunakan nama player yang ingin
+                                ditampilkan pada lobby.
+                            </li>
+
+                            <li>
+                                Setelah request dimulai,
+                                hasil akan dialihkan kebawah.
+                            </li>
+
+                            <li>
+                                Jangan lupa share ke teman kalian yaa biar makin menyala 
+                            </li>
+                        </ul>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 RESULT CARD
+            ========================== -->
+
+            <div
+                class="card"
+                id="resultCard"
+            >
+
+                <div class="card-header">
+
+                    <div class="card-title">
+
+                        <div class="card-title-icon">
+                            ◈
+                        </div>
+
+                        Hasil Lobby
+
+                    </div>
+
+                </div>
+
+
+                <div class="card-body result-card-body">
+
+
+                    <!-- EMPTY -->
+
+                    <div
+                        class="result-empty"
+                        id="resultEmpty"
+                    >
+
+                        <div class="empty-icon">
+                            ◇
+                        </div>
+
+                        <h3>
+                            Belum Ada Gambar
+                        </h3>
+
+                        <p>
+                            Masukkan nama player kemudian
+                            tekan tombol buat gambar lobby
+                            untuk menghasilkan gambar baru.
+                        </p>
+
+                    </div>
+
+
+                    <!-- LOADING -->
+
+                    <div
+                        class="loading"
+                        id="loading"
+                    >
+
+                        <div class="loader"></div>
+
+                        <h3>
+                            Sedang Membuat Lobby...
+                        </h3>
+
+                        <p>
+                            Tunggu sebentar, gambar sedang
+                            diproses..
+                        </p>
+
+                    </div>
+
+
+                    <!-- RESULT -->
+
+                    <div
+                        class="result-content"
+                        id="resultContent"
+                    >
+
+                        <div class="image-preview">
+
+                            <img
+                                id="resultImage"
+                                src=""
+                                alt=""
+                            >
+
+                        </div>
+
+
+                        <div class="file-info">
+
+                            <div class="file-info-box">
+
+                                <div class="file-info-label">
+                                    Format
+                                </div>
+
+                                <div
+                                    class="file-info-value"
+                                    id="fileFormat"
+                                >
+                                    JPG
+                                </div>
+
+                            </div>
+
+
+                            <div class="file-info-box">
+
+                                <div class="file-info-label">
+                                    Ukuran
+                                </div>
+
+                                <div
+                                    class="file-info-value"
+                                    id="fileSize"
+                                >
+                                    -
+                                </div>
+
+                            </div>
+
+
+                            <div class="file-info-box">
+
+                                <div class="file-info-label">
+                                    File
+                                </div>
+
+                                <div
+                                    class="file-info-value"
+                                    id="fileName"
+                                >
+                                    -
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!--
+                            HANYA 2 TOMBOL
+                            Tidak ada WhatsApp,
+                            Instagram,
+                            atau Bagikan.
+                        -->
+
+                        <div class="actions">
+
+                            <button
+                                type="button"
+                                class="action-btn primary"
+                                id="downloadBtn"
+                            >
+                                ⬇️
+                                Download Foto Ini
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="action-btn"
+                                id="newBtn"
+                            >
+                                ✦
+                                Buat Gambar Baru
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer>
+
+        <div class="container">
+
+            Free Fire Lobby Maker
+            <br>
+
+            <strong>
+                Gunakan secara bijak dan sesuai ketentuan
+                layanan yang berlaku.
+            </strong>
+
         </div>
-        <div class="video-stats">
-         <div class="stat">
-          <i class="fa-brands fa-youtube"></i> YouTube
-         </div>
-         <div class="stat" id="channelText">
-          <i class="fa-solid fa-user"></i> Channel: -
-         </div>
-         <div class="stat" id="durationText">
-          <i class="fa-solid fa-clock"></i> Durasi: -
-         </div>
-         <div class="stat" id="viewsText">
-          <i class="fa-solid fa-eye"></i> Views: -
-         </div>
-         <div class="stat" id="videoIdText"> ID: - </div>
-        </div>
-       </div>
-      </div>
-      <!-- ==============================
-                     DOWNLOAD
-                ============================== -->
-      <div class="download-section">
-       <div class="download-label">
-        <i class="fa-solid fa-download"></i> Pilih format download
-       </div>
-       <div class="download-grid">
-        <!-- ==========================
-                             MP3
-                        =========================== -->
-        <div class="download-option">
-         <div class="option-top">
-          <div class="option-icon">
-           <i class="fa-solid fa-music"></i>
-          </div>
-          <div>
-           <div class="option-title"> Audio MP3 </div>
-           <div class="option-desc"> Bitrate 128kbps </div>
-          </div>
-         </div>
-         <button class="download-btn" id="mp3Btn" type="button">
-          <i class="fa-solid fa-download"></i> DOWNLOAD MP3 </button>
-        </div>
-        <!-- ==========================
-                             MP4
-                        =========================== -->
-        <div class="download-option">
-         <div class="option-top">
-          <div class="option-icon">
-           <i class="fa-solid fa-video"></i>
-          </div>
-          <div>
-           <div class="option-title"> Video MP4 </div>
-           <div class="option-desc"> Quality 360p · 480p · 720p </div>
-          </div>
-         </div>
-         <button class="download-btn" id="mp4Btn" type="button">
-          <i class="fa-solid fa-list"></i> PILIH KUALITAS MP4 </button>
-         <!-- QUALITY OPTIONS -->
-         <div class="quality-box" id="qualityBox">
-          <div class="quality-title"> Pilih kualitas video yang ingin di download: </div>
-          <div class="quality-list" id="qualityList"></div>
-         </div>
-        </div>
-       </div>
-      </div>
-     </div>
-    </section>
-   </main>
-   <!-- ==============================
-         INFO
-    ============================== -->
-   <div class="bottom-info">
-    <div class="info-box">
-     <h3>
-      <i class="fa-solid fa-circle-info"></i> Cara menggunakan
-     </h3>
-     <p> Tempel URL YouTube ke kolom di atas, lalu tekan Tombol <strong>DOWNLOAD</strong>, kemudian pilih MP3 atau MP4. Untuk MP4 bisa pilih kualitas video 360p, 480p, atau 720p. </p>
-    </div>
-    <div class="info-box">
-     <h3>
-      <i class="fa-solid fa-shield-halved"></i> Catatan
-     </h3>
-     <p> Jika downloader ini membantu, bagikan ke teman, grup, atau komunitas kamu. Biar mereka juga bisa download video YouTube dengan mudah dan gratis. </p>
-    </div>
-   </div>
-   <!-- FOOTER -->
-   <footer class="footer">
-    <p> © <span>2026</span> YouTube Downloader | Made with <span aria-label="love">♥</span> by <span class="creator">DIMMZZZSUM_ENAK</span>
-    </p>
-   </footer>
-  </div>
-  <script>
-   "use strict";
-   const CONFIG = {
-    API_URL: "https://api.neoxr.eu/api/youtube",
-    API_KEY: "gBw4bfj5haqY",
-    AUDIO_QUALITY: "128kbps",
-    VIDEO_QUALITIES: ["360p", "480p", "720p"],
-    API_TIMEOUT: 60000,
-    THUMBNAILS: [
-     id => `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`,
-     id => `https://i.ytimg.com/vi/${id}/hqdefault.jpg`,
-     id => `https://img.youtube.com/vi/${id}/hqdefault.jpg`,
-     id => `https://i.ytimg.com/vi/${id}/mqdefault.jpg`,
-     id => `https://img.youtube.com/vi/${id}/0.jpg`
-    ]
-   };
-   let currentVideo = null;
-   let currentMedia = {
-    audio: null,
-    videos: []
-   };
-   let selectedQuality = null;
-   const urlInput = document.getElementById("youtubeUrl");
-   const processBtn = document.getElementById("processBtn");
-   const result = document.getElementById("result");
-   const message = document.getElementById("message");
-   const thumbnail = document.getElementById("thumbnail");
-   const thumbnailLoading = document.getElementById("thumbnailLoading");
-   const videoTitle = document.getElementById("videoTitle");
-   const normalizedUrl = document.getElementById("normalizedUrl");
-   const videoIdText = document.getElementById("videoIdText");
-   const channelText = document.getElementById("channelText");
-   const durationText = document.getElementById("durationText");
-   const viewsText = document.getElementById("viewsText");
-   const mp3Btn = document.getElementById("mp3Btn");
-   const mp4Btn = document.getElementById("mp4Btn");
-   const qualityBox = document.getElementById("qualityBox");
-   const qualityList = document.getElementById("qualityList");
 
-   function showMessage(text, type = "error") {
-    message.textContent = text;
-    message.className = "show " + type;
-   }
+    </footer>
 
-   function hideMessage() {
-    message.textContent = "";
-    message.className = "";
-   }
 
-   function setLoading(button, loading, text) {
-    if (!button) {
-     return;
-    }
-    if (loading) {
-     button.disabled = true;
-     button.dataset.oldHtml = button.innerHTML;
-     button.innerHTML = `
-            
-											<span class="spinner"></span>
-            ${escapeHtml(
-                text ||
-                "MEMPROSES..."
-            )}
-        `;
-    } else {
-     button.disabled = false;
-     if (button.dataset.oldHtml) {
-      button.innerHTML = button.dataset.oldHtml;
-     }
-    }
-   }
+    <!-- TOAST -->
 
-   function escapeHtml(value) {
-    return String(value ?? "").replace(/&/g, "&amp;").replace(/ < /g,
-     "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
-   }
+    <div
+        class="toast"
+        id="toast"
+    ></div>
 
-   function extractYouTubeId(value) {
-    if (!value) {
-     return null;
-    }
-    let url;
-    try {
-     url = new URL(value.trim());
-    } catch {
-     return null;
-    }
-    const host = url.hostname.toLowerCase().replace(/^www\./, "");
-    if (host === "youtu.be") {
-     const id = url.pathname.split("/").filter(Boolean)[0];
-     return validYouTubeId(id) ? id : null;
-    }
-    if (host === "youtube.com" || host === "m.youtube.com") {
-     const v = url.searchParams.get("v");
-     if (validYouTubeId(v)) {
-      return v;
-     }
-     const parts = url.pathname.split("/").filter(Boolean);
-     const type = parts[0];
-     const supportedTypes = ["shorts", "embed", "live"];
-     if (supportedTypes.includes(type) && parts[1]) {
-      return validYouTubeId(parts[1]) ? parts[1] : null;
-     }
-    }
-    return null;
-   }
 
-   function validYouTubeId(id) {
-    return Boolean(id && /^[A-Za-z0-9_-]{11}$/.test(id));
-   }
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
 
-   function normalizeYouTubeUrl(id) {
-    return ("https://www.youtube.com/watch?v=" + encodeURIComponent(id));
-   }
-   async function getOEmbed(youtubeUrl) {
-    const endpoint = "https://www.youtube.com/oembed?url=" + encodeURIComponent(youtubeUrl) + "&format=json";
-    const controller = new AbortController();
-    const timer = setTimeout(
-     () => controller.abort(), 15000);
-    try {
-     const response = await fetch(endpoint, {
-      method: "GET",
-      mode: "cors",
-      cache: "no-store",
-      signal: controller.signal
-     });
-     if (!response.ok) {
-      throw new Error(`oEmbed HTTP ${response.status}`);
-     }
-     return await response.json();
-    } finally {
-     clearTimeout(timer);
-    }
-   }
-   async function loadThumbnail(id, oembed, apiThumbnail) {
-    thumbnail.classList.remove("loaded");
-    thumbnailLoading.style.display = "flex";
-    thumbnailLoading.innerHTML = `
-        
-										<i class="fa-solid fa-spinner fa-spin"></i>
-										<span>Memuat thumbnail...</span>
-    `;
-    const candidates = [];
-    if (apiThumbnail) {
-     candidates.push(apiThumbnail);
-    }
-    if (oembed && oembed.thumbnail_url) {
-     candidates.push(oembed.thumbnail_url);
-    }
-    for (const builder of CONFIG.THUMBNAILS) {
-     candidates.push(builder(id));
-    }
-    const unique = [...new Set(candidates)];
-    for (const src of unique) {
-     const valid = await testImage(src);
-     if (!valid) {
-      continue;
-     }
-     thumbnail.onload = () => {
-      thumbnailLoading.style.display = "none";
-      thumbnail.classList.add("loaded");
-     };
-     thumbnail.src = src;
-     return;
-    }
-    thumbnailLoading.innerHTML = `
-        
-										<i class="fa-solid fa-image"></i>
-										<span>Thumbnail tidak tersedia</span>
-    `;
-   }
+    <script>
+        /*
+         * ============================================
+         * API CONFIG
+         * ============================================
+         */
 
-   function testImage(src) {
-    return new Promise(resolve => {
-     const img = new Image();
-     img.onload = () => resolve(true);
-     img.onerror = () => resolve(false);
-     img.src = src + (src.includes("?") ? "&" : "?") + "_=" + Date.now();
-    });
-   }
-   async function processVideo() {
-    hideMessage();
-    result.classList.remove("show");
-    currentVideo = null;
-    currentMedia = {
-     audio: null,
-     videos: []
-    };
-    selectedQuality = null;
-    qualityBox.classList.remove("show");
-    qualityList.innerHTML = "";
-    const input = urlInput.value.trim();
-    if (!input) {
-     showMessage("Masukkan link YouTube terlebih dahulu.");
-     urlInput.focus();
-     return;
-    }
-    const id = extractYouTubeId(input);
-    if (!id) {
-     showMessage("Link YouTube tidak valid. Contoh: https://www.youtube.com/watch?v=dQw4w9WgXcQ");
-     return;
-    }
-    setLoading(processBtn, true, "MEMPROSES...");
-    try {
-     const normalized = normalizeYouTubeUrl(id);
-     let oembed = null;
-     try {
-      oembed = await getOEmbed(normalized);
-     } catch (error) {
-      console.warn("oEmbed gagal:", error);
-     }
-     let metadata = null;
-     try {
-      metadata = await requestNeoxr(normalized, "audio", CONFIG.AUDIO_QUALITY);
-     } catch (error) {
-      console.warn("API metadata gagal:", error);
-     }
-     const title = metadata && metadata.title ? metadata.title : (oembed && oembed.title ? oembed.title : "YouTube Video");
-     const thumbnailUrl = metadata && metadata.thumbnail ? metadata.thumbnail : (oembed ? oembed.thumbnail_url : null);
-     currentVideo = {
-      id: id,
-      url: normalized,
-      title: title,
-      thumbnail: thumbnailUrl,
-      channel: metadata && metadata.channel ? metadata.channel : "-",
-      duration: metadata && metadata.duration ? metadata.duration : "-",
-      views: metadata && metadata.views ? metadata.views : "-"
-     };
-     videoTitle.textContent = currentVideo.title;
-     normalizedUrl.textContent = currentVideo.url;
-     videoIdText.textContent = "ID: " + currentVideo.id;
-     channelText.innerHTML = `
-            
-										<i class="fa-solid fa-user"></i>
-            Channel: ${escapeHtml(
-                currentVideo.channel
-            )}
-            `;
-     durationText.innerHTML = `
-            
-										<i class="fa-solid fa-clock"></i>
-            Durasi: ${escapeHtml(
-                currentVideo.duration
-            )}
-            `;
-     viewsText.innerHTML = `
-            
-										<i class="fa-solid fa-eye"></i>
-            Views: ${escapeHtml(
-                currentVideo.views
-            )}
-            `;
-     result.classList.add("show");
-     loadThumbnail(id, oembed, thumbnailUrl);
-     showMessage("Video ditemukan. MP3 128kbps dan pilihan MP4 360p/480p/720p tersedia.", "success");
-     setTimeout(
-      () => {
-       result.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-       });
-      }, 100);
-    } catch (error) {
-     console.error(error);
-     showMessage("Gagal memproses video: " + (error.message || "error tidak diketahui"));
-    } finally {
-     setLoading(processBtn, false);
-    }
-   }
-   async function requestNeoxr(youtubeUrl, type, quality) {
-    const endpoint = CONFIG.API_URL + "?url=" + encodeURIComponent(youtubeUrl) + "&type=" + encodeURIComponent(type) + "&quality=" + encodeURIComponent(quality) + "&apikey=" + encodeURIComponent(CONFIG.API_KEY);
-    const controller = new AbortController();
-    const timer = setTimeout(
-     () => controller.abort(), CONFIG.API_TIMEOUT);
-    try {
-     const response = await fetch(endpoint, {
-      method: "GET",
-      mode: "cors",
-      cache: "no-store",
-      headers: {
-       "Accept": "application/json"
-      },
-      signal: controller.signal
-     });
-     const raw = await response.text();
-     let data;
-     try {
-      data = JSON.parse(raw);
-     } catch {
-      throw new Error("API mengembalikan respons bukan JSON.");
-     }
-     if (!response.ok) {
-      throw new Error(data.message || data.error || `API HTTP ${response.status}`);
-     }
-     if (data.status === false) {
-      throw new Error(data.message || data.error || "API gagal memproses video.");
-     }
-     if (!data.data || typeof data.data !== "object") {
-      throw new Error("Respons API tidak memiliki data media.");
-     }
-     return data;
-    } finally {
-     clearTimeout(timer);
-    }
-   }
-   async function downloadMP3() {
-    if (!currentVideo) {
-     showMessage("Proses video terlebih dahulu.");
-     return;
-    }
-    setLoading(mp3Btn, true, "MENGAMBIL MP3...");
-    hideMessage();
-    try {
-     showMessage("Mengambil MP3 128kbps dari server...", "info");
-     const data = await requestNeoxr(currentVideo.url, "audio", CONFIG.AUDIO_QUALITY);
-     if (!data || !data.data || !data.data.url) {
-      throw new Error("API tidak memberikan link MP3.");
-     }
-     currentMedia.audio = {
-      url: data.data.url,
-      filename: data.data.filename || (sanitizeFilename(currentVideo.title) + ".mp3"),
-      quality: data.data.quality || "128kbps",
-      size: data.data.size || ""
-     };
-     const filename = getAudioFilename(data);
-     await performDownload(data.data.url, filename, "MP3");
-    } catch (error) {
-     console.error("MP3 ERROR:", error);
-     showMessage("MP3 gagal: " + (error.message || "download gagal."));
-    } finally {
-     setLoading(mp3Btn, false);
-    }
-   }
+        /*
+         * Request sekarang lewat Vercel Function.
+         * API key NeoXR TIDAK disimpan di HTML.
+         */
+        const API_ENDPOINT = "/assest/lobby";
 
-   function getAudioFilename(data) {
-    let filename = data && data.data && data.data.filename ? data.data.filename : "";
-    filename = filename.replace(/\.[^/.]+$/, "");
-    if (!filename) {
-     filename = sanitizeFilename(currentVideo.title);
-    } else {
-     filename = sanitizeFilename(filename);
-    }
-    return (filename || "youtube-audio") + ".mp3";
-   }
-   async function downloadMP4() {
-    if (!currentVideo) {
-     showMessage("Proses video terlebih dahulu.");
-     return;
-    }
-    if (currentMedia.videos && currentMedia.videos.length) {
-     qualityBox.classList.add("show");
-     qualityBox.scrollIntoView({
-      behavior: "smooth",
-      block: "nearest"
-     });
-     showMessage("Pilih kualitas MP4 yang ingin kamu download.", "success");
-     return;
-    }
-    setLoading(mp4Btn, true, "MENGAMBIL KUALITAS...");
-    hideMessage();
-    try {
-     showMessage("Mengambil pilihan 360p, 480p dan 720p...", "info");
-     const requests = CONFIG.VIDEO_QUALITIES.map(quality => requestNeoxr(currentVideo.url, "video", quality).then(data => ({
-      quality: quality,
-      data: data,
-      success: true
-     })).catch(error => ({
-      quality: quality,
-      error: error,
-      success: false
-     })));
-     const results = await Promise.all(requests);
-     const videos = results.filter(item => item.success && item.data && item.data.data && item.data.data.url).map(item => ({
-      quality: item.quality,
-      url: item.data.data.url,
-      filename: item.data.data.filename || "",
-      size: item.data.data.size || "",
-      extension: item.data.data.extension || "mp4"
-     }));
-     currentMedia.videos = videos;
-     if (!videos.length) {
-      const firstError = results.find(item => !item.success);
-      throw (firstError && firstError.error ? firstError.error : new Error("Tidak ada kualitas MP4 yang tersedia."));
-     }
-     renderQualities(videos);
-     showMessage("Pilih kualitas MP4 yang ingin kamu download.", "success");
-     qualityBox.scrollIntoView({
-      behavior: "smooth",
-      block: "nearest"
-     });
-    } catch (error) {
-     console.error("MP4 ERROR:", error);
-     showMessage("MP4 gagal: " + (error.message || "gagal mengambil kualitas."));
-    } finally {
-     setLoading(mp4Btn, false);
-    }
-   }
 
-   function renderQualities(videos) {
-    qualityList.innerHTML = "";
-    selectedQuality = null;
-    if (!Array.isArray(videos) || !videos.length) {
-     qualityBox.classList.remove("show");
-     return;
-    }
-    const order = {
-     "360p": 360,
-     "480p": 480,
-     "720p": 720
-    };
-    const sorted = [...videos].sort(
-     (a, b) => (order[b.quality] || qualityNumber(b.quality)) - (order[a.quality] || qualityNumber(a.quality)));
-    sorted.forEach(item => {
-     const button = document.createElement("button");
-     button.type = "button";
-     button.className = "quality-btn";
-     const sizeText = item.size ? item.size : "MP4";
-     button.innerHTML = `
-                
-										<strong>
-                    ${escapeHtml(
-                        item.quality
-                    )}
-                </strong>
-										<small>
-                    ${escapeHtml(
-                        sizeText
-                    )}
-                </small>
-            `;
-     button.addEventListener("click", async () => {
-      document.querySelectorAll(".quality-btn").forEach(btn => btn.classList.remove("active"));
-      button.classList.add("active");
-      selectedQuality = item;
-      await downloadSelectedMP4();
-     });
-     qualityList.appendChild(button);
-    });
-    qualityBox.classList.add("show");
-   }
-   async function downloadSelectedMP4() {
-    if (!selectedQuality || !selectedQuality.url) {
-     showMessage("Pilih kualitas MP4 terlebih dahulu.");
-     return;
-    }
-    try {
-     const quality = selectedQuality.quality;
-     let filename = selectedQuality.filename;
-     if (filename) {
-      filename = filename.replace(/\.[^/.]+$/, "");
-      filename = sanitizeFilename(filename);
-     }
-     if (!filename) {
-      filename = sanitizeFilename(currentVideo.title) + "-" + sanitizeFilename(quality);
-     }
-     filename += ".mp4";
-     showMessage(`Menyiapkan MP4 ${quality}...`, "info");
-     await performDownload(selectedQuality.url, filename, "MP4 " + quality);
-    } catch (error) {
-     console.error("SELECTED MP4 ERROR:", error);
-     showMessage("Download MP4 gagal: " + (error.message || "download gagal."));
-    }
-   }
+        /*
+         * ============================================
+         * DOM
+         * ============================================
+         */
 
-   function qualityNumber(quality) {
-    const match = String(quality || "").match(/(\d{3,4})/);
-    return match ? Number(match[1]) : 0;
-   }
-   async function performDownload(url, filename, type) {
-    if (!url || !/^https?:\/\//i.test(url)) {
-     throw new Error("URL media dari API tidak valid.");
-    }
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = filename;
-    link.target = "_blank";
-    link.rel = "noopener noreferrer";
-    link.style.display = "none";
-    document.body.appendChild(link);
-    try {
-     link.click();
-    } finally {
-     setTimeout(
-      () => {
-       link.remove();
-      }, 1000);
-    }
-    showMessage(`${type} dikirim ke browser untuk proses download.`, "success");
-    return true;
-   }
+        const form =
+            document.getElementById(
+                "lobbyForm"
+            );
 
-   function sanitizeFilename(value) {
-    return String(value || "youtube-download").normalize("NFKD").replace(/[\u0300-\u036f]/g, "").replace(/[<>:"/\\|?*\x00-\x1F]/g, "").replace(/\s+/g, " ").trim().slice(0, 150) || "youtube-download";
-   }
-   processBtn.addEventListener("click", processVideo);
-   mp3Btn.addEventListener("click", downloadMP3);
-   mp4Btn.addEventListener("click", downloadMP4);
-   urlInput.addEventListener("keydown", event => {
-    if (event.key === "Enter") {
-     event.preventDefault();
-     processVideo();
-    }
-   });
-   urlInput.addEventListener("dblclick", async () => {
-    try {
-     const text = await navigator.clipboard.readText();
-     if (text && /youtube\.com|youtu\.be/i.test(text)) {
-      urlInput.value = text;
-     }
-    } catch {}
-   });
-   hideMessage();
-   result.classList.remove("show");
-  </script>
- </body>
+        const playerName =
+            document.getElementById(
+                "playerName"
+            );
+
+        const generateBtn =
+            document.getElementById(
+                "generateBtn"
+            );
+
+        const generateText =
+            document.getElementById(
+                "generateText"
+            );
+
+        const resultCard =
+            document.getElementById(
+                "resultCard"
+            );
+
+        const resultEmpty =
+            document.getElementById(
+                "resultEmpty"
+            );
+
+        const loading =
+            document.getElementById(
+                "loading"
+            );
+
+        const resultContent =
+            document.getElementById(
+                "resultContent"
+            );
+
+        const resultImage =
+            document.getElementById(
+                "resultImage"
+            );
+
+        const errorBox =
+            document.getElementById(
+                "errorBox"
+            );
+
+        const downloadBtn =
+            document.getElementById(
+                "downloadBtn"
+            );
+
+        const newBtn =
+            document.getElementById(
+                "newBtn"
+            );
+
+        const fileFormat =
+            document.getElementById(
+                "fileFormat"
+            );
+
+        const fileSize =
+            document.getElementById(
+                "fileSize"
+            );
+
+        const fileName =
+            document.getElementById(
+                "fileName"
+            );
+
+        const toast =
+            document.getElementById(
+                "toast"
+            );
+
+
+        /*
+         * ============================================
+         * STATE
+         * ============================================
+         */
+
+        let currentResult = {
+            url: "",
+            filename: "",
+            originalName: "",
+            size: "",
+            mime: "",
+            extension: "",
+            requestedName: ""
+        };
+
+        /*
+         * Setiap request punya nomor sendiri.
+         *
+         * Contoh:
+         *
+         * Request ABADI2828 = #1
+         * Request HEDON_2828 = #2
+         *
+         * Kalau request #1 selesai belakangan,
+         * hasilnya tidak boleh menimpa request #2.
+         */
+
+        let requestCounter = 0;
+
+        let toastTimer = null;
+
+
+        /*
+         * ============================================
+         * TOAST
+         * ============================================
+         */
+
+        function showToast(message) {
+
+            clearTimeout(toastTimer);
+
+            toast.textContent =
+                message;
+
+            toast.classList.add(
+                "show"
+            );
+
+            toastTimer =
+                setTimeout(
+                    function() {
+
+                        toast.classList.remove(
+                            "show"
+                        );
+
+                    },
+                    3000
+                );
+        }
+
+
+        /*
+         * ============================================
+         * ERROR
+         * ============================================
+         */
+
+        function showError(message) {
+
+            errorBox.textContent =
+                message;
+
+            errorBox.classList.add(
+                "active"
+            );
+        }
+
+
+        function hideError() {
+
+            errorBox.textContent =
+                "";
+
+            errorBox.classList.remove(
+                "active"
+            );
+        }
+
+
+        /*
+         * ============================================
+         * SCROLL KE HASIL
+         * ============================================
+         *
+         * Ini dijalankan SEGERA ketika request
+         * dimulai, bukan menunggu gambar selesai.
+         */
+
+        function scrollToResult() {
+
+            resultCard.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+
+        }
+
+
+        /*
+         * ============================================
+         * RESET HASIL
+         * ============================================
+         */
+
+        function resetResult() {
+
+            /*
+             * Hapus event lama
+             */
+            resultImage.onload = null;
+            resultImage.onerror = null;
+
+            /*
+             * Hapus gambar lama sepenuhnya
+             */
+            resultImage.removeAttribute(
+                "src"
+            );
+
+            resultImage.src = "";
+
+            resultImage.alt = "";
+
+            /*
+             * Reset data
+             */
+            currentResult = {
+
+                url: "",
+
+                filename: "",
+
+                originalName: "",
+
+                size: "",
+
+                mime: "",
+
+                extension: "",
+
+                requestedName: ""
+
+            };
+
+
+            /*
+             * Reset informasi file
+             */
+
+            fileFormat.textContent =
+                "JPG";
+
+            fileSize.textContent =
+                "-";
+
+            fileName.textContent =
+                "-";
+
+
+            /*
+             * Tampilkan empty
+             */
+
+            resultContent.classList.remove(
+                "active"
+            );
+
+            loading.classList.remove(
+                "active"
+            );
+
+            resultEmpty.style.display =
+                "flex";
+        }
+
+
+        /*
+         * ============================================
+         * LOADING
+         * ============================================
+         */
+
+        function setLoading(state) {
+
+            generateBtn.disabled =
+                state;
+
+
+            if (state) {
+
+                generateText.textContent =
+                    "⏳ Sedang Memproses...";
+
+
+                resultEmpty.style.display =
+                    "none";
+
+
+                resultContent.classList.remove(
+                    "active"
+                );
+
+
+                loading.classList.add(
+                    "active"
+                );
+
+            } else {
+
+                generateText.textContent =
+                    "⚡ Buat Gambar Lobby";
+
+
+                loading.classList.remove(
+                    "active"
+                );
+
+            }
+        }
+
+
+        /*
+         * ============================================
+         * EXTRACT URL API
+         * ============================================
+         */
+
+        function extractImageUrl(result) {
+
+            if (!result) {
+                return "";
+            }
+
+
+            /*
+             * Format API utama:
+             *
+             * result.data.url
+             */
+
+            if (
+                result.data &&
+                typeof result.data === "object" &&
+                !Array.isArray(result.data) &&
+                typeof result.data.url === "string" &&
+                result.data.url.trim()
+            ) {
+
+                return result.data.url.trim();
+
+            }
+
+
+            /*
+             * Kalau data berupa array
+             */
+
+            if (
+                Array.isArray(result.data) &&
+                result.data.length > 0
+            ) {
+
+                const first =
+                    result.data[0];
+
+
+                if (
+                    first &&
+                    typeof first === "object" &&
+                    typeof first.url === "string" &&
+                    first.url.trim()
+                ) {
+
+                    return first.url.trim();
+
+                }
+
+            }
+
+
+            /*
+             * Root URL
+             */
+
+            if (
+                typeof result.url === "string" &&
+                result.url.trim()
+            ) {
+
+                return result.url.trim();
+
+            }
+
+
+            /*
+             * Fallback
+             */
+
+            if (
+                result.data &&
+                typeof result.data === "object"
+            ) {
+
+                const possibleKeys = [
+
+                    "download",
+
+                    "download_url",
+
+                    "image",
+
+                    "image_url",
+
+                    "link"
+
+                ];
+
+
+                for (
+                    const key
+                    of possibleKeys
+                ) {
+
+                    if (
+                        typeof result.data[key] === "string" &&
+                        result.data[key].trim()
+                    ) {
+
+                        return result.data[key].trim();
+
+                    }
+
+                }
+
+            }
+
+
+            return "";
+        }
+
+
+        /*
+         * ============================================
+         * FORM SUBMIT
+         * ============================================
+         */
+
+        form.addEventListener(
+            "submit",
+            async function(event) {
+
+                event.preventDefault();
+
+                hideError();
+
+
+                /*
+                 * Ambil nama saat tombol ditekan.
+                 *
+                 * Nama ini disimpan di request.
+                 * Jadi kalau user mengganti nama
+                 * setelah request berjalan,
+                 * request sebelumnya tetap memakai
+                 * nama yang benar.
+                 */
+
+                const name =
+                    playerName.value.trim();
+
+
+                /*
+                 * Validasi
+                 */
+
+                if (!name) {
+
+                    showError(
+                        "Silakan masukkan nama player terlebih dahulu."
+                    );
+
+                    playerName.focus();
+
+                    return;
+                }
+
+
+                if (name.length > 50) {
+
+                    showError(
+                        "Nama maksimal 50 karakter."
+                    );
+
+                    playerName.focus();
+
+                    return;
+                }
+
+
+                /*
+                 * Request ID baru
+                 */
+
+                const thisRequest =
+                    ++requestCounter;
+
+
+                /*
+                 * Bersihkan hasil sebelumnya
+                 */
+
+                resetResult();
+
+
+                /*
+                 * Aktifkan loading
+                 */
+
+                setLoading(true);
+
+
+                /*
+                 * LANGSUNG SCROLL KE HASIL
+                 *
+                 * Jadi tidak perlu menunggu API.
+                 */
+
+                scrollToResult();
+
+
+                try {
+
+                    /*
+                     * ==================================
+                     * BUILD API URL
+                     * ==================================
+                     */
+
+                    const params =
+                        new URLSearchParams();
+
+                    params.set(
+                        "text",
+                        name
+                    );
+
+                    /*
+                     * API key tidak ikut dikirim dari browser.
+                     * Vercel Function yang mengambil API key
+                     * dari Environment Variable NEOXR_API_KEY.
+                     */
+                    const requestUrl =
+                        API_ENDPOINT +
+                        "?" +
+                        params.toString();
+
+
+                    console.log(
+                        "FF Lobby Request:",
+                        name
+                    );
+
+
+                    /*
+                     * ==================================
+                     * FETCH
+                     * ==================================
+                     */
+
+                    const response =
+                        await fetch(
+                            requestUrl,
+                            {
+                                method: "GET",
+
+                                headers: {
+                                    "Accept":
+                                        "application/json, text/plain, */*"
+                                },
+
+                                cache:
+                                    "no-store"
+                            }
+                        );
+
+
+                    const rawText =
+                        await response.text();
+
+
+                    console.log(
+                        "FF Lobby HTTP:",
+                        response.status
+                    );
+
+
+                    console.log(
+                        "FF Lobby Response:",
+                        rawText
+                    );
+
+
+                    if (!response.ok) {
+
+                        throw new Error(
+                            "API HTTP " +
+                            response.status
+                        );
+
+                    }
+
+
+                    /*
+                     * ==================================
+                     * PARSE JSON
+                     * ==================================
+                     */
+
+                    let result;
+
+
+                    try {
+
+                        result =
+                            JSON.parse(
+                                rawText
+                            );
+
+                    } catch {
+
+                        throw new Error(
+                            "Response API bukan JSON."
+                        );
+
+                    }
+
+
+                    console.log(
+                        "FF Lobby JSON:",
+                        result
+                    );
+
+
+                    /*
+                     * ==================================
+                     * CEK REQUEST TERBARU
+                     * ==================================
+                     */
+
+                    if (
+                        thisRequest !==
+                        requestCounter
+                    ) {
+
+                        console.log(
+                            "Request lama diabaikan."
+                        );
+
+                        return;
+                    }
+
+
+                    /*
+                     * ==================================
+                     * CEK STATUS API
+                     * ==================================
+                     */
+
+                    if (
+                        result.status === false
+                    ) {
+
+                        throw new Error(
+                            result.message ||
+                            result.msg ||
+                            "API gagal membuat gambar."
+                        );
+
+                    }
+
+
+                    /*
+                     * ==================================
+                     * AMBIL URL GAMBAR
+                     * ==================================
+                     */
+
+                    const imageUrl =
+                        extractImageUrl(
+                            result
+                        );
+
+
+                    if (!imageUrl) {
+
+                        console.error(
+                            "Response API:",
+                            result
+                        );
+
+                        throw new Error(
+                            "API tidak mengembalikan URL gambar."
+                        );
+
+                    }
+
+
+                    /*
+                     * Validasi URL
+                     */
+
+                    try {
+
+                        new URL(
+                            imageUrl
+                        );
+
+                    } catch {
+
+                        throw new Error(
+                            "URL gambar dari API tidak valid."
+                        );
+
+                    }
+
+
+                    /*
+                     * ==================================
+                     * DATA API
+                     * ==================================
+                     */
+
+                    const data =
+                        (
+                            result.data &&
+                            typeof result.data === "object" &&
+                            !Array.isArray(result.data)
+                        )
+                            ? result.data
+                            : {};
+
+
+                    /*
+                     * ==================================
+                     * SIMPAN HASIL TERBARU
+                     * ==================================
+                     */
+
+                    currentResult = {
+
+                        url:
+                            imageUrl,
+
+                        filename:
+                            data.filename ||
+                            "free-fire-lobby.jpg",
+
+                        originalName:
+                            data.original_name ||
+                            "",
+
+                        size:
+                            data.size ||
+                            "",
+
+                        mime:
+                            data.mime ||
+                            "image/jpeg",
+
+                        extension:
+                            data.extension ||
+                            "jpg",
+
+                        requestedName:
+                            name
+
+                    };
+
+
+                    /*
+                     * ==================================
+                     * TAMPILKAN HASIL
+                     * ==================================
+                     */
+
+                    displayResult(
+                        thisRequest
+                    );
+
+
+                    showToast(
+                        "Lobby " +
+                        name +
+                        " berhasil dibuat."
+                    );
+
+
+                } catch (error) {
+
+                    /*
+                     * Kalau ini request lama,
+                     * jangan sentuh UI.
+                     */
+
+                    if (
+                        thisRequest !==
+                        requestCounter
+                    ) {
+
+                        return;
+                    }
+
+
+                    console.error(
+                        "FREE FIRE LOBBY ERROR:",
+                        error
+                    );
+
+
+                    resultEmpty.style.display =
+                        "flex";
+
+
+                    resultContent.classList.remove(
+                        "active"
+                    );
+
+
+                    loading.classList.remove(
+                        "active"
+                    );
+
+
+                    showError(
+                        "Gagal membuat gambar. " +
+                        error.message
+                    );
+
+
+                    showToast(
+                        "Gagal memproses gambar."
+                    );
+
+
+                } finally {
+
+                    if (
+                        thisRequest ===
+                        requestCounter
+                    ) {
+
+                        setLoading(
+                            false
+                        );
+
+                    }
+
+                }
+
+            }
+        );
+
+
+        /*
+         * ============================================
+         * DISPLAY RESULT
+         * ============================================
+         */
+
+        function displayResult(
+            requestId
+        ) {
+
+            /*
+             * Jangan tampilkan kalau
+             * request sudah bukan yang terbaru.
+             */
+
+            if (
+                requestId !==
+                requestCounter
+            ) {
+
+                return;
+            }
+
+
+            /*
+             * Gunakan URL API asli.
+             *
+             * Tidak menambahkan parameter
+             * aneh ke signed URL.
+             */
+
+            const displayUrl =
+                currentResult.url;
+
+
+            /*
+             * ==================================
+             * IMAGE LOAD
+             * ==================================
+             */
+
+            resultImage.onload =
+                function() {
+
+                    if (
+                        requestId !==
+                        requestCounter
+                    ) {
+
+                        return;
+                    }
+
+
+                    /*
+                     * Sembunyikan loading
+                     */
+
+                    loading.classList.remove(
+                        "active"
+                    );
+
+
+                    /*
+                     * Tampilkan hasil
+                     */
+
+                    resultEmpty.style.display =
+                        "none";
+
+                    resultContent.classList.add(
+                        "active"
+                    );
+
+
+                    /*
+                     * Pastikan posisi tetap
+                     * di bagian hasil.
+                     */
+
+                    resultCard.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
+
+                };
+
+
+            /*
+             * ==================================
+             * IMAGE ERROR
+             * ==================================
+             */
+
+            resultImage.onerror =
+                function() {
+
+                    if (
+                        requestId !==
+                        requestCounter
+                    ) {
+
+                        return;
+                    }
+
+
+                    loading.classList.remove(
+                        "active"
+                    );
+
+
+                    resultContent.classList.remove(
+                        "active"
+                    );
+
+
+                    resultEmpty.style.display =
+                        "flex";
+
+
+                    showError(
+                        "Gambar berhasil dibuat oleh API, tetapi gambar tidak dapat ditampilkan."
+                    );
+
+                };
+
+
+            /*
+             * ==================================
+             * CLEAR OLD IMAGE
+             * ==================================
+             */
+
+            resultImage.removeAttribute(
+                "src"
+            );
+
+            resultImage.src = "";
+
+
+            /*
+             * Set gambar BARU.
+             */
+
+            resultImage.src =
+                displayUrl;
+
+
+            resultImage.alt =
+                "Free Fire Lobby - " +
+                currentResult.requestedName;
+
+
+            /*
+             * ==================================
+             * FILE INFO
+             * ==================================
+             */
+
+            fileFormat.textContent =
+                (
+                    currentResult.extension ||
+                    "jpg"
+                ).toUpperCase();
+
+
+            fileSize.textContent =
+                currentResult.size ||
+                "-";
+
+
+            fileName.textContent =
+                currentResult.filename ||
+                currentResult.originalName ||
+                (
+                    currentResult.requestedName +
+                    ".jpg"
+                );
+
+        }
+
+
+        /*
+         * ============================================
+         * DOWNLOAD
+         * ============================================
+         */
+
+        downloadBtn.addEventListener(
+            "click",
+            async function() {
+
+                if (
+                    !currentResult.url
+                ) {
+
+                    showToast(
+                        "Belum ada gambar."
+                    );
+
+                    return;
+                }
+
+
+                const oldText =
+                    downloadBtn.innerHTML;
+
+
+                downloadBtn.disabled =
+                    true;
+
+
+                downloadBtn.innerHTML =
+                    "⏳ Menyiapkan...";
+
+
+                try {
+
+                    /*
+                     * Ambil file sebagai Blob.
+                     */
+
+                    const response =
+                        await fetch(
+                            currentResult.url,
+                            {
+                                method: "GET",
+                                cache: "no-store"
+                            }
+                        );
+
+
+                    if (!response.ok) {
+
+                        throw new Error(
+                            "Download gagal."
+                        );
+
+                    }
+
+
+                    const blob =
+                        await response.blob();
+
+
+                    if (
+                        !blob ||
+                        blob.size === 0
+                    ) {
+
+                        throw new Error(
+                            "File gambar kosong."
+                        );
+
+                    }
+
+
+                    /*
+                     * Buat temporary URL
+                     */
+
+                    const blobUrl =
+                        URL.createObjectURL(
+                            blob
+                        );
+
+
+                    /*
+                     * Nama file download.
+                     *
+                     * Kalau API memberi filename,
+                     * gunakan filename API.
+                     *
+                     * Kalau tidak ada,
+                     * gunakan nama player.
+                     */
+
+                    let downloadName =
+                        currentResult.filename;
+
+
+                    if (
+                        !downloadName ||
+                        downloadName === "-"
+                    ) {
+
+                        const safeName =
+                            currentResult.requestedName
+                                .replace(
+                                    /[^a-z0-9_-]/gi,
+                                    "_"
+                                );
+
+                        downloadName =
+                            safeName +
+                            ".jpg";
+                    }
+
+
+                    /*
+                     * Buat link download.
+                     */
+
+                    const link =
+                        document.createElement(
+                            "a"
+                        );
+
+
+                    link.href =
+                        blobUrl;
+
+
+                    link.download =
+                        downloadName;
+
+
+                    link.style.display =
+                        "none";
+
+
+                    document.body.appendChild(
+                        link
+                    );
+
+
+                    link.click();
+
+
+                    link.remove();
+
+
+                    /*
+                     * Bersihkan Blob URL.
+                     */
+
+                    setTimeout(
+                        function() {
+
+                            URL.revokeObjectURL(
+                                blobUrl
+                            );
+
+                        },
+                        1500
+                    );
+
+
+                    showToast(
+                        "Download gambar berhasil dimulai."
+                    );
+
+
+                } catch (error) {
+
+                    console.warn(
+                        "Direct download gagal:",
+                        error
+                    );
+
+
+                    /*
+                     * Fallback hanya membuka
+                     * URL gambar API.
+                     */
+
+                    window.open(
+                        currentResult.url,
+                        "_blank",
+                        "noopener,noreferrer"
+                    );
+
+
+                    showToast(
+                        "Gambar dibuka di tab baru."
+                    );
+
+                } finally {
+
+                    downloadBtn.disabled =
+                        false;
+
+
+                    downloadBtn.innerHTML =
+                        oldText;
+
+                }
+
+            }
+        );
+
+
+        /*
+         * ============================================
+         * BUAT GAMBAR BARU
+         * ============================================
+         */
+
+        newBtn.addEventListener(
+            "click",
+            function() {
+
+                /*
+                 * Naikkan request counter.
+                 *
+                 * Ini otomatis membuat semua
+                 * request lama menjadi tidak berlaku.
+                 */
+
+                requestCounter++;
+
+
+                /*
+                 * Hapus gambar lama.
+                 */
+
+                resetResult();
+
+
+                /*
+                 * Hapus error lama.
+                 */
+
+                hideError();
+
+
+                /*
+                 * Kosongkan nama.
+                 */
+
+                playerName.value =
+                    "";
+
+
+                /*
+                 * Fokus ke input.
+                 */
+
+                playerName.focus();
+
+
+                /*
+                 * Scroll kembali ke bagian
+                 * form agar user langsung bisa
+                 * mengetik nama baru.
+                 */
+
+                playerName.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center"
+                });
+
+
+                showToast(
+                    "Siap membuat gambar lobby baru."
+                );
+
+            }
+        );
+
+        playerName.addEventListener(
+            "keydown",
+            function(event) {
+
+                if (
+                    event.key === "Enter"
+                ) {
+
+                    event.preventDefault();
+
+                    form.requestSubmit();
+
+                }
+
+            }
+        );
+
+    </script>
+
+</body>
 </html>
