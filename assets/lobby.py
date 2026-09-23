@@ -31,7 +31,7 @@ class handler(BaseHTTPRequestHandler):
     def do_GET(self):
         parsed = urlparse(self.path)
 
-        if parsed.path != "/api/lobby":
+        if parsed.path != "/assest/lobby":
             self.send_json({
                 "status": False,
                 "message": "Endpoint tidak ditemukan"
