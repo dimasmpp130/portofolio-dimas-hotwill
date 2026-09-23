@@ -1474,16 +1474,51 @@
 
     <script>
         /*
+         * Proteksi ringan:
+         * - Klik kanan tetap aktif.
+         * - Copy/paste tetap aktif.
+         * - Shortcut DevTools umum dicegah.
+         *
+         * Ini hanya penghalang untuk pengguna awam.
+         * DevTools tidak bisa dibuat benar-benar tidak bisa
+         * dibuka dari HTML yang berjalan di browser.
+         */
+        document.addEventListener("keydown", function(event) {
+            const key = String(event.key).toLowerCase();
+
+            if (
+                event.key === "F12" ||
+                (event.ctrlKey && event.shiftKey && ["i", "j", "c"].includes(key)) ||
+                (event.ctrlKey && key === "u")
+            ) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+        }, true);
+
+        /*
+         * API CONFIG
+         */
+        
          * ============================================
          * API CONFIG
          * ============================================
          */
 
+        const API_ENDPOINT =
+            "https://api.neoxr.eu/api/fflobby";
+
         /*
-         * Request sekarang lewat Vercel Function.
-         * API key NeoXR TIDAK disimpan di HTML.
+         * API key disamarkan dari pencarian teks sederhana.
+         * CATATAN: ini bukan keamanan absolut karena browser
+         * tetap harus menerima key untuk mengirim request.
          */
-        const API_ENDPOINT = "/api/lobby.py";
+        const API_KEY = [
+            103, 66, 119, 52, 98, 102, 106, 53,
+            104, 97, 113, 89
+        ].map(function(code) {
+            return String.fromCharCode(code);
+        }).join("");
 
 
         /*
@@ -2031,11 +2066,12 @@
                         name
                     );
 
-                    /*
-                     * API key tidak ikut dikirim dari browser.
-                     * Vercel Function yang mengambil API key
-                     * dari Environment Variable NEOXR_API_KEY.
-                     */
+                    params.set(
+                        "apikey",
+                        API_KEY
+                    );
+
+
                     const requestUrl =
                         API_ENDPOINT +
                         "?" +
