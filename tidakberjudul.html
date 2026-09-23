@@ -1525,8 +1525,18 @@
          * ============================================
          */
 
-        const API_ENDPOINT =
-            "https://api.neoxr.eu/api/fflobby";
+        /*
+         * Endpoint disamarkan.
+         * Catatan: ini hanya obfuscation, bukan private 100%.
+         */
+        const API_ENDPOINT = [
+            104, 116, 116, 112, 115, 58, 47, 47,
+            97, 112, 105, 46, 110, 101, 111, 120,
+            114, 46, 101, 117, 47, 97, 112, 105,
+            47, 102, 102, 108, 111, 98, 98, 121
+        ].map(function(n) {
+            return String.fromCharCode(n);
+        }).join("");
 
         /*
          * API KEY disamarkan agar tidak tampil sebagai
