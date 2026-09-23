@@ -60,7 +60,7 @@ class handler(BaseHTTPRequestHandler):
 
         api_url = "https://api.neoxr.eu/api/fflobby?" + urllib.parse.urlencode({
             "text": text,
-            "apikey": "gBw4bfj5haqY"
+            "apikey": api_key
         })
 
         try:
