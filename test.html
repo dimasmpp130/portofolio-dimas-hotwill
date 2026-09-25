@@ -2,10 +2,10 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-<meta name="theme-color" content="#080a0f">
-<meta name="description" content="NONTONKU - katalog drama Asia dengan tautan sumber resmi.">
-<title>NONTONKU — Dracin & Drakor</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#08090d">
+<meta name="description" content="What Word Game - Tebak kata dari huruf acak.">
+<title>WHAT WORD? — Tebak Kata</title>
 
 <style>
 *{
@@ -15,700 +15,650 @@
   -webkit-tap-highlight-color:transparent;
 }
 
-html{
-  scroll-behavior:smooth;
+html,body{
+  width:100%;
+  min-height:100%;
+  background:#08090d;
 }
 
 body{
-  background:#080a0f;
-  color:#f4f5f8;
   font-family:Arial,Helvetica,sans-serif;
-  min-height:100vh;
+  color:#f5f7fb;
   overflow-x:hidden;
+  user-select:none;
+  -webkit-user-select:none;
 }
 
-button,
-input{
+button,input{
   font-family:inherit;
 }
 
 button{
   border:0;
+  outline:0;
   cursor:pointer;
 }
 
-a{
-  text-decoration:none;
-  color:inherit;
-}
-
-body:before{
-  content:"";
-  position:fixed;
-  inset:0;
-  z-index:-1;
-  pointer-events:none;
+.app{
+  min-height:100vh;
+  min-height:100dvh;
+  position:relative;
+  overflow:hidden;
   background:
-    radial-gradient(circle at 15% 0%,rgba(124,58,237,.12),transparent 30%),
-    radial-gradient(circle at 100% 30%,rgba(14,165,233,.07),transparent 25%);
+    radial-gradient(circle at 50% -10%,rgba(100,90,255,.16),transparent 38%),
+    #08090d;
 }
 
-/* HEADER */
+/* BACKGROUND */
+.bg-orb{
+  position:absolute;
+  width:180px;
+  height:180px;
+  border-radius:50%;
+  filter:blur(70px);
+  opacity:.12;
+  pointer-events:none;
+}
 
-.header{
-  position:sticky;
-  top:0;
-  z-index:50;
-  height:58px;
-  padding:0 14px;
+.orb1{
+  background:#695cff;
+  left:-100px;
+  top:20%;
+}
+
+.orb2{
+  background:#00d9ff;
+  right:-110px;
+  bottom:10%;
+}
+
+/* TOP */
+.topbar{
+  width:min(700px,calc(100% - 28px));
+  margin:auto;
+  padding:20px 0 10px;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  background:rgba(8,10,15,.96);
-  border-bottom:1px solid rgba(255,255,255,.06);
-  backdrop-filter:blur(8px);
-  -webkit-backdrop-filter:blur(8px);
+  position:relative;
+  z-index:2;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
 }
 
 .logo{
-  display:flex;
-  align-items:center;
-  gap:9px;
-  font-size:16px;
-  font-weight:800;
-}
-
-.logo-icon{
-  width:30px;
-  height:30px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border-radius:9px;
-  background:linear-gradient(135deg,#8b5cf6,#5b21b6);
-  font-size:13px;
-}
-
-.logo span{
-  color:#a78bfa;
-}
-
-.header-info{
-  color:#6f7785;
-  font-size:9px;
-}
-
-/* HERO */
-
-.hero{
-  position:relative;
-  height:300px;
-  margin:12px;
-  overflow:hidden;
-  border-radius:20px;
-  background:#10131a;
-  border:1px solid rgba(255,255,255,.06);
-}
-
-.hero-slide{
-  position:absolute;
-  inset:0;
-  opacity:0;
-  transition:opacity .45s ease;
-}
-
-.hero-slide.active{
-  opacity:1;
-}
-
-.hero-slide img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  opacity:.55;
-}
-
-.hero-slide:after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:
-    linear-gradient(90deg,rgba(4,6,10,.97),rgba(4,6,10,.48),rgba(4,6,10,.08)),
-    linear-gradient(0deg,rgba(4,6,10,.95),transparent 60%);
-}
-
-.hero-content{
-  position:absolute;
-  z-index:3;
-  left:20px;
-  right:20px;
-  bottom:26px;
-  max-width:470px;
-}
-
-.hero-small{
-  display:inline-block;
-  padding:5px 8px;
-  margin-bottom:8px;
-  border-radius:6px;
-  background:#7c3aed;
-  font-size:9px;
-  font-weight:800;
-}
-
-.hero-title{
-  font-size:25px;
-  font-weight:800;
-  line-height:1.08;
-  margin-bottom:7px;
-}
-
-.hero-text{
-  color:#a5acb8;
-  font-size:10px;
-  line-height:1.5;
-  max-width:360px;
-}
-
-.hero-dots{
-  position:absolute;
-  z-index:5;
-  right:17px;
-  bottom:17px;
-  display:flex;
-  gap:5px;
-}
-
-.hero-dot{
-  width:6px;
-  height:6px;
-  border-radius:50%;
-  background:rgba(255,255,255,.35);
-}
-
-.hero-dot.active{
-  width:17px;
-  border-radius:8px;
-  background:#fff;
-}
-
-/* SEARCH */
-
-.search-wrap{
-  padding:0 12px;
-  margin-bottom:18px;
-}
-
-.search-box{
-  display:flex;
-  align-items:center;
-  gap:9px;
-  padding:6px;
+  width:38px;
+  height:38px;
   border-radius:12px;
-  background:#11141b;
-  border:1px solid rgba(255,255,255,.07);
-}
-
-.search-icon{
-  width:35px;
-  height:35px;
   display:flex;
   align-items:center;
   justify-content:center;
-  color:#858d9a;
-  font-size:18px;
+  background:linear-gradient(135deg,#7065ff,#5145d8);
+  box-shadow:0 8px 25px rgba(92,78,255,.22);
+  font-size:19px;
 }
 
-.search-box input{
-  flex:1;
-  min-width:0;
-  height:35px;
-  border:0;
-  outline:0;
-  color:#fff;
-  background:transparent;
-  font-size:12px;
+.brand-text strong{
+  display:block;
+  font-size:14px;
+  letter-spacing:1px;
 }
 
-.search-box input::placeholder{
-  color:#606875;
-}
-
-.search-btn{
-  padding:10px 13px;
-  border-radius:8px;
-  background:#7139d6;
-  color:#fff;
+.brand-text span{
+  display:block;
+  color:#858a99;
   font-size:10px;
-  font-weight:800;
+  margin-top:2px;
 }
 
-.search-btn:active{
-  transform:scale(.97);
+.score-box{
+  min-width:75px;
+  padding:8px 11px;
+  border:1px solid #1e2230;
+  background:#0d0f15;
+  border-radius:11px;
+  text-align:center;
 }
 
-/* MAIN */
-
-.container{
-  width:100%;
-  max-width:1050px;
-  margin:auto;
-  padding:0 12px 50px;
-}
-
-.section-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:12px;
-}
-
-.section-title{
-  font-size:16px;
-  font-weight:800;
-}
-
-.section-sub{
-  color:#68707d;
+.score-box small{
+  display:block;
+  color:#7d8290;
   font-size:9px;
+  text-transform:uppercase;
+  letter-spacing:1px;
 }
 
-/* RESULTS */
+.score-box b{
+  font-size:16px;
+}
 
-.results{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:11px;
+/* GAME */
+.game{
+  width:min(700px,calc(100% - 28px));
+  margin:12px auto 0;
+  position:relative;
+  z-index:2;
 }
 
 .card{
-  overflow:hidden;
-  border-radius:13px;
-  background:#10131a;
-  border:1px solid rgba(255,255,255,.055);
-  cursor:pointer;
-  transition:transform .15s ease;
+  border:1px solid #1d2130;
+  background:rgba(13,15,22,.94);
+  border-radius:22px;
+  padding:22px;
+  box-shadow:0 20px 60px rgba(0,0,0,.22);
 }
 
-.card:active{
-  transform:scale(.98);
+.category{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  padding:7px 11px;
+  border-radius:999px;
+  background:#15172a;
+  border:1px solid #292d4a;
+  color:#a9a4ff;
+  font-size:11px;
+  font-weight:bold;
 }
 
-.poster{
-  position:relative;
-  aspect-ratio:2/2.8;
-  background:#161920;
-  overflow:hidden;
+.category-dot{
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:#8b82ff;
 }
 
-.poster img{
-  width:100%;
-  height:100%;
-  display:block;
-  object-fit:cover;
-  background:#161920;
-}
-
-.poster-label{
-  position:absolute;
-  top:7px;
-  left:7px;
-  z-index:2;
-  padding:4px 6px;
-  border-radius:5px;
-  background:rgba(0,0,0,.72);
-  font-size:8px;
-  font-weight:800;
-}
-
-.card-body{
-  padding:9px;
-}
-
-.card-title{
+.question-title{
+  margin-top:18px;
+  color:#777d8c;
   font-size:12px;
-  font-weight:700;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
 }
 
-.card-meta{
+.word{
+  min-height:90px;
+  margin-top:8px;
   display:flex;
-  gap:5px;
-  margin-top:5px;
-  color:#737b88;
-  font-size:9px;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  flex-wrap:wrap;
+  font-size:clamp(26px,7vw,44px);
+  font-weight:900;
+  letter-spacing:5px;
+  color:#fff;
+  text-align:center;
+  text-shadow:0 0 25px rgba(119,105,255,.18);
 }
 
-/* EMPTY */
+.letter{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:28px;
+}
 
-.empty{
-  min-height:160px;
+.info{
+  text-align:center;
+  color:#777d8c;
+  font-size:11px;
+  margin-top:2px;
+}
+
+/* LIVES */
+.lives{
   display:flex;
-  flex-direction:column;
+  justify-content:center;
+  gap:8px;
+  margin:19px 0 17px;
+}
+
+.life{
+  width:34px;
+  height:10px;
+  border-radius:99px;
+  background:#665cff;
+  box-shadow:0 0 10px rgba(102,92,255,.22);
+  transition:.18s ease;
+}
+
+.life.dead{
+  background:#292c36;
+  box-shadow:none;
+}
+
+/* INPUT */
+.input-wrap{
+  display:flex;
+  gap:8px;
+}
+
+.answer{
+  width:100%;
+  min-width:0;
+  height:50px;
+  padding:0 15px;
+  border-radius:13px;
+  border:1px solid #272b38;
+  background:#090b10;
+  color:#fff;
+  font-size:15px;
+  outline:none;
+  text-transform:uppercase;
+  transition:border-color .15s ease,box-shadow .15s ease;
+}
+
+.answer:focus{
+  border-color:#675cff;
+  box-shadow:0 0 0 3px rgba(103,92,255,.09);
+}
+
+.answer::placeholder{
+  color:#505562;
+  text-transform:none;
+}
+
+.submit{
+  flex:0 0 105px;
+  height:50px;
+  border-radius:13px;
+  color:#fff;
+  font-size:13px;
+  font-weight:bold;
+  background:linear-gradient(135deg,#7167ff,#5146dc);
+  box-shadow:0 9px 25px rgba(87,73,220,.22);
+  transition:transform .12s ease,opacity .12s ease;
+}
+
+.submit:active{
+  transform:scale(.97);
+}
+
+.submit:disabled{
+  opacity:.45;
+}
+
+/* STATUS */
+.status{
+  min-height:24px;
+  display:flex;
   align-items:center;
   justify-content:center;
   text-align:center;
-  color:#6e7683;
-  padding:25px;
-}
-
-.empty-icon{
-  width:45px;
-  height:45px;
-  border-radius:13px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:#11151d;
-  margin-bottom:10px;
-  font-size:18px;
-}
-
-.empty-title{
-  color:#aeb4bf;
+  margin-top:13px;
   font-size:12px;
-  font-weight:700;
-  margin-bottom:5px;
+  color:#8b91a0;
 }
 
-.empty-text{
+.status.good{
+  color:#68e6a5;
+}
+
+.status.bad{
+  color:#ff737e;
+}
+
+/* BOTTOM INFO */
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  margin-top:10px;
+}
+
+.stat{
+  background:#0d0f15;
+  border:1px solid #1c202b;
+  border-radius:14px;
+  padding:12px 8px;
+  text-align:center;
+}
+
+.stat small{
+  display:block;
+  color:#696f7e;
   font-size:9px;
-  line-height:1.6;
+  text-transform:uppercase;
+  letter-spacing:.8px;
+  margin-bottom:4px;
+}
+
+.stat b{
+  font-size:15px;
+}
+
+/* FOOTER */
+.footer{
+  width:min(700px,calc(100% - 28px));
+  margin:14px auto 24px;
+  text-align:center;
+  color:#454a57;
+  font-size:10px;
+  position:relative;
+  z-index:2;
 }
 
 /* LOADING */
-
 .loading{
-  display:none;
-  text-align:center;
-  padding:35px 10px;
-  color:#777f8c;
-  font-size:10px;
-}
-
-.loading.show{
-  display:block;
-}
-
-.loader{
-  width:24px;
-  height:24px;
-  margin:0 auto 10px;
-  border:2px solid #252a35;
-  border-top-color:#8b5cf6;
-  border-radius:50%;
-  animation:spin .7s linear infinite;
-}
-
-@keyframes spin{
-  to{
-    transform:rotate(360deg);
-  }
-}
-
-/* MODAL */
-
-.modal{
-  position:fixed;
-  inset:0;
-  z-index:100;
-  display:none;
-  align-items:flex-end;
-  justify-content:center;
-  background:rgba(0,0,0,.78);
-}
-
-.modal.show{
-  display:flex;
-}
-
-.modal-box{
-  width:100%;
-  max-width:680px;
-  max-height:92vh;
-  overflow-y:auto;
-  background:#0d1016;
-  border-radius:22px 22px 0 0;
-  border:1px solid rgba(255,255,255,.07);
-}
-
-.modal-image{
-  position:relative;
-  height:220px;
-  background:#11151c;
-  overflow:hidden;
-}
-
-.modal-image img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  opacity:.65;
-  background:#11151c;
-}
-
-.modal-image:after{
-  content:"";
   position:absolute;
   inset:0;
-  background:linear-gradient(transparent 25%,#0d1016 100%);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#08090d;
+  z-index:50;
+  transition:opacity .2s ease;
+}
+
+.loading.hide{
+  opacity:0;
   pointer-events:none;
 }
 
-.close{
-  position:absolute;
-  z-index:5;
-  right:12px;
-  top:12px;
-  width:34px;
-  height:34px;
-  border-radius:50%;
-  background:rgba(0,0,0,.65);
-  color:#fff;
-  font-size:18px;
-}
-
-.detail{
-  position:relative;
-  z-index:4;
-  margin-top:-52px;
-  padding:0 16px 28px;
-}
-
-.detail-title{
-  font-size:23px;
-  font-weight:800;
-  margin-bottom:8px;
-}
-
-.badges{
-  display:flex;
-  flex-wrap:wrap;
-  gap:6px;
-  margin-bottom:13px;
-}
-
-.badge{
-  padding:5px 8px;
-  border-radius:6px;
-  background:#171b23;
-  color:#aab1bd;
-  font-size:9px;
-}
-
-.description{
-  color:#929aa7;
-  font-size:10px;
-  line-height:1.7;
-  margin-bottom:15px;
-}
-
-.info-row{
-  color:#717987;
-  font-size:9px;
-  line-height:1.7;
-  margin-bottom:17px;
-}
-
-.section-episode{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:9px;
-}
-
-.section-episode strong{
-  font-size:14px;
-}
-
-.section-episode span{
-  color:#68707c;
-  font-size:9px;
-}
-
-.episodes{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:7px;
-}
-
-.episode{
-  min-height:60px;
-  padding:7px;
-  border-radius:9px;
-  background:#141821;
-  border:1px solid rgba(255,255,255,.05);
-}
-
-.episode.vip{
-  border-color:rgba(245,158,11,.18);
-}
-
-.ep-name{
-  font-size:9px;
-  font-weight:800;
-  margin-bottom:5px;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-
-.ep-status{
-  color:#68717e;
-  font-size:7px;
-  margin-bottom:6px;
-}
-
-.episode.vip .ep-status{
-  color:#d99819;
-}
-
-.ep-buttons{
-  display:flex;
-  gap:4px;
-}
-
-.ep-buttons a{
-  flex:1;
-  min-width:0;
-  padding:6px 2px;
+.loader{
   text-align:center;
-  border-radius:6px;
-  background:#1c222d;
-  color:#cdd2da;
-  font-size:7px;
-  font-weight:800;
 }
 
-.ep-buttons a:first-child{
-  background:#7139d6;
-  color:#fff;
+.loader-icon{
+  width:52px;
+  height:52px;
+  border-radius:16px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#11131d;
+  border:1px solid #24283a;
+  font-size:24px;
+  animation:pulse 1s infinite;
 }
 
-/* WELCOME */
+.loader p{
+  color:#777d8b;
+  font-size:11px;
+  margin-top:10px;
+}
 
-.welcome{
+@keyframes pulse{
+  50%{transform:scale(.94);opacity:.65}
+}
+
+/* SHAKE */
+.shake{
+  animation:shake .32s ease;
+}
+
+@keyframes shake{
+  0%,100%{transform:translateX(0)}
+  20%{transform:translateX(-7px)}
+  40%{transform:translateX(7px)}
+  60%{transform:translateX(-5px)}
+  80%{transform:translateX(5px)}
+}
+
+/* POPUP */
+.overlay{
   position:fixed;
   inset:0;
-  z-index:200;
+  background:rgba(0,0,0,.72);
+  backdrop-filter:blur(3px);
+  -webkit-backdrop-filter:blur(3px);
   display:flex;
   align-items:center;
   justify-content:center;
   padding:20px;
-  background:rgba(0,0,0,.82);
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .16s ease;
+  z-index:100;
 }
 
-.welcome.hidden{
-  display:none;
+.overlay.show{
+  opacity:1;
+  pointer-events:auto;
 }
 
-.welcome-box{
+.popup{
+  width:min(360px,100%);
+  background:#0e1017;
+  border:1px solid #252938;
+  border-radius:21px;
+  padding:24px 20px;
+  text-align:center;
+  box-shadow:0 30px 80px rgba(0,0,0,.55);
+  transform:scale(.94);
+  transition:transform .16s ease;
+}
+
+.overlay.show .popup{
+  transform:scale(1);
+}
+
+.popup-icon{
+  font-size:42px;
+  margin-bottom:10px;
+}
+
+.popup h2{
+  font-size:21px;
+  margin-bottom:7px;
+}
+
+.popup p{
+  color:#858b99;
+  font-size:12px;
+  line-height:1.6;
+}
+
+.popup-answer{
+  margin:14px 0;
+  padding:11px;
+  border-radius:11px;
+  background:#090b10;
+  color:#aaa5ff;
+  font-size:18px;
+  font-weight:900;
+  letter-spacing:2px;
+}
+
+.popup-btn{
   width:100%;
-  max-width:380px;
-  padding:23px;
-  border-radius:18px;
-  background:#10131a;
-  border:1px solid rgba(255,255,255,.08);
-  box-shadow:0 20px 70px rgba(0,0,0,.45);
+  height:45px;
+  border-radius:12px;
+  background:#6258ee;
+  color:#fff;
+  font-weight:bold;
 }
 
-.welcome-logo{
-  width:45px;
-  height:45px;
+/* JUMPSCARE */
+.scare{
+  position:fixed;
+  inset:0;
+  z-index:200;
+  background:#030304;
   display:flex;
   align-items:center;
   justify-content:center;
-  border-radius:13px;
-  background:#7139d6;
-  margin-bottom:14px;
-  font-size:19px;
+  opacity:0;
+  pointer-events:none;
 }
 
-.welcome-title{
-  font-size:20px;
-  font-weight:800;
-  margin-bottom:8px;
+.scare.show{
+  animation:scareShow .72s ease forwards;
 }
 
-.welcome-text{
-  color:#8f97a4;
-  font-size:10px;
-  line-height:1.8;
-  margin-bottom:17px;
+.scare-face{
+  width:150px;
+  height:150px;
+  border-radius:50%;
+  background:#111;
+  position:relative;
+  box-shadow:
+    0 0 0 5px #090909,
+    0 0 50px rgba(255,30,40,.25);
+  transform:scale(.3);
 }
 
-.welcome-btn{
-  width:100%;
-  padding:11px;
-  border-radius:9px;
-  background:#fff;
-  color:#0b0d11;
-  font-size:10px;
-  font-weight:800;
+.eye{
+  position:absolute;
+  width:30px;
+  height:42px;
+  border-radius:50%;
+  background:#eee;
+  top:42px;
 }
 
-/* FOOTER */
+.eye:after{
+  content:"";
+  position:absolute;
+  width:9px;
+  height:20px;
+  background:#050505;
+  border-radius:50%;
+  left:10px;
+  top:11px;
+}
 
-.footer{
+.eye.left{left:35px}
+.eye.right{right:35px}
+
+.mouth{
+  position:absolute;
+  width:70px;
+  height:30px;
+  border-radius:0 0 50px 50px;
+  border-bottom:7px solid #eee;
+  left:40px;
+  bottom:32px;
+}
+
+.scare-text{
+  position:absolute;
+  bottom:15%;
+  font-size:12px;
+  color:#777;
+  letter-spacing:3px;
+}
+
+@keyframes scareShow{
+  0%{
+    opacity:0;
+  }
+  12%{
+    opacity:1;
+  }
+  20%{
+    opacity:.25;
+  }
+  30%{
+    opacity:1;
+  }
+  65%{
+    opacity:1;
+  }
+  100%{
+    opacity:0;
+  }
+}
+
+.scare.show .scare-face{
+  animation:faceIn .55s cubic-bezier(.1,.8,.2,1);
+}
+
+@keyframes faceIn{
+  0%{transform:scale(.25)}
+  30%{transform:scale(1.35)}
+  50%{transform:scale(.88)}
+  70%{transform:scale(1.05)}
+  100%{transform:scale(1)}
+}
+
+/* TOAST */
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:25px;
+  transform:translate(-50%,20px);
+  z-index:300;
+  width:max-content;
+  max-width:calc(100% - 30px);
+  padding:11px 15px;
+  border-radius:12px;
+  background:#151821;
+  border:1px solid #292e3c;
+  color:#fff;
+  font-size:11px;
+  opacity:0;
+  pointer-events:none;
+  transition:.2s ease;
   text-align:center;
-  color:#4e5561;
-  font-size:8px;
-  line-height:1.7;
-  padding:15px 12px 30px;
 }
 
-/* RESPONSIVE */
+.toast.show{
+  opacity:1;
+  transform:translate(-50%,0);
+}
 
-@media(min-width:600px){
+/* CONFETTI LIGHT */
+.confetti{
+  position:fixed;
+  width:6px;
+  height:10px;
+  top:-20px;
+  z-index:250;
+  pointer-events:none;
+  background:#fff;
+  animation:fall 800ms linear forwards;
+}
 
-  .hero{
-    height:350px;
-  }
-
-  .results{
-    grid-template-columns:repeat(4,minmax(0,1fr));
-  }
-
-  .episodes{
-    grid-template-columns:repeat(5,1fr);
-  }
-
-  .modal{
-    align-items:center;
-    padding:20px;
-  }
-
-  .modal-box{
-    border-radius:20px;
+@keyframes fall{
+  to{
+    transform:translate3d(var(--x),110vh,0) rotate(500deg);
+    opacity:0;
   }
 }
 
-@media(min-width:900px){
-
-  .hero{
-    height:390px;
+/* MOBILE */
+@media(max-width:480px){
+  .topbar{
+    padding-top:15px;
   }
 
-  .container{
-    padding-left:0;
-    padding-right:0;
+  .card{
+    padding:18px 15px;
+    border-radius:18px;
+  }
+
+  .word{
+    min-height:82px;
+    gap:5px;
+    letter-spacing:3px;
+  }
+
+  .submit{
+    flex-basis:90px;
   }
 }
 
-@media(max-width:360px){
-
-  .hero{
-    height:270px;
+@media(max-width:340px){
+  .brand-text span{
+    display:none;
   }
 
-  .hero-title{
-    font-size:21px;
+  .score-box{
+    min-width:65px;
   }
 
-  .episodes{
-    grid-template-columns:repeat(2,1fr);
+  .submit{
+    flex-basis:78px;
+    font-size:11px;
+  }
+
+  .word{
+    font-size:25px;
   }
 }
 </style>
@@ -716,1835 +666,792 @@ body:before{
 
 <body>
 
-<header class="header">
+<div class="app">
 
-  <div class="logo">
-    <div class="logo-icon">▶</div>
-    NONTON<span>KU</span>
+  <div class="bg-orb orb1"></div>
+  <div class="bg-orb orb2"></div>
+
+  <!-- LOADING -->
+  <div class="loading" id="loading">
+    <div class="loader">
+      <div class="loader-icon">🧠</div>
+      <p>Lagi nyari soal...</p>
+    </div>
   </div>
 
-  <div class="header-info">
-    DRAMA ASIA
-  </div>
-
-</header>
-
-
-<!-- HERO -->
-
-<section class="hero">
-
-  <div class="hero-slide active">
-
-    <img
-      id="heroImage1"
-      src=""
-      alt="Drama Asia"
-      referrerpolicy="no-referrer">
-
-    <div class="hero-content">
-
-      <div class="hero-small">
-        DRAMA ASIA
+  <!-- HEADER -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">?</div>
+      <div class="brand-text">
+        <strong>WHAT WORD?</strong>
+        <span>tebak kata • jangan nyontek 😭</span>
       </div>
-
-      <div class="hero-title">
-        Cari tontonan favoritmu.
-      </div>
-
-      <div class="hero-text">
-        Tinggal cari judulnya. Pilih dramanya,
-        pilih episode, lalu lanjut nonton di sumber resminya.
-      </div>
-
     </div>
 
-  </div>
-
-
-  <div class="hero-slide">
-
-    <img
-      id="heroImage2"
-      src=""
-      alt="Drama Asia"
-      referrerpolicy="no-referrer">
-
-    <div class="hero-content">
-
-      <div class="hero-small">
-        DRACIN • DRAKOR
-      </div>
-
-      <div class="hero-title">
-        Mau nonton apa hari ini?
-      </div>
-
-      <div class="hero-text">
-        Cari manual pakai judul film atau dramanya.
-        Data episode diambil otomatis dari API.
-      </div>
-
+    <div class="score-box">
+      <small>Score</small>
+      <b id="score">0</b>
     </div>
+  </header>
 
-  </div>
+  <!-- GAME -->
+  <main class="game">
 
+    <section class="card" id="gameCard">
 
-  <div class="hero-dots">
+      <div class="category">
+        <span class="category-dot"></span>
+        <span id="category">Loading...</span>
+      </div>
 
-    <span class="hero-dot active"></span>
-    <span class="hero-dot"></span>
+      <div class="question-title">
+        Susun huruf di bawah jadi kata yang bener
+      </div>
 
-  </div>
+      <div class="word" id="word">
+        • • •
+      </div>
 
-</section>
+      <div class="info">
+        gampang? belum tentu 😏
+      </div>
 
+      <div class="lives" id="lives">
+        <div class="life"></div>
+        <div class="life"></div>
+        <div class="life"></div>
+      </div>
 
-<!-- SEARCH -->
+      <form class="input-wrap" id="form">
+        <input
+          class="answer"
+          id="answer"
+          type="text"
+          autocomplete="off"
+          autocapitalize="characters"
+          spellcheck="false"
+          placeholder="ketik jawaban di sini..."
+        >
 
-<div class="search-wrap">
+        <button class="submit" id="submit" type="submit">
+          JAWAB
+        </button>
+      </form>
 
-  <form
-    class="search-box"
-    id="searchForm">
+      <div class="status" id="status">
+        3 kesempatan. jangan buru-buru 😎
+      </div>
 
-    <div class="search-icon">
-      ⌕
-    </div>
+    </section>
 
-    <input
-      id="searchInput"
-      type="search"
-      autocomplete="off"
-      autocapitalize="none"
-      spellcheck="false"
-      placeholder="Cari dracin / drakor...">
+    <section class="stats">
+      <div class="stat">
+        <small>Benar</small>
+        <b id="correct">0</b>
+      </div>
 
-    <button
-      class="search-btn"
-      type="submit">
-      CARI
-    </button>
+      <div class="stat">
+        <small>Salah</small>
+        <b id="wrong">0</b>
+      </div>
 
-  </form>
+      <div class="stat">
+        <small>Streak</small>
+        <b id="streak">0</b>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    WHAT WORD? • main santai, jangan emosi wkwk
+  </footer>
 
 </div>
 
 
-<main class="container">
+<!-- RESULT POPUP -->
+<div class="overlay" id="overlay">
+  <div class="popup">
 
-  <div class="section-head">
+    <div class="popup-icon" id="popupIcon">🎉</div>
 
-    <div
-      class="section-title"
-      id="resultTitle">
-      Cari drama
+    <h2 id="popupTitle">Mantap!</h2>
+
+    <p id="popupMessage">
+      Jawaban kamu benar.
+    </p>
+
+    <div class="popup-answer" id="popupAnswer">
+      MELON
     </div>
 
-    <div
-      class="section-sub"
-      id="resultCount">
-      siap gas
-    </div>
-
-  </div>
-
-
-  <div
-    class="loading"
-    id="loading">
-
-    <div class="loader"></div>
-
-    Lagi nyari...
-
-  </div>
-
-
-  <div
-    class="empty"
-    id="empty">
-
-    <div class="empty-icon">
-      ⌕
-    </div>
-
-    <div class="empty-title">
-      Belum ada yang dicari
-    </div>
-
-    <div class="empty-text">
-      Ketik judul film, dracin, atau drakor di atas.
-    </div>
-
-  </div>
-
-
-  <div
-    class="results"
-    id="results">
-  </div>
-
-</main>
-
-
-<footer class="footer">
-
-  NONTONKU hanya menyediakan katalog dan tautan ke sumber resmi.<br>
-  Konten video tetap berada di platform pemiliknya.
-
-</footer>
-
-
-<!-- DETAIL -->
-
-<div
-  class="modal"
-  id="modal">
-
-  <div class="modal-box">
-
-    <div class="modal-image">
-
-      <img
-        id="detailImage"
-        src=""
-        alt="Drama"
-        referrerpolicy="no-referrer">
-
-      <button
-        class="close"
-        id="closeModal">
-        ×
-      </button>
-
-    </div>
-
-
-    <div class="detail">
-
-      <h2
-        class="detail-title"
-        id="detailTitle">
-      </h2>
-
-
-      <div
-        class="badges"
-        id="detailBadges">
-      </div>
-
-
-      <div
-        class="description"
-        id="detailDescription">
-      </div>
-
-
-      <div
-        class="info-row"
-        id="detailInfo">
-      </div>
-
-
-      <div class="section-episode">
-
-        <strong>
-          Episode
-        </strong>
-
-        <span id="episodeCount">
-          -
-        </span>
-
-      </div>
-
-
-      <div
-        class="episodes"
-        id="episodes">
-      </div>
-
-    </div>
-
-  </div>
-
-</div>
-
-
-<!-- WELCOME -->
-
-<div
-  class="welcome"
-  id="welcome">
-
-  <div class="welcome-box">
-
-    <div class="welcome-logo">
-      ▶
-    </div>
-
-    <div class="welcome-title">
-      Welcome di NONTONKU 👋
-    </div>
-
-    <div class="welcome-text">
-      Cari film atau drama yang kamu mau,
-      terus pilih episode. NONTONKU cuma
-      jadi katalog, sedangkan tontonan tetap
-      dibuka lewat sumber resmi.
-    </div>
-
-    <button
-      class="welcome-btn"
-      id="welcomeButton">
-      OKE, GAS
+    <button class="popup-btn" id="popupButton">
+      LANJUT →
     </button>
 
   </div>
+</div>
+
+
+<!-- JUMPSCARE -->
+<div class="scare" id="scare">
+
+  <div class="scare-face">
+    <div class="eye left"></div>
+    <div class="eye right"></div>
+    <div class="mouth"></div>
+  </div>
+
+  <div class="scare-text">
+    SALAH TERUS WKWK 😭
+  </div>
 
 </div>
+
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
 
 
 <script>
+/*
+========================================================
+ WHAT WORD?
+ Mini Game Tebak Kata
+ API:
+ https://api.neoxr.eu/api/whatword?apikey=...
+========================================================
+*/
+
+const API_URL =
+  "https://api.neoxr.eu/api/whatword?apikey=gBw4bfj5haqY";
+
+
+/* ELEMENT */
+const loading = document.getElementById("loading");
+const categoryEl = document.getElementById("category");
+const wordEl = document.getElementById("word");
+const answerEl = document.getElementById("answer");
+const form = document.getElementById("form");
+const submitBtn = document.getElementById("submit");
+const statusEl = document.getElementById("status");
+const gameCard = document.getElementById("gameCard");
+
+const scoreEl = document.getElementById("score");
+const correctEl = document.getElementById("correct");
+const wrongEl = document.getElementById("wrong");
+const streakEl = document.getElementById("streak");
+const livesEl = document.getElementById("lives");
+
+const overlay = document.getElementById("overlay");
+const popupIcon = document.getElementById("popupIcon");
+const popupTitle = document.getElementById("popupTitle");
+const popupMessage = document.getElementById("popupMessage");
+const popupAnswer = document.getElementById("popupAnswer");
+const popupButton = document.getElementById("popupButton");
+
+const scare = document.getElementById("scare");
+const toast = document.getElementById("toast");
+
+
+/* GAME STATE */
+let currentAnswer = "";
+let currentCategory = "";
+
+let chances = 3;
+
+let score = 0;
+let correct = 0;
+let wrong = 0;
+let streak = 0;
+
+let loadingQuestion = false;
+let nextAction = null;
+
+let toastTimer = null;
+
+
+/* =====================================================
+   LOCAL STORAGE
+===================================================== */
+
+try{
+  score = parseInt(localStorage.getItem("ww_score") || "0",10);
+  correct = parseInt(localStorage.getItem("ww_correct") || "0",10);
+  wrong = parseInt(localStorage.getItem("ww_wrong") || "0",10);
+  streak = parseInt(localStorage.getItem("ww_streak") || "0",10);
+}catch(e){}
+
+updateStats();
+
+
+function saveStats(){
+  try{
+    localStorage.setItem("ww_score",score);
+    localStorage.setItem("ww_correct",correct);
+    localStorage.setItem("ww_wrong",wrong);
+    localStorage.setItem("ww_streak",streak);
+  }catch(e){}
+}
+
 
 /* =====================================================
    API
 ===================================================== */
 
-var API_KEY =
-  "gBw4bfj5haqY";
+async function getQuestion(){
 
-var SEARCH_API =
-  "https://api.neoxr.eu/api/dracin";
+  if(loadingQuestion) return;
 
-var DETAIL_API =
-  "https://api.neoxr.eu/api/dracin-get";
+  loadingQuestion = true;
 
+  loading.classList.remove("hide");
 
-/* =====================================================
-   FALLBACK
-===================================================== */
+  submitBtn.disabled = true;
+  answerEl.disabled = true;
 
-var FALLBACK_POSTER =
-  "https://placehold.co/500x700/10131a/ffffff?text=NO+POSTER";
+  try{
 
-var FALLBACK_DETAIL =
-  "https://placehold.co/1000x600/10131a/ffffff?text=NONTONKU";
+    const controller = new AbortController();
 
+    const timeout = setTimeout(function(){
+      controller.abort();
+    },10000);
 
-/* =====================================================
-   IQIYI IMAGE PROXY
-=====================================================
+    const response = await fetch(API_URL,{
+      method:"GET",
+      cache:"no-store",
+      signal:controller.signal
+    });
 
-   Ini bagian penting.
+    clearTimeout(timeout);
 
-   Browser tidak langsung mengambil:
-   pic5.iqiyipic.com
-
-   tetapi melalui:
-   images.weserv.nl
-
-===================================================== */
-
-function imageProxy(url){
-
-  if(!url){
-    return FALLBACK_POSTER;
-  }
-
-  url = String(url).trim();
-
-  if(!url){
-    return FALLBACK_POSTER;
-  }
-
-
-  /* buang file:// */
-
-  if(
-    url.indexOf("file://") === 0
-  ){
-    url =
-      url.substring(7);
-  }
-
-
-  /* //pic... */
-
-  if(
-    url.indexOf("//") === 0
-  ){
-    url =
-      "https:" + url;
-  }
-
-
-  /* www... */
-
-  if(
-    url.indexOf("www.") === 0
-  ){
-    url =
-      "https://" + url;
-  }
-
-
-  /* http... */
-
-  if(
-    url.indexOf("http://") === 0
-  ){
-    url =
-      "https://" +
-      url.substring(7);
-  }
-
-
-  /*
-    Gunakan proxy gambar.
-  */
-
-  return (
-    "https://images.weserv.nl/?" +
-    "url=" +
-    encodeURIComponent(url) +
-    "&w=700" +
-    "&q=82" +
-    "&output=webp"
-  );
-
-}
-
-
-/* =====================================================
-   IMAGE FALLBACK
-===================================================== */
-
-function imageError(img){
-
-  if(!img){
-    return;
-  }
-
-
-  if(
-    img.getAttribute(
-      "data-fallback"
-    ) === "1"
-  ){
-    return;
-  }
-
-
-  img.setAttribute(
-    "data-fallback",
-    "1"
-  );
-
-
-  img.src =
-    FALLBACK_POSTER;
-
-}
-
-
-/* =====================================================
-   DETAIL IMAGE FALLBACK
-===================================================== */
-
-var detailImage =
-  document.getElementById(
-    "detailImage"
-  );
-
-
-detailImage.onerror =
-  function(){
-
-    if(
-      this.getAttribute(
-        "data-fallback"
-      ) === "1"
-    ){
-      return;
+    if(!response.ok){
+      throw new Error("HTTP " + response.status);
     }
 
+    const json = await response.json();
 
-    this.setAttribute(
-      "data-fallback",
-      "1"
+    if(
+      !json ||
+      json.status !== true ||
+      !json.data
+    ){
+      throw new Error("Data API tidak valid");
+    }
+
+    const data = json.data;
+
+    currentCategory =
+      String(data.tipe || "Umum");
+
+    currentAnswer =
+      String(data.jawaban || "")
+      .trim()
+      .toUpperCase();
+
+    const question =
+      String(data.pertanyaan || "")
+      .trim()
+      .toUpperCase();
+
+    if(!currentAnswer || !question){
+      throw new Error("Soal kosong");
+    }
+
+    categoryEl.textContent = currentCategory;
+
+    renderWord(question);
+
+    chances = 3;
+
+    updateLives();
+
+    answerEl.value = "";
+    answerEl.disabled = false;
+    submitBtn.disabled = false;
+
+    statusEl.textContent =
+      "3 kesempatan. jangan buru-buru 😎";
+
+    statusEl.className = "status";
+
+    loading.classList.add("hide");
+
+    setTimeout(function(){
+      answerEl.focus();
+    },80);
+
+  }catch(error){
+
+    console.error(error);
+
+    categoryEl.textContent = "ERROR";
+
+    wordEl.textContent = "😵";
+
+    statusEl.textContent =
+      "Soalnya gagal diambil. cek koneksi terus coba lagi.";
+
+    statusEl.className = "status bad";
+
+    loading.classList.add("hide");
+
+    answerEl.disabled = true;
+    submitBtn.disabled = false;
+
+    submitBtn.textContent = "COBA LAGI";
+
+  }finally{
+
+    loadingQuestion = false;
+
+  }
+}
+
+
+/* =====================================================
+   RENDER WORD
+===================================================== */
+
+function renderWord(text){
+
+  wordEl.innerHTML = "";
+
+  const chars = text.split("");
+
+  chars.forEach(function(char){
+
+    const span = document.createElement("span");
+
+    span.className = "letter";
+
+    if(char === "-" || char === " "){
+      span.textContent = char;
+      span.style.opacity = ".45";
+    }else{
+      span.textContent = char;
+    }
+
+    wordEl.appendChild(span);
+
+  });
+}
+
+
+/* =====================================================
+   SUBMIT
+===================================================== */
+
+form.addEventListener("submit",function(e){
+
+  e.preventDefault();
+
+  if(loadingQuestion) return;
+
+  if(!currentAnswer){
+
+    getQuestion();
+
+    return;
+  }
+
+  const userAnswer =
+    answerEl.value
+    .trim()
+    .toUpperCase()
+    .replace(/\s+/g," ");
+
+  if(!userAnswer){
+
+    showToast("Isi jawabannya dulu woi 😭");
+
+    answerEl.focus();
+
+    return;
+  }
+
+  checkAnswer(userAnswer);
+
+});
+
+
+function checkAnswer(userAnswer){
+
+  if(userAnswer === currentAnswer){
+
+    handleCorrect();
+
+  }else{
+
+    handleWrong();
+
+  }
+
+}
+
+
+/* =====================================================
+   CORRECT
+===================================================== */
+
+function handleCorrect(){
+
+  correct++;
+
+  streak++;
+
+  score += 10;
+
+  if(streak >= 3){
+    score += 5;
+  }
+
+  saveStats();
+  updateStats();
+
+  gameCard.classList.add("shake");
+
+  setTimeout(function(){
+    gameCard.classList.remove("shake");
+  },350);
+
+  statusEl.textContent =
+    "NAHH BENER! otak masih nyala 🔥";
+
+  statusEl.className = "status good";
+
+  answerEl.disabled = true;
+  submitBtn.disabled = true;
+
+  createConfetti();
+
+  setTimeout(function(){
+
+    popupIcon.textContent =
+      streak >= 3 ? "🔥" : "🎉";
+
+    popupTitle.textContent =
+      streak >= 3
+      ? "GILA, STREAK!"
+      : "BENER WOI!";
+
+    popupMessage.textContent =
+      streak >= 3
+      ? "Streak kamu udah " + streak + ". lanjut terus sebelum otak logout."
+      : "Jawaban kamu tepat. lumayan lah 😎";
+
+    popupAnswer.textContent =
+      currentAnswer;
+
+    popupButton.textContent =
+      "SOAL BERIKUTNYA →";
+
+    nextAction = "next";
+
+    overlay.classList.add("show");
+
+  },450);
+
+}
+
+
+/* =====================================================
+   WRONG
+===================================================== */
+
+function handleWrong(){
+
+  chances--;
+
+  wrong++;
+
+  streak = 0;
+
+  saveStats();
+  updateStats();
+
+  updateLives();
+
+  gameCard.classList.remove("shake");
+
+  void gameCard.offsetWidth;
+
+  gameCard.classList.add("shake");
+
+  setTimeout(function(){
+    gameCard.classList.remove("shake");
+  },350);
+
+  if(chances > 0){
+
+    statusEl.textContent =
+      "Salah 😭 masih ada " +
+      chances +
+      " kesempatan.";
+
+    statusEl.className = "status bad";
+
+    showToast(
+      chances === 2
+      ? "Belum tepat. santai dulu 😭"
+      : "Salah lagi. tinggal 1 kesempatan 💀"
     );
 
+    answerEl.value = "";
 
-    this.src =
-      FALLBACK_DETAIL;
+    answerEl.focus();
 
-  };
+  }else{
+
+    handleGameOver();
+
+  }
+
+}
 
 
 /* =====================================================
-   HERO IMAGES
+   GAME OVER / JUMPSCARE
 ===================================================== */
 
-var hero1 =
-  "https://pic5.iqiyipic.com/image/20260829/99/82/a_100416841_m_601_en_m5.jpg";
+function handleGameOver(){
 
-var hero2 =
-  "https://pic6.iqiyipic.com/image/20260401/ab/07/a_100586923_m_601_en_m4_1013_569.webp";
+  answerEl.disabled = true;
+  submitBtn.disabled = true;
 
+  statusEl.textContent =
+    "kesempatan habis... 💀";
 
-document.getElementById(
-  "heroImage1"
-).src =
-  imageProxy(hero1);
+  statusEl.className = "status bad";
 
+  /* JUMPSCARE */
+  triggerScare();
 
-document.getElementById(
-  "heroImage2"
-).src =
-  imageProxy(hero2);
+  setTimeout(function(){
 
+    popupIcon.textContent = "💀";
 
-document.getElementById(
-  "heroImage1"
-).onerror =
-  function(){
+    popupTitle.textContent = "YAHH KALAH 😭";
 
-    this.src =
-      FALLBACK_DETAIL;
+    popupMessage.textContent =
+      "Tiga kali salah. katanya cuma game santai...";
 
-  };
+    popupAnswer.textContent =
+      "Jawabannya: " + currentAnswer;
 
+    popupButton.textContent =
+      "COBA SOAL LAIN →";
 
-document.getElementById(
-  "heroImage2"
-).onerror =
-  function(){
+    nextAction = "next";
 
-    this.src =
-      FALLBACK_DETAIL;
+    overlay.classList.add("show");
 
-  };
+  },800);
+
+}
 
 
 /* =====================================================
-   ELEMENT
+   LIVES
 ===================================================== */
 
-var searchForm =
-  document.getElementById(
-    "searchForm"
-  );
+function updateLives(){
 
-var searchInput =
-  document.getElementById(
-    "searchInput"
-  );
+  const lives =
+    livesEl.querySelectorAll(".life");
 
-var results =
-  document.getElementById(
-    "results"
-  );
+  lives.forEach(function(life,index){
 
-var loading =
-  document.getElementById(
-    "loading"
-  );
+    if(index < chances){
+      life.classList.remove("dead");
+    }else{
+      life.classList.add("dead");
+    }
 
-var empty =
-  document.getElementById(
-    "empty"
-  );
+  });
 
-var resultTitle =
-  document.getElementById(
-    "resultTitle"
-  );
-
-var resultCount =
-  document.getElementById(
-    "resultCount"
-  );
-
-var modal =
-  document.getElementById(
-    "modal"
-  );
-
-var welcome =
-  document.getElementById(
-    "welcome"
-  );
+}
 
 
 /* =====================================================
-   FIX URL
+   STATS
 ===================================================== */
 
-function fixUrl(url){
+function updateStats(){
 
-  if(!url){
-    return "";
+  scoreEl.textContent = score;
+  correctEl.textContent = correct;
+  wrongEl.textContent = wrong;
+  streakEl.textContent = streak;
+
+}
+
+
+/* =====================================================
+   POPUP BUTTON
+===================================================== */
+
+popupButton.addEventListener("click",function(){
+
+  overlay.classList.remove("show");
+
+  if(nextAction === "next"){
+
+    nextAction = null;
+
+    getQuestion();
+
   }
 
-  url =
-    String(url).trim();
+});
 
 
-  if(!url){
-    return "";
+/* Klik area gelap untuk tutup popup */
+overlay.addEventListener("click",function(e){
+
+  if(e.target === overlay){
+
+    overlay.classList.remove("show");
+
+    if(nextAction === "next"){
+
+      nextAction = null;
+
+      getQuestion();
+
+    }
+
   }
 
-
-  if(
-    url.indexOf("file://") === 0
-  ){
-    url =
-      url.substring(7);
-  }
+});
 
 
-  if(
-    url.indexOf("//") === 0
-  ){
-    return "https:" + url;
-  }
+/* =====================================================
+   JUMPSCARE
+===================================================== */
+
+function triggerScare(){
+
+  scare.classList.remove("show");
+
+  void scare.offsetWidth;
+
+  scare.classList.add("show");
+
+  /* Haptic Android kalau browser mendukung */
+  try{
+
+    if(navigator.vibrate){
+      navigator.vibrate([
+        60,30,60,30,100
+      ]);
+    }
+
+  }catch(e){}
+
+  setTimeout(function(){
+
+    scare.classList.remove("show");
+
+  },750);
+
+}
 
 
-  if(
-    url.indexOf("www.") === 0
-  ){
-    return "https://" + url;
-  }
+/* =====================================================
+   TOAST
+===================================================== */
+
+function showToast(message){
+
+  toast.textContent = message;
+
+  toast.classList.add("show");
+
+  clearTimeout(toastTimer);
+
+  toastTimer = setTimeout(function(){
+
+    toast.classList.remove("show");
+
+  },1800);
+
+}
 
 
-  if(
-    url.indexOf("http://") === 0
-  ){
-    return (
-      "https://" +
-      url.substring(7)
+/* =====================================================
+   CONFETTI
+===================================================== */
+
+function createConfetti(){
+
+  const amount =
+    window.innerWidth < 500 ? 14 : 22;
+
+  for(let i=0;i<amount;i++){
+
+    const el =
+      document.createElement("div");
+
+    el.className = "confetti";
+
+    el.style.left =
+      Math.random() * 100 + "vw";
+
+    el.style.setProperty(
+      "--x",
+      ((Math.random() - .5) * 180) + "px"
     );
+
+    el.style.animationDelay =
+      (Math.random() * .15) + "s";
+
+    const shapes =
+      ["●","■","◆"];
+
+    el.textContent =
+      shapes[Math.floor(Math.random()*shapes.length)];
+
+    document.body.appendChild(el);
+
+    setTimeout(function(){
+
+      el.remove();
+
+    },1000);
+
   }
 
-
-  return url;
-
 }
 
 
 /* =====================================================
-   ESCAPE
+   ENTER / KEYBOARD
 ===================================================== */
 
-function escapeHTML(value){
+answerEl.addEventListener("keydown",function(e){
 
-  if(
-    value === null ||
-    value === undefined
-  ){
-    return "";
-  }
-
-
-  return String(value)
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-
-}
-
-
-/* =====================================================
-   XHR
-===================================================== */
-
-function requestJSON(
-  url,
-  callback
-){
-
-  var xhr =
-    new XMLHttpRequest();
-
-
-  xhr.open(
-    "GET",
-    url,
-    true
-  );
-
-
-  xhr.timeout =
-    30000;
-
-
-  xhr.onreadystatechange =
-    function(){
-
-      if(
-        xhr.readyState !== 4
-      ){
-        return;
-      }
-
-
-      if(
-        xhr.status >= 200 &&
-        xhr.status < 300
-      ){
-
-        try{
-
-          var json =
-            JSON.parse(
-              xhr.responseText
-            );
-
-
-          callback(
-            null,
-            json
-          );
-
-        }catch(error){
-
-          callback(
-            error,
-            null
-          );
-
-        }
-
-      }else{
-
-        callback(
-          new Error(
-            "HTTP " +
-            xhr.status
-          ),
-          null
-        );
-
-      }
-
-    };
-
-
-  xhr.onerror =
-    function(){
-
-      callback(
-        new Error(
-          "Network error"
-        ),
-        null
-      );
-
-    };
-
-
-  xhr.ontimeout =
-    function(){
-
-      callback(
-        new Error(
-          "Request timeout"
-        ),
-        null
-      );
-
-    };
-
-
-  xhr.send();
-
-}
-
-
-/* =====================================================
-   SEARCH
-===================================================== */
-
-searchForm.addEventListener(
-  "submit",
-  function(e){
+  if(e.key === "Enter"){
 
     e.preventDefault();
 
-
-    var query =
-      searchInput.value.trim();
-
-
-    if(!query){
-
-      searchInput.focus();
-
-      return;
-
-    }
-
-
-    searchDrama(
-      query
-    );
+    form.requestSubmit();
 
   }
-);
 
-
-function searchDrama(
-  query
-){
-
-  results.innerHTML =
-    "";
-
-  empty.style.display =
-    "none";
-
-  loading.classList.add(
-    "show"
-  );
-
-
-  resultTitle.textContent =
-    'Nyari "' +
-    query +
-    '"';
-
-
-  resultCount.textContent =
-    "tunggu bentar...";
-
-
-  var url =
-    SEARCH_API +
-    "?q=" +
-    encodeURIComponent(
-      query
-    ) +
-    "&apikey=" +
-    encodeURIComponent(
-      API_KEY
-    );
-
-
-  requestJSON(
-    url,
-    function(error,json){
-
-      loading.classList.remove(
-        "show"
-      );
-
-
-      if(error){
-
-        console.error(
-          error
-        );
-
-
-        showEmpty(
-          "Gagal mengambil data",
-          "API tidak bisa diakses. Coba lagi beberapa saat."
-        );
-
-
-        return;
-
-      }
-
-
-      if(
-        !json ||
-        json.status !== true ||
-        !Array.isArray(
-          json.data
-        ) ||
-        json.data.length === 0
-      ){
-
-        showEmpty(
-          "Film nggak ketemu",
-          "Coba judul lain atau kata kunci yang lebih pendek."
-        );
-
-
-        return;
-
-      }
-
-
-      renderResults(
-        json.data
-      );
-
-    }
-  );
-
-}
+});
 
 
 /* =====================================================
-   RESULTS
+   START
 ===================================================== */
 
-function renderResults(
-  data
-){
+updateLives();
 
-  results.innerHTML =
-    "";
-
-  empty.style.display =
-    "none";
-
-
-  resultCount.textContent =
-    data.length +
-    " hasil";
-
-
-  for(
-    var i = 0;
-    i < data.length;
-    i++
-  ){
-
-    var item =
-      data[i];
-
-
-    var card =
-      document.createElement(
-        "article"
-      );
-
-
-    card.className =
-      "card";
-
-
-    var originalImage =
-      item.thumbnail ||
-      "";
-
-
-    var thumbnail =
-      imageProxy(
-        originalImage
-      );
-
-
-    var title =
-      item.title ||
-      "Tanpa judul";
-
-
-    var year =
-      item.publishYear ||
-      item.year ||
-      "-";
-
-
-    var episodeCount =
-      Array.isArray(
-        item.episodes
-      )
-      ? item.episodes.length
-      : 0;
-
-
-    card.innerHTML =
-
-      '<div class="poster">' +
-
-        '<img' +
-          ' src="' +
-          escapeHTML(
-            thumbnail
-          ) +
-          '"' +
-          ' alt="' +
-          escapeHTML(
-            title
-          ) +
-          '"' +
-          ' loading="lazy"' +
-          ' referrerpolicy="no-referrer"' +
-          ' onerror="imageError(this)">' +
-
-        '<span class="poster-label">' +
-          (
-            episodeCount
-            ? episodeCount +
-              " EP"
-            : "DRAMA"
-          ) +
-        '</span>' +
-
-      '</div>' +
-
-      '<div class="card-body">' +
-
-        '<div class="card-title">' +
-          escapeHTML(
-            title
-          ) +
-        '</div>' +
-
-        '<div class="card-meta">' +
-
-          '<span>' +
-            escapeHTML(
-              year
-            ) +
-          '</span>' +
-
-          '<span>•</span>' +
-
-          '<span>Drama</span>' +
-
-        '</div>' +
-
-      '</div>';
-
-
-    (function(
-      selectedItem
-    ){
-
-      card.addEventListener(
-        "click",
-        function(){
-
-          openDrama(
-            selectedItem
-          );
-
-        }
-      );
-
-    })(item);
-
-
-    results.appendChild(
-      card
-    );
-
-  }
-
-}
-
-
-/* =====================================================
-   OPEN DETAIL
-===================================================== */
-
-function openDrama(
-  item
-){
-
-  var albumUrl =
-    fixUrl(
-      item.url
-    );
-
-
-  if(!albumUrl){
-
-    showEmpty(
-      "Link film nggak tersedia",
-      "Data dari API belum mempunyai URL detail."
-    );
-
-    return;
-
-  }
-
-
-  modal.classList.add(
-    "show"
-  );
-
-
-  document.body.style.overflow =
-    "hidden";
-
-
-  detailImage.setAttribute(
-    "data-fallback",
-    "0"
-  );
-
-
-  detailImage.src =
-    imageProxy(
-      item.thumbnail
-    );
-
-
-  document.getElementById(
-    "detailTitle"
-  ).textContent =
-    item.title ||
-    "Memuat...";
-
-
-  document.getElementById(
-    "detailBadges"
-  ).innerHTML =
-
-    '<span class="badge">' +
-      escapeHTML(
-        item.publishYear ||
-        item.year ||
-        "-"
-      ) +
-    '</span>' +
-
-    '<span class="badge">' +
-      'Drama' +
-    '</span>';
-
-
-  document.getElementById(
-    "detailDescription"
-  ).textContent =
-    "Lagi mengambil detail episode...";
-
-
-  document.getElementById(
-    "detailInfo"
-  ).textContent =
-    "Sumber resmi: iQ.com";
-
-
-  document.getElementById(
-    "episodeCount"
-  ).textContent =
-    "...";
-
-
-  document.getElementById(
-    "episodes"
-  ).innerHTML =
-
-    '<div style="' +
-      'grid-column:1/-1;' +
-      'padding:25px;' +
-      'text-align:center;' +
-      'color:#737b87;' +
-      'font-size:10px;">' +
-      'Memuat episode...' +
-    '</div>';
-
-
-  var url =
-    DETAIL_API +
-    "?url=" +
-    encodeURIComponent(
-      albumUrl
-    ) +
-    "&apikey=" +
-    encodeURIComponent(
-      API_KEY
-    );
-
-
-  requestJSON(
-    url,
-    function(error,json){
-
-      if(error){
-
-        console.error(
-          error
-        );
-
-
-        document.getElementById(
-          "detailDescription"
-        ).textContent =
-          "Detail drama gagal dimuat.";
-
-
-        document.getElementById(
-          "episodes"
-        ).innerHTML =
-
-          '<div style="' +
-            'grid-column:1/-1;' +
-            'padding:25px;' +
-            'text-align:center;' +
-            'color:#737b87;' +
-            'font-size:10px;">' +
-            'Episode gagal dimuat.' +
-          '</div>';
-
-
-        return;
-
-      }
-
-
-      if(
-        !json ||
-        json.status !== true ||
-        !json.data
-      ){
-
-        document.getElementById(
-          "detailDescription"
-        ).textContent =
-          "Detail drama tidak tersedia.";
-
-
-        return;
-
-      }
-
-
-      renderDetail(
-        json.data
-      );
-
-    }
-  );
-
-}
-
-
-/* =====================================================
-   DETAIL
-===================================================== */
-
-function renderDetail(
-  data
-){
-
-  var title =
-    data.title ||
-    "Tanpa judul";
-
-
-  var year =
-    data.year ||
-    data.publishYear ||
-    "-";
-
-
-  var rating =
-    data.rating ||
-    "13+";
-
-
-  var type =
-    data.type ||
-    "Drama";
-
-
-  var episodes =
-    Array.isArray(
-      data.episodes
-    )
-    ? data.episodes
-    : [];
-
-
-  detailImage.setAttribute(
-    "data-fallback",
-    "0"
-  );
-
-
-  detailImage.src =
-    imageProxy(
-      data.thumbnail
-    );
-
-
-  document.getElementById(
-    "detailTitle"
-  ).textContent =
-    title;
-
-
-  document.getElementById(
-    "detailBadges"
-  ).innerHTML =
-
-    '<span class="badge">' +
-      escapeHTML(
-        year
-      ) +
-    '</span>' +
-
-    '<span class="badge">' +
-      escapeHTML(
-        rating
-      ) +
-    '</span>' +
-
-    '<span class="badge">' +
-      escapeHTML(
-        type
-      ) +
-    '</span>' +
-
-    '<span class="badge">' +
-      episodes.length +
-      ' Episode' +
-    '</span>';
-
-
-  var director =
-    "-";
-
-
-  if(
-    Array.isArray(
-      data.director
-    )
-  ){
-
-    var directors = [];
-
-
-    for(
-      var i = 0;
-      i < data.director.length;
-      i++
-    ){
-
-      var d =
-        data.director[i];
-
-
-      var name =
-        d.name ||
-        d.n ||
-        "";
-
-
-      if(name){
-        directors.push(
-          name
-        );
-      }
-
-    }
-
-
-    if(directors.length){
-      director =
-        directors.join(
-          ", "
-        );
-    }
-
-  }
-
-
-  var cast =
-    "-";
-
-
-  if(
-    Array.isArray(
-      data.cast
-    )
-  ){
-
-    var casts = [];
-
-
-    for(
-      var j = 0;
-      j < data.cast.length &&
-      j < 5;
-      j++
-    ){
-
-      var c =
-        data.cast[j];
-
-
-      var castName =
-        c.name ||
-        c.n ||
-        "";
-
-
-      if(castName){
-        casts.push(
-          castName
-        );
-      }
-
-    }
-
-
-    if(casts.length){
-      cast =
-        casts.join(
-          ", "
-        );
-    }
-
-  }
-
-
-  document.getElementById(
-    "detailDescription"
-  ).textContent =
-
-    "Detail " +
-    title +
-    " tersedia dengan " +
-    episodes.length +
-    " episode. Pilih episode untuk membuka sumber resmi.";
-
-
-  document.getElementById(
-    "detailInfo"
-  ).innerHTML =
-
-    "<b>Sutradara:</b> " +
-    escapeHTML(
-      director
-    ) +
-
-    "<br>" +
-
-    "<b>Pemain:</b> " +
-    escapeHTML(
-      cast
-    );
-
-
-  document.getElementById(
-    "episodeCount"
-  ).textContent =
-    episodes.length +
-    " episode";
-
-
-  renderEpisodes(
-    episodes
-  );
-
-}
-
-
-/* =====================================================
-   EPISODES
-===================================================== */
-
-function renderEpisodes(
-  episodes
-){
-
-  var container =
-    document.getElementById(
-      "episodes"
-    );
-
-
-  container.innerHTML =
-    "";
-
-
-  if(!episodes.length){
-
-    container.innerHTML =
-
-      '<div style="' +
-        'grid-column:1/-1;' +
-        'padding:25px;' +
-        'text-align:center;' +
-        'color:#737b87;' +
-        'font-size:10px;">' +
-        'Episode belum tersedia.' +
-      '</div>';
-
-
-    return;
-
-  }
-
-
-  for(
-    var i = 0;
-    i < episodes.length;
-    i++
-  ){
-
-    var ep =
-      episodes[i];
-
-
-    var title =
-      ep.title ||
-      ep.name ||
-      "Episode " +
-      (i + 1);
-
-
-    var url =
-      fixUrl(
-        ep.url
-      );
-
-
-    var vip =
-      ep.vip === true ||
-      (
-        ep.vipInfo &&
-        ep.vipInfo.isVip === 1
-      );
-
-
-    var item =
-      document.createElement(
-        "div"
-      );
-
-
-    item.className =
-      "episode" +
-      (
-        vip
-        ? " vip"
-        : ""
-      );
-
-
-    if(!url){
-
-      item.innerHTML =
-
-        '<div class="ep-name">' +
-          escapeHTML(
-            title
-          ) +
-        '</div>' +
-
-        '<div class="ep-status">' +
-          'LINK TIDAK TERSEDIA' +
-        '</div>';
-
-
-      container.appendChild(
-        item
-      );
-
-
-      continue;
-
-    }
-
-
-    item.innerHTML =
-
-      '<div class="ep-name" title="' +
-        escapeHTML(
-          title
-        ) +
-      '">' +
-        escapeHTML(
-          title
-        ) +
-      '</div>' +
-
-      '<div class="ep-status">' +
-        (
-          vip
-          ? "VIP"
-          : "FREE"
-        ) +
-      '</div>' +
-
-      '<div class="ep-buttons">' +
-
-        '<a href="' +
-          escapeHTML(
-            url
-          ) +
-          '"' +
-          ' target="_blank"' +
-          ' rel="noopener noreferrer">' +
-          '▶ Tonton' +
-        '</a>' +
-
-        '<a href="' +
-          escapeHTML(
-            url
-          ) +
-          '"' +
-          ' target="_blank"' +
-          ' rel="noopener noreferrer">' +
-          '↓ Resmi' +
-        '</a>' +
-
-      '</div>';
-
-
-    container.appendChild(
-      item
-    );
-
-  }
-
-}
-
-
-/* =====================================================
-   EMPTY
-===================================================== */
-
-function showEmpty(
-  title,
-  text
-){
-
-  results.innerHTML =
-    "";
-
-
-  empty.style.display =
-    "flex";
-
-
-  empty.innerHTML =
-
-    '<div class="empty-icon">' +
-      '×' +
-    '</div>' +
-
-    '<div class="empty-title">' +
-      escapeHTML(
-        title
-      ) +
-    '</div>' +
-
-    '<div class="empty-text">' +
-      escapeHTML(
-        text
-      ) +
-    '</div>';
-
-
-  resultCount.textContent =
-    "0 hasil";
-
-}
-
-
-/* =====================================================
-   CLOSE
-===================================================== */
-
-function closeModal(){
-
-  modal.classList.remove(
-    "show"
-  );
-
-
-  document.body.style.overflow =
-    "";
-
-}
-
-
-document.getElementById(
-  "closeModal"
-).addEventListener(
-  "click",
-  closeModal
-);
-
-
-modal.addEventListener(
-  "click",
-  function(e){
-
-    if(
-      e.target === modal
-    ){
-      closeModal();
-    }
-
-  }
-);
-
-
-document.addEventListener(
-  "keydown",
-  function(e){
-
-    if(
-      e.key === "Escape"
-    ){
-      closeModal();
-    }
-
-  }
-);
-
-
-/* =====================================================
-   WELCOME
-===================================================== */
-
-document.getElementById(
-  "welcomeButton"
-).addEventListener(
-  "click",
-  function(){
-
-    welcome.classList.add(
-      "hidden"
-    );
-
-
-    try{
-
-      localStorage.setItem(
-        "nontonku_welcome",
-        "1"
-      );
-
-    }catch(error){}
-
-  }
-);
-
-
-try{
-
-  if(
-    localStorage.getItem(
-      "nontonku_welcome"
-    ) === "1"
-  ){
-
-    welcome.classList.add(
-      "hidden"
-    );
-
-  }
-
-}catch(error){}
-
-
-/* =====================================================
-   SLIDER
-===================================================== */
-
-var heroIndex =
-  0;
-
-
-var heroSlides =
-  document.querySelectorAll(
-    ".hero-slide"
-  );
-
-
-var heroDots =
-  document.querySelectorAll(
-    ".hero-dot"
-  );
-
-
-function showHero(
-  index
-){
-
-  heroIndex =
-    index %
-    heroSlides.length;
-
-
-  for(
-    var i = 0;
-    i < heroSlides.length;
-    i++
-  ){
-
-    heroSlides[i]
-      .classList
-      .toggle(
-        "active",
-        i === heroIndex
-      );
-
-  }
-
-
-  for(
-    var j = 0;
-    j < heroDots.length;
-    j++
-  ){
-
-    heroDots[j]
-      .classList
-      .toggle(
-        "active",
-        j === heroIndex
-      );
-
-  }
-
-}
-
-
-setInterval(
-  function(){
-
-    showHero(
-      heroIndex + 1
-    );
-
-  },
-  5000
-);
-
-
-/* =====================================================
-   ENTER SEARCH
-===================================================== */
-
-searchInput.addEventListener(
-  "keydown",
-  function(e){
-
-    if(
-      e.key === "Enter"
-    ){
-
-      e.preventDefault();
-
-
-      searchForm.dispatchEvent(
-        new Event(
-          "submit"
-        )
-      );
-
-    }
-
-  }
-);
+getQuestion();
 
 </script>
 
