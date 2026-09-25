@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
 <meta name="theme-color" content="#080a0f">
-<meta name="description" content="NONTONKU - cari dan tonton drama Asia melalui sumber resmi.">
+<meta name="description" content="NONTONKU - katalog drama Asia dengan tautan sumber resmi.">
 <title>NONTONKU — Dracin & Drakor</title>
 
 <style>
@@ -27,7 +27,8 @@ body{
   overflow-x:hidden;
 }
 
-button,input{
+button,
+input{
   font-family:inherit;
 }
 
@@ -37,13 +38,9 @@ button{
 }
 
 a{
-  color:inherit;
   text-decoration:none;
+  color:inherit;
 }
-
-/* =========================
-   BACKGROUND
-========================= */
 
 body:before{
   content:"";
@@ -56,9 +53,7 @@ body:before{
     radial-gradient(circle at 100% 30%,rgba(14,165,233,.07),transparent 25%);
 }
 
-/* =========================
-   HEADER
-========================= */
+/* HEADER */
 
 .header{
   position:sticky;
@@ -103,9 +98,7 @@ body:before{
   font-size:9px;
 }
 
-/* =========================
-   HERO
-========================= */
+/* HERO */
 
 .hero{
   position:relative;
@@ -199,9 +192,7 @@ body:before{
   background:#fff;
 }
 
-/* =========================
-   SEARCH
-========================= */
+/* SEARCH */
 
 .search-wrap{
   padding:0 12px;
@@ -256,9 +247,7 @@ body:before{
   transform:scale(.97);
 }
 
-/* =========================
-   MAIN
-========================= */
+/* MAIN */
 
 .container{
   width:100%;
@@ -284,9 +273,7 @@ body:before{
   font-size:9px;
 }
 
-/* =========================
-   RESULTS
-========================= */
+/* RESULTS */
 
 .results{
   display:grid;
@@ -300,7 +287,7 @@ body:before{
   background:#10131a;
   border:1px solid rgba(255,255,255,.055);
   cursor:pointer;
-  transition:transform .15s ease,border-color .15s ease;
+  transition:transform .15s ease;
 }
 
 .card:active{
@@ -354,9 +341,7 @@ body:before{
   font-size:9px;
 }
 
-/* =========================
-   EMPTY
-========================= */
+/* EMPTY */
 
 .empty{
   min-height:160px;
@@ -393,9 +378,7 @@ body:before{
   line-height:1.6;
 }
 
-/* =========================
-   LOADING
-========================= */
+/* LOADING */
 
 .loading{
   display:none;
@@ -425,9 +408,7 @@ body:before{
   }
 }
 
-/* =========================
-   MODAL
-========================= */
+/* MODAL */
 
 .modal{
   position:fixed;
@@ -606,9 +587,7 @@ body:before{
   color:#fff;
 }
 
-/* =========================
-   WELCOME
-========================= */
+/* WELCOME */
 
 .welcome{
   position:fixed;
@@ -670,9 +649,7 @@ body:before{
   font-weight:800;
 }
 
-/* =========================
-   FOOTER
-========================= */
+/* FOOTER */
 
 .footer{
   text-align:center;
@@ -682,9 +659,7 @@ body:before{
   padding:15px 12px 30px;
 }
 
-/* =========================
-   RESPONSIVE
-========================= */
+/* RESPONSIVE */
 
 @media(min-width:600px){
 
@@ -735,10 +710,6 @@ body:before{
   .episodes{
     grid-template-columns:repeat(2,1fr);
   }
-
-  .ep-buttons a{
-    font-size:7px;
-  }
 }
 </style>
 </head>
@@ -759,19 +730,17 @@ body:before{
 </header>
 
 
-<!-- =========================
-     HERO SLIDER
-========================= -->
+<!-- HERO -->
 
 <section class="hero">
 
   <div class="hero-slide active">
 
     <img
-      src="https://pic5.iqiyipic.com/image/20260829/99/82/a_100416841_m_601_en_m5.jpg"
+      id="heroImage1"
+      src=""
       alt="Drama Asia"
-      referrerpolicy="no-referrer"
-      onerror="this.src='https://placehold.co/1200x600/10131a/ffffff?text=NONTONKU'">
+      referrerpolicy="no-referrer">
 
     <div class="hero-content">
 
@@ -796,10 +765,10 @@ body:before{
   <div class="hero-slide">
 
     <img
-      src="https://pic6.iqiyipic.com/image/20260401/ab/07/a_100586923_m_601_en_m4_1013_569.webp"
+      id="heroImage2"
+      src=""
       alt="Drama Asia"
-      referrerpolicy="no-referrer"
-      onerror="this.src='https://placehold.co/1200x600/10131a/ffffff?text=NONTONKU'">
+      referrerpolicy="no-referrer">
 
     <div class="hero-content">
 
@@ -831,13 +800,13 @@ body:before{
 </section>
 
 
-<!-- =========================
-     SEARCH
-========================= -->
+<!-- SEARCH -->
 
 <div class="search-wrap">
 
-  <form class="search-box" id="searchForm">
+  <form
+    class="search-box"
+    id="searchForm">
 
     <div class="search-icon">
       ⌕
@@ -927,9 +896,7 @@ body:before{
 </footer>
 
 
-<!-- =========================
-     DETAIL MODAL
-========================= -->
+<!-- DETAIL -->
 
 <div
   class="modal"
@@ -1005,9 +972,7 @@ body:before{
 </div>
 
 
-<!-- =========================
-     WELCOME POPUP
-========================= -->
+<!-- WELCOME -->
 
 <div
   class="welcome"
@@ -1042,8 +1007,9 @@ body:before{
 
 
 <script>
+
 /* =====================================================
-   KONFIGURASI API
+   API
 ===================================================== */
 
 var API_KEY =
@@ -1057,14 +1023,209 @@ var DETAIL_API =
 
 
 /* =====================================================
-   FALLBACK IMAGE
+   FALLBACK
 ===================================================== */
 
 var FALLBACK_POSTER =
-  "https://placehold.co/500x700/10131a/ffffff?text=No+Poster";
+  "https://placehold.co/500x700/10131a/ffffff?text=NO+POSTER";
 
 var FALLBACK_DETAIL =
   "https://placehold.co/1000x600/10131a/ffffff?text=NONTONKU";
+
+
+/* =====================================================
+   IQIYI IMAGE PROXY
+=====================================================
+
+   Ini bagian penting.
+
+   Browser tidak langsung mengambil:
+   pic5.iqiyipic.com
+
+   tetapi melalui:
+   images.weserv.nl
+
+===================================================== */
+
+function imageProxy(url){
+
+  if(!url){
+    return FALLBACK_POSTER;
+  }
+
+  url = String(url).trim();
+
+  if(!url){
+    return FALLBACK_POSTER;
+  }
+
+
+  /* buang file:// */
+
+  if(
+    url.indexOf("file://") === 0
+  ){
+    url =
+      url.substring(7);
+  }
+
+
+  /* //pic... */
+
+  if(
+    url.indexOf("//") === 0
+  ){
+    url =
+      "https:" + url;
+  }
+
+
+  /* www... */
+
+  if(
+    url.indexOf("www.") === 0
+  ){
+    url =
+      "https://" + url;
+  }
+
+
+  /* http... */
+
+  if(
+    url.indexOf("http://") === 0
+  ){
+    url =
+      "https://" +
+      url.substring(7);
+  }
+
+
+  /*
+    Gunakan proxy gambar.
+  */
+
+  return (
+    "https://images.weserv.nl/?" +
+    "url=" +
+    encodeURIComponent(url) +
+    "&w=700" +
+    "&q=82" +
+    "&output=webp"
+  );
+
+}
+
+
+/* =====================================================
+   IMAGE FALLBACK
+===================================================== */
+
+function imageError(img){
+
+  if(!img){
+    return;
+  }
+
+
+  if(
+    img.getAttribute(
+      "data-fallback"
+    ) === "1"
+  ){
+    return;
+  }
+
+
+  img.setAttribute(
+    "data-fallback",
+    "1"
+  );
+
+
+  img.src =
+    FALLBACK_POSTER;
+
+}
+
+
+/* =====================================================
+   DETAIL IMAGE FALLBACK
+===================================================== */
+
+var detailImage =
+  document.getElementById(
+    "detailImage"
+  );
+
+
+detailImage.onerror =
+  function(){
+
+    if(
+      this.getAttribute(
+        "data-fallback"
+      ) === "1"
+    ){
+      return;
+    }
+
+
+    this.setAttribute(
+      "data-fallback",
+      "1"
+    );
+
+
+    this.src =
+      FALLBACK_DETAIL;
+
+  };
+
+
+/* =====================================================
+   HERO IMAGES
+===================================================== */
+
+var hero1 =
+  "https://pic5.iqiyipic.com/image/20260829/99/82/a_100416841_m_601_en_m5.jpg";
+
+var hero2 =
+  "https://pic6.iqiyipic.com/image/20260401/ab/07/a_100586923_m_601_en_m4_1013_569.webp";
+
+
+document.getElementById(
+  "heroImage1"
+).src =
+  imageProxy(hero1);
+
+
+document.getElementById(
+  "heroImage2"
+).src =
+  imageProxy(hero2);
+
+
+document.getElementById(
+  "heroImage1"
+).onerror =
+  function(){
+
+    this.src =
+      FALLBACK_DETAIL;
+
+  };
+
+
+document.getElementById(
+  "heroImage2"
+).onerror =
+  function(){
+
+    this.src =
+      FALLBACK_DETAIL;
+
+  };
 
 
 /* =====================================================
@@ -1072,44 +1233,53 @@ var FALLBACK_DETAIL =
 ===================================================== */
 
 var searchForm =
-  document.getElementById("searchForm");
+  document.getElementById(
+    "searchForm"
+  );
 
 var searchInput =
-  document.getElementById("searchInput");
+  document.getElementById(
+    "searchInput"
+  );
 
 var results =
-  document.getElementById("results");
+  document.getElementById(
+    "results"
+  );
 
 var loading =
-  document.getElementById("loading");
+  document.getElementById(
+    "loading"
+  );
 
 var empty =
-  document.getElementById("empty");
+  document.getElementById(
+    "empty"
+  );
 
 var resultTitle =
-  document.getElementById("resultTitle");
+  document.getElementById(
+    "resultTitle"
+  );
 
 var resultCount =
-  document.getElementById("resultCount");
+  document.getElementById(
+    "resultCount"
+  );
 
 var modal =
-  document.getElementById("modal");
+  document.getElementById(
+    "modal"
+  );
 
 var welcome =
-  document.getElementById("welcome");
-
-var detailImage =
-  document.getElementById("detailImage");
+  document.getElementById(
+    "welcome"
+  );
 
 
 /* =====================================================
    FIX URL
-   //www.iq.com
-   www.iq.com
-   file://www.iq.com
-   http://www.iq.com
-
-   semuanya -> https://www.iq.com
 ===================================================== */
 
 function fixUrl(url){
@@ -1118,55 +1288,54 @@ function fixUrl(url){
     return "";
   }
 
-  url = String(url).trim();
+  url =
+    String(url).trim();
+
 
   if(!url){
     return "";
   }
 
-  /* file://www.iq.com */
-  if(url.indexOf("file://") === 0){
-    url = url.substring(7);
+
+  if(
+    url.indexOf("file://") === 0
+  ){
+    url =
+      url.substring(7);
   }
 
-  /* //www.iq.com */
-  if(url.indexOf("//") === 0){
+
+  if(
+    url.indexOf("//") === 0
+  ){
     return "https:" + url;
   }
 
-  /* www.iq.com */
-  if(url.indexOf("www.") === 0){
+
+  if(
+    url.indexOf("www.") === 0
+  ){
     return "https://" + url;
   }
 
-  /* http:// */
-  if(url.indexOf("http://") === 0){
-    return "https://" + url.substring(7);
+
+  if(
+    url.indexOf("http://") === 0
+  ){
+    return (
+      "https://" +
+      url.substring(7)
+    );
   }
+
 
   return url;
+
 }
 
 
 /* =====================================================
-   FIX IMAGE URL
-===================================================== */
-
-function fixImageUrl(url){
-
-  var fixed =
-    fixUrl(url);
-
-  if(!fixed){
-    return FALLBACK_POSTER;
-  }
-
-  return fixed;
-}
-
-
-/* =====================================================
-   ESCAPE HTML
+   ESCAPE
 ===================================================== */
 
 function escapeHTML(value){
@@ -1178,98 +1347,29 @@ function escapeHTML(value){
     return "";
   }
 
+
   return String(value)
     .replace(/&/g,"&amp;")
     .replace(/</g,"&lt;")
     .replace(/>/g,"&gt;")
     .replace(/"/g,"&quot;")
     .replace(/'/g,"&#039;");
+
 }
 
 
 /* =====================================================
-   IMAGE ERROR FALLBACK
+   XHR
 ===================================================== */
 
-function posterError(img){
-
-  if(!img){
-    return;
-  }
-
-  if(img.getAttribute("data-fallback") === "1"){
-    return;
-  }
-
-  img.setAttribute(
-    "data-fallback",
-    "1"
-  );
-
-  img.src =
-    FALLBACK_POSTER;
-}
-
-
-/* =====================================================
-   DETAIL IMAGE ERROR
-===================================================== */
-
-detailImage.onerror =
-  function(){
-
-    if(
-      this.getAttribute("data-fallback") === "1"
-    ){
-      return;
-    }
-
-    this.setAttribute(
-      "data-fallback",
-      "1"
-    );
-
-    this.src =
-      FALLBACK_DETAIL;
-
-  };
-
-
-/* =====================================================
-   SEARCH FORM
-===================================================== */
-
-searchForm.addEventListener(
-  "submit",
-  function(e){
-
-    e.preventDefault();
-
-    var query =
-      searchInput.value.trim();
-
-    if(!query){
-
-      searchInput.focus();
-
-      return;
-    }
-
-    searchDrama(query);
-
-  }
-);
-
-
-/* =====================================================
-   XHR REQUEST
-   Lebih kompatibel untuk Android lama
-===================================================== */
-
-function requestJSON(url,callback){
+function requestJSON(
+  url,
+  callback
+){
 
   var xhr =
     new XMLHttpRequest();
+
 
   xhr.open(
     "GET",
@@ -1277,15 +1377,20 @@ function requestJSON(url,callback){
     true
   );
 
+
   xhr.timeout =
     30000;
+
 
   xhr.onreadystatechange =
     function(){
 
-      if(xhr.readyState !== 4){
+      if(
+        xhr.readyState !== 4
+      ){
         return;
       }
+
 
       if(
         xhr.status >= 200 &&
@@ -1295,7 +1400,10 @@ function requestJSON(url,callback){
         try{
 
           var json =
-            JSON.parse(xhr.responseText);
+            JSON.parse(
+              xhr.responseText
+            );
+
 
           callback(
             null,
@@ -1315,7 +1423,8 @@ function requestJSON(url,callback){
 
         callback(
           new Error(
-            "HTTP " + xhr.status
+            "HTTP " +
+            xhr.status
           ),
           null
         );
@@ -1329,7 +1438,9 @@ function requestJSON(url,callback){
     function(){
 
       callback(
-        new Error("Network error"),
+        new Error(
+          "Network error"
+        ),
         null
       );
 
@@ -1340,7 +1451,9 @@ function requestJSON(url,callback){
     function(){
 
       callback(
-        new Error("Request timeout"),
+        new Error(
+          "Request timeout"
+        ),
         null
       );
 
@@ -1353,12 +1466,43 @@ function requestJSON(url,callback){
 
 
 /* =====================================================
-   SEARCH DRAMA
+   SEARCH
 ===================================================== */
 
-function searchDrama(query){
+searchForm.addEventListener(
+  "submit",
+  function(e){
 
-  results.innerHTML = "";
+    e.preventDefault();
+
+
+    var query =
+      searchInput.value.trim();
+
+
+    if(!query){
+
+      searchInput.focus();
+
+      return;
+
+    }
+
+
+    searchDrama(
+      query
+    );
+
+  }
+);
+
+
+function searchDrama(
+  query
+){
+
+  results.innerHTML =
+    "";
 
   empty.style.display =
     "none";
@@ -1367,8 +1511,12 @@ function searchDrama(query){
     "show"
   );
 
+
   resultTitle.textContent =
-    'Nyari "' + query + '"';
+    'Nyari "' +
+    query +
+    '"';
+
 
   resultCount.textContent =
     "tunggu bentar...";
@@ -1377,9 +1525,13 @@ function searchDrama(query){
   var url =
     SEARCH_API +
     "?q=" +
-    encodeURIComponent(query) +
+    encodeURIComponent(
+      query
+    ) +
     "&apikey=" +
-    encodeURIComponent(API_KEY);
+    encodeURIComponent(
+      API_KEY
+    );
 
 
   requestJSON(
@@ -1393,30 +1545,39 @@ function searchDrama(query){
 
       if(error){
 
-        console.error(error);
+        console.error(
+          error
+        );
+
 
         showEmpty(
           "Gagal mengambil data",
-          "API lagi nggak bisa diakses. Coba beberapa saat lagi."
+          "API tidak bisa diakses. Coba lagi beberapa saat."
         );
 
+
         return;
+
       }
 
 
       if(
         !json ||
         json.status !== true ||
-        !Array.isArray(json.data) ||
+        !Array.isArray(
+          json.data
+        ) ||
         json.data.length === 0
       ){
 
         showEmpty(
           "Film nggak ketemu",
-          "Coba pakai judul lain atau kata kunci yang lebih pendek."
+          "Coba judul lain atau kata kunci yang lebih pendek."
         );
 
+
         return;
+
       }
 
 
@@ -1431,41 +1592,53 @@ function searchDrama(query){
 
 
 /* =====================================================
-   RENDER SEARCH RESULT
+   RESULTS
 ===================================================== */
 
-function renderResults(data){
+function renderResults(
+  data
+){
 
-  results.innerHTML = "";
+  results.innerHTML =
+    "";
 
   empty.style.display =
     "none";
 
+
   resultCount.textContent =
-    data.length + " hasil";
+    data.length +
+    " hasil";
 
 
   for(
-    var index = 0;
-    index < data.length;
-    index++
+    var i = 0;
+    i < data.length;
+    i++
   ){
 
     var item =
-      data[index];
+      data[i];
+
 
     var card =
       document.createElement(
         "article"
       );
 
+
     card.className =
       "card";
 
 
+    var originalImage =
+      item.thumbnail ||
+      "";
+
+
     var thumbnail =
-      fixImageUrl(
-        item.thumbnail
+      imageProxy(
+        originalImage
       );
 
 
@@ -1481,9 +1654,11 @@ function renderResults(data){
 
 
     var episodeCount =
-      Array.isArray(item.episodes)
-        ? item.episodes.length
-        : 0;
+      Array.isArray(
+        item.episodes
+      )
+      ? item.episodes.length
+      : 0;
 
 
     card.innerHTML =
@@ -1492,20 +1667,25 @@ function renderResults(data){
 
         '<img' +
           ' src="' +
-          escapeHTML(thumbnail) +
+          escapeHTML(
+            thumbnail
+          ) +
           '"' +
           ' alt="' +
-          escapeHTML(title) +
+          escapeHTML(
+            title
+          ) +
           '"' +
           ' loading="lazy"' +
           ' referrerpolicy="no-referrer"' +
-          ' onerror="posterError(this)">' +
+          ' onerror="imageError(this)">' +
 
         '<span class="poster-label">' +
           (
             episodeCount
-              ? episodeCount + " EP"
-              : "DRAMA"
+            ? episodeCount +
+              " EP"
+            : "DRAMA"
           ) +
         '</span>' +
 
@@ -1514,21 +1694,31 @@ function renderResults(data){
       '<div class="card-body">' +
 
         '<div class="card-title">' +
-          escapeHTML(title) +
+          escapeHTML(
+            title
+          ) +
         '</div>' +
 
         '<div class="card-meta">' +
+
           '<span>' +
-            escapeHTML(year) +
+            escapeHTML(
+              year
+            ) +
           '</span>' +
+
           '<span>•</span>' +
+
           '<span>Drama</span>' +
+
         '</div>' +
 
       '</div>';
 
 
-    (function(selectedItem){
+    (function(
+      selectedItem
+    ){
 
       card.addEventListener(
         "click",
@@ -1557,26 +1747,32 @@ function renderResults(data){
    OPEN DETAIL
 ===================================================== */
 
-function openDrama(item){
+function openDrama(
+  item
+){
 
   var albumUrl =
-    fixUrl(item.url);
+    fixUrl(
+      item.url
+    );
 
 
   if(!albumUrl){
 
     showEmpty(
       "Link film nggak tersedia",
-      "Data dari API ini belum mempunyai URL detail."
+      "Data dari API belum mempunyai URL detail."
     );
 
     return;
+
   }
 
 
   modal.classList.add(
     "show"
   );
+
 
   document.body.style.overflow =
     "hidden";
@@ -1589,7 +1785,7 @@ function openDrama(item){
 
 
   detailImage.src =
-    fixImageUrl(
+    imageProxy(
       item.thumbnail
     );
 
@@ -1653,9 +1849,13 @@ function openDrama(item){
   var url =
     DETAIL_API +
     "?url=" +
-    encodeURIComponent(albumUrl) +
+    encodeURIComponent(
+      albumUrl
+    ) +
     "&apikey=" +
-    encodeURIComponent(API_KEY);
+    encodeURIComponent(
+      API_KEY
+    );
 
 
   requestJSON(
@@ -1664,12 +1864,15 @@ function openDrama(item){
 
       if(error){
 
-        console.error(error);
+        console.error(
+          error
+        );
+
 
         document.getElementById(
           "detailDescription"
         ).textContent =
-          "Detail dramanya gagal dimuat. Coba buka lagi sebentar.";
+          "Detail drama gagal dimuat.";
 
 
         document.getElementById(
@@ -1685,7 +1888,9 @@ function openDrama(item){
             'Episode gagal dimuat.' +
           '</div>';
 
+
         return;
+
       }
 
 
@@ -1701,20 +1906,8 @@ function openDrama(item){
           "Detail drama tidak tersedia.";
 
 
-        document.getElementById(
-          "episodes"
-        ).innerHTML =
-
-          '<div style="' +
-            'grid-column:1/-1;' +
-            'padding:25px;' +
-            'text-align:center;' +
-            'color:#737b87;' +
-            'font-size:10px;">' +
-            'Episode belum tersedia.' +
-          '</div>';
-
         return;
+
       }
 
 
@@ -1729,10 +1922,12 @@ function openDrama(item){
 
 
 /* =====================================================
-   RENDER DETAIL
+   DETAIL
 ===================================================== */
 
-function renderDetail(data){
+function renderDetail(
+  data
+){
 
   var title =
     data.title ||
@@ -1755,16 +1950,12 @@ function renderDetail(data){
     "Drama";
 
 
-  var thumbnail =
-    fixImageUrl(
-      data.thumbnail
-    );
-
-
   var episodes =
-    Array.isArray(data.episodes)
-      ? data.episodes
-      : [];
+    Array.isArray(
+      data.episodes
+    )
+    ? data.episodes
+    : [];
 
 
   detailImage.setAttribute(
@@ -1774,7 +1965,9 @@ function renderDetail(data){
 
 
   detailImage.src =
-    thumbnail;
+    imageProxy(
+      data.thumbnail
+    );
 
 
   document.getElementById(
@@ -1788,15 +1981,21 @@ function renderDetail(data){
   ).innerHTML =
 
     '<span class="badge">' +
-      escapeHTML(year) +
+      escapeHTML(
+        year
+      ) +
     '</span>' +
 
     '<span class="badge">' +
-      escapeHTML(rating) +
+      escapeHTML(
+        rating
+      ) +
     '</span>' +
 
     '<span class="badge">' +
-      escapeHTML(type) +
+      escapeHTML(
+        type
+      ) +
     '</span>' +
 
     '<span class="badge">' +
@@ -1810,11 +2009,13 @@ function renderDetail(data){
 
 
   if(
-    Array.isArray(data.director) &&
-    data.director.length
+    Array.isArray(
+      data.director
+    )
   ){
 
-    var directorNames = [];
+    var directors = [];
+
 
     for(
       var i = 0;
@@ -1822,25 +2023,30 @@ function renderDetail(data){
       i++
     ){
 
-      var directorItem =
+      var d =
         data.director[i];
 
-      var directorName =
-        directorItem.name ||
-        directorItem.n ||
+
+      var name =
+        d.name ||
+        d.n ||
         "";
 
-      if(directorName){
-        directorNames.push(
-          directorName
+
+      if(name){
+        directors.push(
+          name
         );
       }
 
     }
 
-    if(directorNames.length){
+
+    if(directors.length){
       director =
-        directorNames.join(", ");
+        directors.join(
+          ", "
+        );
     }
 
   }
@@ -1851,11 +2057,12 @@ function renderDetail(data){
 
 
   if(
-    Array.isArray(data.cast) &&
-    data.cast.length
+    Array.isArray(
+      data.cast
+    )
   ){
 
-    var castNames = [];
+    var casts = [];
 
 
     for(
@@ -1865,16 +2072,18 @@ function renderDetail(data){
       j++
     ){
 
-      var castItem =
+      var c =
         data.cast[j];
 
+
       var castName =
-        castItem.name ||
-        castItem.n ||
+        c.name ||
+        c.n ||
         "";
 
+
       if(castName){
-        castNames.push(
+        casts.push(
           castName
         );
       }
@@ -1882,9 +2091,11 @@ function renderDetail(data){
     }
 
 
-    if(castNames.length){
+    if(casts.length){
       cast =
-        castNames.join(", ");
+        casts.join(
+          ", "
+        );
     }
 
   }
@@ -1898,7 +2109,7 @@ function renderDetail(data){
     title +
     " tersedia dengan " +
     episodes.length +
-    " episode. Pilih episode di bawah untuk lanjut ke sumber resmi.";
+    " episode. Pilih episode untuk membuka sumber resmi.";
 
 
   document.getElementById(
@@ -1906,12 +2117,16 @@ function renderDetail(data){
   ).innerHTML =
 
     "<b>Sutradara:</b> " +
-    escapeHTML(director) +
+    escapeHTML(
+      director
+    ) +
 
     "<br>" +
 
     "<b>Pemain:</b> " +
-    escapeHTML(cast);
+    escapeHTML(
+      cast
+    );
 
 
   document.getElementById(
@@ -1929,10 +2144,12 @@ function renderDetail(data){
 
 
 /* =====================================================
-   RENDER EPISODES
+   EPISODES
 ===================================================== */
 
-function renderEpisodes(episodes){
+function renderEpisodes(
+  episodes
+){
 
   var container =
     document.getElementById(
@@ -1940,7 +2157,8 @@ function renderEpisodes(episodes){
     );
 
 
-  container.innerHTML = "";
+  container.innerHTML =
+    "";
 
 
   if(!episodes.length){
@@ -1956,28 +2174,33 @@ function renderEpisodes(episodes){
         'Episode belum tersedia.' +
       '</div>';
 
+
     return;
+
   }
 
 
   for(
-    var index = 0;
-    index < episodes.length;
-    index++
+    var i = 0;
+    i < episodes.length;
+    i++
   ){
 
     var ep =
-      episodes[index];
+      episodes[i];
 
 
     var title =
       ep.title ||
       ep.name ||
-      ("Episode " + (index + 1));
+      "Episode " +
+      (i + 1);
 
 
     var url =
-      fixUrl(ep.url);
+      fixUrl(
+        ep.url
+      );
 
 
     var vip =
@@ -1996,7 +2219,11 @@ function renderEpisodes(episodes){
 
     item.className =
       "episode" +
-      (vip ? " vip" : "");
+      (
+        vip
+        ? " vip"
+        : ""
+      );
 
 
     if(!url){
@@ -2004,51 +2231,62 @@ function renderEpisodes(episodes){
       item.innerHTML =
 
         '<div class="ep-name">' +
-          escapeHTML(title) +
+          escapeHTML(
+            title
+          ) +
         '</div>' +
 
         '<div class="ep-status">' +
           'LINK TIDAK TERSEDIA' +
         '</div>';
 
+
       container.appendChild(
         item
       );
 
+
       continue;
+
     }
 
 
     item.innerHTML =
 
       '<div class="ep-name" title="' +
-        escapeHTML(title) +
+        escapeHTML(
+          title
+        ) +
       '">' +
-        escapeHTML(title) +
+        escapeHTML(
+          title
+        ) +
       '</div>' +
 
       '<div class="ep-status">' +
         (
           vip
-            ? "VIP"
-            : "FREE"
+          ? "VIP"
+          : "FREE"
         ) +
       '</div>' +
 
       '<div class="ep-buttons">' +
 
-        '<a' +
-          ' href="' +
-          escapeHTML(url) +
+        '<a href="' +
+          escapeHTML(
+            url
+          ) +
           '"' +
           ' target="_blank"' +
           ' rel="noopener noreferrer">' +
           '▶ Tonton' +
         '</a>' +
 
-        '<a' +
-          ' href="' +
-          escapeHTML(url) +
+        '<a href="' +
+          escapeHTML(
+            url
+          ) +
           '"' +
           ' target="_blank"' +
           ' rel="noopener noreferrer">' +
@@ -2068,7 +2306,7 @@ function renderEpisodes(episodes){
 
 
 /* =====================================================
-   EMPTY STATE
+   EMPTY
 ===================================================== */
 
 function showEmpty(
@@ -2078,6 +2316,7 @@ function showEmpty(
 
   results.innerHTML =
     "";
+
 
   empty.style.display =
     "flex";
@@ -2090,11 +2329,15 @@ function showEmpty(
     '</div>' +
 
     '<div class="empty-title">' +
-      escapeHTML(title) +
+      escapeHTML(
+        title
+      ) +
     '</div>' +
 
     '<div class="empty-text">' +
-      escapeHTML(text) +
+      escapeHTML(
+        text
+      ) +
     '</div>';
 
 
@@ -2105,7 +2348,7 @@ function showEmpty(
 
 
 /* =====================================================
-   CLOSE MODAL
+   CLOSE
 ===================================================== */
 
 function closeModal(){
@@ -2113,6 +2356,7 @@ function closeModal(){
   modal.classList.remove(
     "show"
   );
+
 
   document.body.style.overflow =
     "";
@@ -2132,7 +2376,9 @@ modal.addEventListener(
   "click",
   function(e){
 
-    if(e.target === modal){
+    if(
+      e.target === modal
+    ){
       closeModal();
     }
 
@@ -2144,7 +2390,9 @@ document.addEventListener(
   "keydown",
   function(e){
 
-    if(e.key === "Escape"){
+    if(
+      e.key === "Escape"
+    ){
       closeModal();
     }
 
@@ -2153,7 +2401,7 @@ document.addEventListener(
 
 
 /* =====================================================
-   WELCOME POPUP
+   WELCOME
 ===================================================== */
 
 document.getElementById(
@@ -2198,16 +2446,18 @@ try{
 
 
 /* =====================================================
-   HERO SLIDER
+   SLIDER
 ===================================================== */
 
 var heroIndex =
   0;
 
+
 var heroSlides =
   document.querySelectorAll(
     ".hero-slide"
   );
+
 
 var heroDots =
   document.querySelectorAll(
@@ -2215,10 +2465,13 @@ var heroDots =
   );
 
 
-function showHero(index){
+function showHero(
+  index
+){
 
   heroIndex =
-    index % heroSlides.length;
+    index %
+    heroSlides.length;
 
 
   for(
@@ -2227,10 +2480,12 @@ function showHero(index){
     i++
   ){
 
-    heroSlides[i].classList.toggle(
-      "active",
-      i === heroIndex
-    );
+    heroSlides[i]
+      .classList
+      .toggle(
+        "active",
+        i === heroIndex
+      );
 
   }
 
@@ -2241,10 +2496,12 @@ function showHero(index){
     j++
   ){
 
-    heroDots[j].classList.toggle(
-      "active",
-      j === heroIndex
-    );
+    heroDots[j]
+      .classList
+      .toggle(
+        "active",
+        j === heroIndex
+      );
 
   }
 
@@ -2271,12 +2528,17 @@ searchInput.addEventListener(
   "keydown",
   function(e){
 
-    if(e.key === "Enter"){
+    if(
+      e.key === "Enter"
+    ){
 
       e.preventDefault();
 
+
       searchForm.dispatchEvent(
-        new Event("submit")
+        new Event(
+          "submit"
+        )
       );
 
     }
