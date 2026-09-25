@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<meta name="theme-color" content="#08090d">
-<meta name="description" content="What Word Game - Tebak kata dari huruf acak.">
-<title>WHAT WORD? — Tebak Kata</title>
+<meta name="theme-color" content="#07080b">
+<meta name="description" content="WHAT WORD? - Game tebak kata dengan timer dan jumpscare horror.">
+<title>WHAT WORD? — Horror Edition</title>
 
 <style>
 *{
@@ -18,12 +18,12 @@
 html,body{
   width:100%;
   min-height:100%;
-  background:#08090d;
+  background:#07080b;
 }
 
 body{
   font-family:Arial,Helvetica,sans-serif;
-  color:#f5f7fb;
+  color:#f4f5f8;
   overflow-x:hidden;
   user-select:none;
   -webkit-user-select:none;
@@ -45,34 +45,37 @@ button{
   position:relative;
   overflow:hidden;
   background:
-    radial-gradient(circle at 50% -10%,rgba(100,90,255,.16),transparent 38%),
-    #08090d;
+    radial-gradient(circle at 50% -10%,rgba(99,86,255,.14),transparent 38%),
+    #07080b;
 }
 
-/* BACKGROUND */
 .bg-orb{
   position:absolute;
   width:180px;
   height:180px;
   border-radius:50%;
   filter:blur(70px);
-  opacity:.12;
+  opacity:.11;
   pointer-events:none;
 }
 
 .orb1{
-  background:#695cff;
+  background:#685cff;
   left:-100px;
-  top:20%;
+  top:18%;
 }
 
 .orb2{
-  background:#00d9ff;
+  background:#00c8ff;
   right:-110px;
   bottom:10%;
 }
 
-/* TOP */
+
+/* =========================
+   HEADER
+========================= */
+
 .topbar{
   width:min(700px,calc(100% - 28px));
   margin:auto;
@@ -97,7 +100,7 @@ button{
   display:flex;
   align-items:center;
   justify-content:center;
-  background:linear-gradient(135deg,#7065ff,#5145d8);
+  background:linear-gradient(135deg,#7065ff,#5044d5);
   box-shadow:0 8px 25px rgba(92,78,255,.22);
   font-size:19px;
 }
@@ -136,7 +139,11 @@ button{
   font-size:16px;
 }
 
-/* GAME */
+
+/* =========================
+   GAME
+========================= */
+
 .game{
   width:min(700px,calc(100% - 28px));
   margin:12px auto 0;
@@ -146,11 +153,17 @@ button{
 
 .card{
   border:1px solid #1d2130;
-  background:rgba(13,15,22,.94);
+  background:rgba(13,15,22,.95);
   border-radius:22px;
   padding:22px;
   box-shadow:0 20px 60px rgba(0,0,0,.22);
+  overflow:hidden;
 }
+
+
+/* =========================
+   CATEGORY
+========================= */
 
 .category{
   display:inline-flex;
@@ -172,6 +185,11 @@ button{
   background:#8b82ff;
 }
 
+
+/* =========================
+   QUESTION
+========================= */
+
 .question-title{
   margin-top:18px;
   color:#777d8c;
@@ -179,26 +197,36 @@ button{
 }
 
 .word{
-  min-height:90px;
-  margin-top:8px;
+  min-height:82px;
+  margin-top:7px;
   display:flex;
   align-items:center;
   justify-content:center;
-  gap:7px;
+  gap:5px;
   flex-wrap:wrap;
-  font-size:clamp(26px,7vw,44px);
-  font-weight:900;
-  letter-spacing:5px;
+
+  /*
+    Ukuran sedang.
+    Tidak lagi segede versi sebelumnya.
+  */
+  font-size:clamp(21px,5vw,32px);
+
+  font-weight:800;
+  letter-spacing:3px;
+  line-height:1.35;
+
   color:#fff;
   text-align:center;
-  text-shadow:0 0 25px rgba(119,105,255,.18);
+
+  overflow-wrap:anywhere;
+  word-break:break-word;
+  max-width:100%;
 }
 
 .letter{
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  min-width:28px;
 }
 
 .info{
@@ -208,12 +236,63 @@ button{
   margin-top:2px;
 }
 
-/* LIVES */
+
+/* =========================
+   TIMER
+========================= */
+
+.timer-box{
+  margin-top:17px;
+}
+
+.timer-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:7px;
+}
+
+.timer-label{
+  font-size:10px;
+  color:#777d8c;
+  text-transform:uppercase;
+  letter-spacing:1px;
+}
+
+.timer-number{
+  font-size:13px;
+  font-weight:bold;
+  color:#a9a4ff;
+  min-width:42px;
+  text-align:right;
+}
+
+.timer-track{
+  height:6px;
+  width:100%;
+  border-radius:999px;
+  background:#1b1e27;
+  overflow:hidden;
+}
+
+.timer-bar{
+  height:100%;
+  width:100%;
+  border-radius:999px;
+  background:#665cff;
+  transition:width 1s linear,background .2s ease;
+}
+
+
+/* =========================
+   LIVES
+========================= */
+
 .lives{
   display:flex;
   justify-content:center;
   gap:8px;
-  margin:19px 0 17px;
+  margin:18px 0 17px;
 }
 
 .life{
@@ -230,7 +309,11 @@ button{
   box-shadow:none;
 }
 
-/* INPUT */
+
+/* =========================
+   INPUT
+========================= */
+
 .input-wrap{
   display:flex;
   gap:8px;
@@ -281,7 +364,11 @@ button{
   opacity:.45;
 }
 
-/* STATUS */
+
+/* =========================
+   STATUS
+========================= */
+
 .status{
   min-height:24px;
   display:flex;
@@ -301,7 +388,11 @@ button{
   color:#ff737e;
 }
 
-/* BOTTOM INFO */
+
+/* =========================
+   STATS
+========================= */
+
 .stats{
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -330,7 +421,11 @@ button{
   font-size:15px;
 }
 
-/* FOOTER */
+
+/* =========================
+   FOOTER
+========================= */
+
 .footer{
   width:min(700px,calc(100% - 28px));
   margin:14px auto 24px;
@@ -341,15 +436,19 @@ button{
   z-index:2;
 }
 
-/* LOADING */
+
+/* =========================
+   LOADING
+========================= */
+
 .loading{
-  position:absolute;
+  position:fixed;
   inset:0;
   display:flex;
   align-items:center;
   justify-content:center;
-  background:#08090d;
-  z-index:50;
+  background:#07080b;
+  z-index:500;
   transition:opacity .2s ease;
 }
 
@@ -383,10 +482,17 @@ button{
 }
 
 @keyframes pulse{
-  50%{transform:scale(.94);opacity:.65}
+  50%{
+    transform:scale(.94);
+    opacity:.65;
+  }
 }
 
-/* SHAKE */
+
+/* =========================
+   SHAKE
+========================= */
+
 .shake{
   animation:shake .32s ease;
 }
@@ -399,20 +505,29 @@ button{
   80%{transform:translateX(5px)}
 }
 
-/* POPUP */
+
+/* =========================
+   POPUP
+========================= */
+
 .overlay{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.72);
+  background:rgba(0,0,0,.74);
   backdrop-filter:blur(3px);
   -webkit-backdrop-filter:blur(3px);
+
   display:flex;
   align-items:center;
   justify-content:center;
+
   padding:20px;
+
   opacity:0;
   pointer-events:none;
+
   transition:opacity .16s ease;
+
   z-index:100;
 }
 
@@ -429,7 +544,9 @@ button{
   padding:24px 20px;
   text-align:center;
   box-shadow:0 30px 80px rgba(0,0,0,.55);
+
   transform:scale(.94);
+
   transition:transform .16s ease;
 }
 
@@ -473,127 +590,352 @@ button{
   font-weight:bold;
 }
 
-/* JUMPSCARE */
+
+/* =========================
+   HORROR SCREEN
+========================= */
+
 .scare{
   position:fixed;
   inset:0;
-  z-index:200;
-  background:#030304;
+  z-index:900;
+
   display:flex;
   align-items:center;
   justify-content:center;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(100,0,0,.22),
+      #000 55%
+    );
+
   opacity:0;
   pointer-events:none;
+  overflow:hidden;
 }
 
 .scare.show{
-  animation:scareShow .72s ease forwards;
+  animation:horrorScreen 2.3s ease forwards;
 }
+
+.scare-flash{
+  position:absolute;
+  inset:0;
+  background:#6e0000;
+  opacity:0;
+}
+
+.scare.show .scare-flash{
+  animation:flashRed 2.1s ease;
+}
+
+
+/* HORROR FACE */
 
 .scare-face{
-  width:150px;
-  height:150px;
-  border-radius:50%;
-  background:#111;
+  width:210px;
+  height:250px;
+
   position:relative;
+
+  background:
+    radial-gradient(
+      ellipse at 50% 42%,
+      #272727 0%,
+      #0a0a0a 65%
+    );
+
+  border-radius:48% 48% 42% 42%;
+
   box-shadow:
-    0 0 0 5px #090909,
-    0 0 50px rgba(255,30,40,.25);
-  transform:scale(.3);
-}
+    0 0 0 4px #050505,
+    0 0 45px rgba(255,0,0,.20);
 
-.eye{
-  position:absolute;
-  width:30px;
-  height:42px;
-  border-radius:50%;
-  background:#eee;
-  top:42px;
-}
-
-.eye:after{
-  content:"";
-  position:absolute;
-  width:9px;
-  height:20px;
-  background:#050505;
-  border-radius:50%;
-  left:10px;
-  top:11px;
-}
-
-.eye.left{left:35px}
-.eye.right{right:35px}
-
-.mouth{
-  position:absolute;
-  width:70px;
-  height:30px;
-  border-radius:0 0 50px 50px;
-  border-bottom:7px solid #eee;
-  left:40px;
-  bottom:32px;
-}
-
-.scare-text{
-  position:absolute;
-  bottom:15%;
-  font-size:12px;
-  color:#777;
-  letter-spacing:3px;
-}
-
-@keyframes scareShow{
-  0%{
-    opacity:0;
-  }
-  12%{
-    opacity:1;
-  }
-  20%{
-    opacity:.25;
-  }
-  30%{
-    opacity:1;
-  }
-  65%{
-    opacity:1;
-  }
-  100%{
-    opacity:0;
-  }
+  transform:scale(.1);
+  opacity:0;
 }
 
 .scare.show .scare-face{
-  animation:faceIn .55s cubic-bezier(.1,.8,.2,1);
+  animation:monsterAppear 1.8s cubic-bezier(.15,.8,.15,1) forwards;
 }
 
-@keyframes faceIn{
-  0%{transform:scale(.25)}
-  30%{transform:scale(1.35)}
-  50%{transform:scale(.88)}
-  70%{transform:scale(1.05)}
-  100%{transform:scale(1)}
+
+/* EYES */
+
+.eye{
+  position:absolute;
+
+  width:48px;
+  height:62px;
+
+  top:72px;
+
+  border-radius:50%;
+
+  background:
+    radial-gradient(
+      ellipse at center,
+      #000 0 22%,
+      #eee 24% 55%,
+      #6e0000 57% 100%
+    );
+
+  box-shadow:
+    0 0 12px rgba(255,0,0,.5);
 }
 
-/* TOAST */
+.eye.left{
+  left:37px;
+  transform:rotate(-7deg);
+}
+
+.eye.right{
+  right:37px;
+  transform:rotate(7deg);
+}
+
+
+/* MOUTH */
+
+.mouth{
+  position:absolute;
+
+  width:115px;
+  height:68px;
+
+  left:50%;
+  transform:translateX(-50%);
+
+  bottom:35px;
+
+  border-radius:8px 8px 50% 50%;
+
+  background:#020202;
+
+  border:2px solid #242424;
+
+  overflow:hidden;
+}
+
+.mouth:before{
+  content:"";
+
+  position:absolute;
+
+  width:100%;
+  height:15px;
+
+  top:0;
+  left:0;
+
+  background:
+    repeating-linear-gradient(
+      90deg,
+      #eee 0 9px,
+      #080808 9px 15px
+    );
+}
+
+
+/* BLOOD / SCRATCH */
+
+.scare-face:before,
+.scare-face:after{
+  content:"";
+  position:absolute;
+
+  width:3px;
+  height:50px;
+
+  background:#640000;
+
+  opacity:.8;
+}
+
+.scare-face:before{
+  left:22px;
+  top:35px;
+  transform:rotate(25deg);
+}
+
+.scare-face:after{
+  right:20px;
+  top:110px;
+  transform:rotate(-18deg);
+}
+
+
+/* HORROR TEXT */
+
+.scare-text{
+  position:absolute;
+
+  bottom:13%;
+
+  color:#b50000;
+
+  font-size:13px;
+  font-weight:bold;
+
+  letter-spacing:4px;
+
+  text-shadow:
+    0 0 10px #700000;
+
+  opacity:0;
+}
+
+.scare.show .scare-text{
+  animation:textHorror 2s ease forwards;
+}
+
+
+@keyframes monsterAppear{
+
+  0%{
+    transform:scale(.08) rotate(-8deg);
+    opacity:0;
+  }
+
+  15%{
+    opacity:1;
+    transform:scale(.65) rotate(4deg);
+  }
+
+  27%{
+    transform:scale(1.12) rotate(-2deg);
+  }
+
+  40%{
+    transform:scale(.95) rotate(1deg);
+  }
+
+  55%{
+    transform:scale(1.03);
+  }
+
+  75%{
+    transform:scale(1);
+  }
+
+  100%{
+    transform:scale(1);
+    opacity:1;
+  }
+
+}
+
+@keyframes horrorScreen{
+
+  0%{
+    opacity:0;
+  }
+
+  8%{
+    opacity:1;
+  }
+
+  12%{
+    opacity:.25;
+  }
+
+  17%{
+    opacity:1;
+  }
+
+  70%{
+    opacity:1;
+  }
+
+  100%{
+    opacity:0;
+  }
+
+}
+
+@keyframes flashRed{
+
+  0%,100%{
+    opacity:0;
+  }
+
+  8%{
+    opacity:.65;
+  }
+
+  12%{
+    opacity:0;
+  }
+
+  18%{
+    opacity:.4;
+  }
+
+  25%{
+    opacity:0;
+  }
+
+}
+
+@keyframes textHorror{
+
+  0%,30%{
+    opacity:0;
+    transform:translateY(10px);
+  }
+
+  45%{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+  80%{
+    opacity:1;
+  }
+
+  100%{
+    opacity:0;
+  }
+
+}
+
+
+/* =========================
+   TOAST
+========================= */
+
 .toast{
   position:fixed;
+
   left:50%;
   bottom:25px;
+
   transform:translate(-50%,20px);
-  z-index:300;
+
+  z-index:950;
+
   width:max-content;
   max-width:calc(100% - 30px);
+
   padding:11px 15px;
+
   border-radius:12px;
+
   background:#151821;
   border:1px solid #292e3c;
+
   color:#fff;
+
   font-size:11px;
+
   opacity:0;
+
   pointer-events:none;
+
   transition:.2s ease;
+
   text-align:center;
 }
 
@@ -602,27 +944,47 @@ button{
   transform:translate(-50%,0);
 }
 
-/* CONFETTI LIGHT */
+
+/* =========================
+   CONFETTI
+========================= */
+
 .confetti{
   position:fixed;
+
   width:6px;
   height:10px;
+
   top:-20px;
+
   z-index:250;
+
   pointer-events:none;
+
   background:#fff;
+
   animation:fall 800ms linear forwards;
 }
 
 @keyframes fall{
+
   to{
-    transform:translate3d(var(--x),110vh,0) rotate(500deg);
+    transform:
+      translate3d(var(--x),110vh,0)
+      rotate(500deg);
+
     opacity:0;
   }
+
 }
 
-/* MOBILE */
+
+/* =========================
+   MOBILE
+========================= */
+
 @media(max-width:480px){
+
   .topbar{
     padding-top:15px;
   }
@@ -633,17 +995,45 @@ button{
   }
 
   .word{
-    min-height:82px;
-    gap:5px;
-    letter-spacing:3px;
+    min-height:78px;
+    font-size:clamp(19px,5vw,27px);
+    letter-spacing:2px;
+    gap:4px;
   }
 
   .submit{
     flex-basis:90px;
   }
+
+  .scare-face{
+    width:180px;
+    height:215px;
+  }
+
+  .eye{
+    width:40px;
+    height:54px;
+    top:61px;
+  }
+
+  .eye.left{
+    left:31px;
+  }
+
+  .eye.right{
+    right:31px;
+  }
+
+  .mouth{
+    width:100px;
+    bottom:30px;
+  }
+
 }
 
+
 @media(max-width:340px){
+
   .brand-text span{
     display:none;
   }
@@ -658,8 +1048,9 @@ button{
   }
 
   .word{
-    font-size:25px;
+    font-size:19px;
   }
+
 }
 </style>
 </head>
@@ -673,57 +1064,141 @@ button{
 
   <!-- LOADING -->
   <div class="loading" id="loading">
+
     <div class="loader">
-      <div class="loader-icon">🧠</div>
-      <p>Lagi nyari soal...</p>
+
+      <div class="loader-icon">
+        🧠
+      </div>
+
+      <p>
+        Lagi nyari soal...
+      </p>
+
     </div>
+
   </div>
+
 
   <!-- HEADER -->
   <header class="topbar">
+
     <div class="brand">
-      <div class="logo">?</div>
-      <div class="brand-text">
-        <strong>WHAT WORD?</strong>
-        <span>tebak kata • jangan nyontek 😭</span>
+
+      <div class="logo">
+        ?
       </div>
+
+      <div class="brand-text">
+
+        <strong>
+          WHAT WORD?
+        </strong>
+
+        <span>
+          tebak kata • jangan nyontek 😭
+        </span>
+
+      </div>
+
     </div>
 
+
     <div class="score-box">
-      <small>Score</small>
-      <b id="score">0</b>
+
+      <small>
+        Score
+      </small>
+
+      <b id="score">
+        0
+      </b>
+
     </div>
+
   </header>
+
 
   <!-- GAME -->
   <main class="game">
 
     <section class="card" id="gameCard">
 
+
+      <!-- CATEGORY -->
       <div class="category">
+
         <span class="category-dot"></span>
-        <span id="category">Loading...</span>
+
+        <span id="category">
+          Loading...
+        </span>
+
       </div>
 
+
+      <!-- QUESTION -->
       <div class="question-title">
+
         Susun huruf di bawah jadi kata yang bener
+
       </div>
+
 
       <div class="word" id="word">
+
         • • •
+
       </div>
+
 
       <div class="info">
-        gampang? belum tentu 😏
+
+        jangan sampai salah baca 😭
+
       </div>
 
+
+      <!-- TIMER -->
+      <div class="timer-box">
+
+        <div class="timer-top">
+
+          <span class="timer-label">
+            Waktu
+          </span>
+
+          <span class="timer-number" id="timerNumber">
+            20s
+          </span>
+
+        </div>
+
+        <div class="timer-track">
+
+          <div
+            class="timer-bar"
+            id="timerBar">
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- LIVES -->
       <div class="lives" id="lives">
+
         <div class="life"></div>
         <div class="life"></div>
         <div class="life"></div>
+
       </div>
 
+
+      <!-- INPUT -->
       <form class="input-wrap" id="form">
+
         <input
           class="answer"
           id="answer"
@@ -734,143 +1209,296 @@ button{
           placeholder="ketik jawaban di sini..."
         >
 
-        <button class="submit" id="submit" type="submit">
+        <button
+          class="submit"
+          id="submit"
+          type="submit">
+
           JAWAB
+
         </button>
+
       </form>
 
-      <div class="status" id="status">
-        3 kesempatan. jangan buru-buru 😎
+
+      <!-- STATUS -->
+      <div
+        class="status"
+        id="status">
+
+        3 kesempatan. waktu jalan terus 😈
+
       </div>
 
     </section>
 
+
+    <!-- STATS -->
     <section class="stats">
-      <div class="stat">
-        <small>Benar</small>
-        <b id="correct">0</b>
-      </div>
 
       <div class="stat">
-        <small>Salah</small>
-        <b id="wrong">0</b>
+
+        <small>
+          Benar
+        </small>
+
+        <b id="correct">
+          0
+        </b>
+
       </div>
 
+
       <div class="stat">
-        <small>Streak</small>
-        <b id="streak">0</b>
+
+        <small>
+          Salah
+        </small>
+
+        <b id="wrong">
+          0
+        </b>
+
       </div>
+
+
+      <div class="stat">
+
+        <small>
+          Streak
+        </small>
+
+        <b id="streak">
+          0
+        </b>
+
+      </div>
+
     </section>
 
   </main>
 
+
   <footer class="footer">
-    WHAT WORD? • main santai, jangan emosi wkwk
+
+    WHAT WORD? • cepat jawabnya, jangan sampai dia datang 👁️
+
   </footer>
 
 </div>
 
 
 <!-- RESULT POPUP -->
-<div class="overlay" id="overlay">
+<div
+  class="overlay"
+  id="overlay">
+
   <div class="popup">
 
-    <div class="popup-icon" id="popupIcon">🎉</div>
+    <div
+      class="popup-icon"
+      id="popupIcon">
 
-    <h2 id="popupTitle">Mantap!</h2>
+      🎉
 
-    <p id="popupMessage">
-      Jawaban kamu benar.
-    </p>
-
-    <div class="popup-answer" id="popupAnswer">
-      MELON
     </div>
 
-    <button class="popup-btn" id="popupButton">
+
+    <h2 id="popupTitle">
+
+      Mantap!
+
+    </h2>
+
+
+    <p id="popupMessage">
+
+      Jawaban kamu benar.
+
+    </p>
+
+
+    <div
+      class="popup-answer"
+      id="popupAnswer">
+
+      MELON
+
+    </div>
+
+
+    <button
+      class="popup-btn"
+      id="popupButton">
+
       LANJUT →
+
     </button>
 
   </div>
+
 </div>
 
 
-<!-- JUMPSCARE -->
-<div class="scare" id="scare">
+<!-- HORROR -->
+<div
+  class="scare"
+  id="scare">
+
+  <div class="scare-flash"></div>
+
 
   <div class="scare-face">
+
     <div class="eye left"></div>
+
     <div class="eye right"></div>
+
     <div class="mouth"></div>
+
   </div>
 
+
   <div class="scare-text">
-    SALAH TERUS WKWK 😭
+
+    KOK SALAH TERUS...?
+
   </div>
 
 </div>
 
 
 <!-- TOAST -->
-<div class="toast" id="toast"></div>
+<div
+  class="toast"
+  id="toast">
+</div>
 
 
 <script>
-/*
-========================================================
- WHAT WORD?
- Mini Game Tebak Kata
- API:
- https://api.neoxr.eu/api/whatword?apikey=...
-========================================================
-*/
+
+/* =====================================================
+   CONFIG
+===================================================== */
 
 const API_URL =
   "https://api.neoxr.eu/api/whatword?apikey=gBw4bfj5haqY";
 
+/*
+  Waktu setiap soal.
+  Bisa kamu ubah:
 
-/* ELEMENT */
-const loading = document.getElementById("loading");
-const categoryEl = document.getElementById("category");
-const wordEl = document.getElementById("word");
-const answerEl = document.getElementById("answer");
-const form = document.getElementById("form");
-const submitBtn = document.getElementById("submit");
-const statusEl = document.getElementById("status");
-const gameCard = document.getElementById("gameCard");
+  20 = normal
+  15 = lebih tegang
+  30 = santai
+*/
 
-const scoreEl = document.getElementById("score");
-const correctEl = document.getElementById("correct");
-const wrongEl = document.getElementById("wrong");
-const streakEl = document.getElementById("streak");
-const livesEl = document.getElementById("lives");
-
-const overlay = document.getElementById("overlay");
-const popupIcon = document.getElementById("popupIcon");
-const popupTitle = document.getElementById("popupTitle");
-const popupMessage = document.getElementById("popupMessage");
-const popupAnswer = document.getElementById("popupAnswer");
-const popupButton = document.getElementById("popupButton");
-
-const scare = document.getElementById("scare");
-const toast = document.getElementById("toast");
+const QUESTION_TIME = 20;
 
 
-/* GAME STATE */
+/* =====================================================
+   ELEMENT
+===================================================== */
+
+const loading =
+  document.getElementById("loading");
+
+const categoryEl =
+  document.getElementById("category");
+
+const wordEl =
+  document.getElementById("word");
+
+const answerEl =
+  document.getElementById("answer");
+
+const form =
+  document.getElementById("form");
+
+const submitBtn =
+  document.getElementById("submit");
+
+const statusEl =
+  document.getElementById("status");
+
+const gameCard =
+  document.getElementById("gameCard");
+
+const scoreEl =
+  document.getElementById("score");
+
+const correctEl =
+  document.getElementById("correct");
+
+const wrongEl =
+  document.getElementById("wrong");
+
+const streakEl =
+  document.getElementById("streak");
+
+const livesEl =
+  document.getElementById("lives");
+
+const timerNumber =
+  document.getElementById("timerNumber");
+
+const timerBar =
+  document.getElementById("timerBar");
+
+const overlay =
+  document.getElementById("overlay");
+
+const popupIcon =
+  document.getElementById("popupIcon");
+
+const popupTitle =
+  document.getElementById("popupTitle");
+
+const popupMessage =
+  document.getElementById("popupMessage");
+
+const popupAnswer =
+  document.getElementById("popupAnswer");
+
+const popupButton =
+  document.getElementById("popupButton");
+
+const scare =
+  document.getElementById("scare");
+
+const toast =
+  document.getElementById("toast");
+
+
+/* =====================================================
+   STATE
+===================================================== */
+
 let currentAnswer = "";
+
 let currentCategory = "";
 
 let chances = 3;
 
 let score = 0;
+
 let correct = 0;
+
 let wrong = 0;
+
 let streak = 0;
 
 let loadingQuestion = false;
+
 let nextAction = null;
 
+let timeLeft = QUESTION_TIME;
+
+let timer = null;
+
 let toastTimer = null;
+
+let audioContext = null;
 
 
 /* =====================================================
@@ -878,22 +1506,310 @@ let toastTimer = null;
 ===================================================== */
 
 try{
-  score = parseInt(localStorage.getItem("ww_score") || "0",10);
-  correct = parseInt(localStorage.getItem("ww_correct") || "0",10);
-  wrong = parseInt(localStorage.getItem("ww_wrong") || "0",10);
-  streak = parseInt(localStorage.getItem("ww_streak") || "0",10);
+
+  score =
+    parseInt(
+      localStorage.getItem("ww_score") || "0",
+      10
+    );
+
+  correct =
+    parseInt(
+      localStorage.getItem("ww_correct") || "0",
+      10
+    );
+
+  wrong =
+    parseInt(
+      localStorage.getItem("ww_wrong") || "0",
+      10
+    );
+
+  streak =
+    parseInt(
+      localStorage.getItem("ww_streak") || "0",
+      10
+    );
+
 }catch(e){}
+
 
 updateStats();
 
 
 function saveStats(){
+
   try{
-    localStorage.setItem("ww_score",score);
-    localStorage.setItem("ww_correct",correct);
-    localStorage.setItem("ww_wrong",wrong);
-    localStorage.setItem("ww_streak",streak);
+
+    localStorage.setItem(
+      "ww_score",
+      score
+    );
+
+    localStorage.setItem(
+      "ww_correct",
+      correct
+    );
+
+    localStorage.setItem(
+      "ww_wrong",
+      wrong
+    );
+
+    localStorage.setItem(
+      "ww_streak",
+      streak
+    );
+
   }catch(e){}
+
+}
+
+
+/* =====================================================
+   AUDIO
+   Horror sound dibuat menggunakan Web Audio API.
+   Tidak perlu MP3 eksternal.
+===================================================== */
+
+function initAudio(){
+
+  try{
+
+    if(!audioContext){
+
+      const AudioCtx =
+        window.AudioContext ||
+        window.webkitAudioContext;
+
+      if(AudioCtx){
+
+        audioContext =
+          new AudioCtx();
+
+      }
+
+    }
+
+    if(
+      audioContext &&
+      audioContext.state === "suspended"
+    ){
+
+      audioContext.resume();
+
+    }
+
+  }catch(e){}
+
+}
+
+
+function horrorSound(){
+
+  try{
+
+    initAudio();
+
+    if(!audioContext) return;
+
+    const now =
+      audioContext.currentTime;
+
+    const osc =
+      audioContext.createOscillator();
+
+    const gain =
+      audioContext.createGain();
+
+    osc.type = "sawtooth";
+
+    osc.frequency.setValueAtTime(
+      85,
+      now
+    );
+
+    osc.frequency.exponentialRampToValueAtTime(
+      38,
+      now + 1.3
+    );
+
+    gain.gain.setValueAtTime(
+      0.0001,
+      now
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+      0.12,
+      now + .08
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+      0.0001,
+      now + 1.45
+    );
+
+    osc.connect(gain);
+
+    gain.connect(
+      audioContext.destination
+    );
+
+    osc.start(now);
+
+    osc.stop(now + 1.5);
+
+  }catch(e){}
+
+}
+
+
+/* =====================================================
+   TIMER
+===================================================== */
+
+function startTimer(){
+
+  stopTimer();
+
+  timeLeft =
+    QUESTION_TIME;
+
+  updateTimerUI();
+
+  timer =
+    setInterval(function(){
+
+      timeLeft--;
+
+      updateTimerUI();
+
+      if(timeLeft <= 0){
+
+        stopTimer();
+
+        timeOut();
+
+      }
+
+    },1000);
+
+}
+
+
+function stopTimer(){
+
+  if(timer){
+
+    clearInterval(timer);
+
+    timer = null;
+
+  }
+
+}
+
+
+function updateTimerUI(){
+
+  timerNumber.textContent =
+    timeLeft + "s";
+
+  const percentage =
+    Math.max(
+      0,
+      (timeLeft / QUESTION_TIME) * 100
+    );
+
+  timerBar.style.width =
+    percentage + "%";
+
+
+  if(timeLeft <= 5){
+
+    timerBar.style.background =
+      "#e34b55";
+
+    timerNumber.style.color =
+      "#ff6972";
+
+  }else if(timeLeft <= 10){
+
+    timerBar.style.background =
+      "#d59b39";
+
+    timerNumber.style.color =
+      "#e0ad54";
+
+  }else{
+
+    timerBar.style.background =
+      "#665cff";
+
+    timerNumber.style.color =
+      "#a9a4ff";
+
+  }
+
+}
+
+
+/* =====================================================
+   TIME OUT
+===================================================== */
+
+function timeOut(){
+
+  if(!currentAnswer) return;
+
+  chances--;
+
+  wrong++;
+
+  streak = 0;
+
+  saveStats();
+
+  updateStats();
+
+  updateLives();
+
+  gameCard.classList.remove("shake");
+
+  void gameCard.offsetWidth;
+
+  gameCard.classList.add("shake");
+
+  statusEl.textContent =
+    "WAKTU HABIS 😭 kesempatan berkurang.";
+
+  statusEl.className =
+    "status bad";
+
+  showToast(
+    "Keburu waktunya habis 💀"
+  );
+
+
+  if(chances > 0){
+
+    answerEl.value = "";
+
+    answerEl.focus();
+
+    /*
+      Kasih waktu baru untuk soal yang sama.
+      Jadi timeout tidak langsung ganti soal.
+    */
+
+    startTimer();
+
+  }else{
+
+    handleGameOver();
+
+  }
+
 }
 
 
@@ -907,108 +1823,185 @@ async function getQuestion(){
 
   loadingQuestion = true;
 
+  stopTimer();
+
   loading.classList.remove("hide");
 
   submitBtn.disabled = true;
+
   answerEl.disabled = true;
+
 
   try{
 
-    const controller = new AbortController();
+    const controller =
+      new AbortController();
 
-    const timeout = setTimeout(function(){
-      controller.abort();
-    },10000);
+    const timeout =
+      setTimeout(function(){
 
-    const response = await fetch(API_URL,{
-      method:"GET",
-      cache:"no-store",
-      signal:controller.signal
-    });
+        controller.abort();
+
+      },10000);
+
+
+    const response =
+      await fetch(
+        API_URL,
+        {
+          method:"GET",
+          cache:"no-store",
+          signal:controller.signal
+        }
+      );
+
 
     clearTimeout(timeout);
 
+
     if(!response.ok){
-      throw new Error("HTTP " + response.status);
+
+      throw new Error(
+        "HTTP " + response.status
+      );
+
     }
 
-    const json = await response.json();
+
+    const json =
+      await response.json();
+
 
     if(
       !json ||
       json.status !== true ||
       !json.data
     ){
-      throw new Error("Data API tidak valid");
+
+      throw new Error(
+        "Data API tidak valid"
+      );
+
     }
 
-    const data = json.data;
+
+    const data =
+      json.data;
+
 
     currentCategory =
-      String(data.tipe || "Umum");
+      String(
+        data.tipe || "Umum"
+      );
+
 
     currentAnswer =
-      String(data.jawaban || "")
+      String(
+        data.jawaban || ""
+      )
       .trim()
       .toUpperCase();
+
 
     const question =
-      String(data.pertanyaan || "")
+      String(
+        data.pertanyaan || ""
+      )
       .trim()
       .toUpperCase();
 
-    if(!currentAnswer || !question){
-      throw new Error("Soal kosong");
+
+    if(
+      !currentAnswer ||
+      !question
+    ){
+
+      throw new Error(
+        "Soal kosong"
+      );
+
     }
 
-    categoryEl.textContent = currentCategory;
+
+    categoryEl.textContent =
+      currentCategory;
+
 
     renderWord(question);
+
 
     chances = 3;
 
     updateLives();
 
+
     answerEl.value = "";
+
     answerEl.disabled = false;
+
     submitBtn.disabled = false;
 
-    statusEl.textContent =
-      "3 kesempatan. jangan buru-buru 😎";
+    submitBtn.textContent =
+      "JAWAB";
 
-    statusEl.className = "status";
+
+    statusEl.textContent =
+      "3 kesempatan. waktu jalan terus 😈";
+
+    statusEl.className =
+      "status";
+
 
     loading.classList.add("hide");
 
+
+    startTimer();
+
+
     setTimeout(function(){
+
       answerEl.focus();
+
     },80);
+
 
   }catch(error){
 
     console.error(error);
 
-    categoryEl.textContent = "ERROR";
 
-    wordEl.textContent = "😵";
+    categoryEl.textContent =
+      "ERROR";
+
+
+    wordEl.textContent =
+      "😵";
+
 
     statusEl.textContent =
-      "Soalnya gagal diambil. cek koneksi terus coba lagi.";
+      "Soalnya gagal diambil. cek koneksi.";
 
-    statusEl.className = "status bad";
+    statusEl.className =
+      "status bad";
+
 
     loading.classList.add("hide");
 
+
     answerEl.disabled = true;
+
     submitBtn.disabled = false;
 
-    submitBtn.textContent = "COBA LAGI";
+    submitBtn.textContent =
+      "COBA LAGI";
+
 
   }finally{
 
     loadingQuestion = false;
 
   }
+
 }
 
 
@@ -1020,24 +2013,42 @@ function renderWord(text){
 
   wordEl.innerHTML = "";
 
-  const chars = text.split("");
+  const chars =
+    text.split("");
+
 
   chars.forEach(function(char){
 
-    const span = document.createElement("span");
+    const span =
+      document.createElement("span");
 
-    span.className = "letter";
+    span.className =
+      "letter";
 
-    if(char === "-" || char === " "){
-      span.textContent = char;
-      span.style.opacity = ".45";
+
+    if(
+      char === "-" ||
+      char === " "
+    ){
+
+      span.textContent =
+        char;
+
+      span.style.opacity =
+        ".45";
+
     }else{
-      span.textContent = char;
+
+      span.textContent =
+        char;
+
     }
+
 
     wordEl.appendChild(span);
 
   });
+
 }
 
 
@@ -1045,42 +2056,65 @@ function renderWord(text){
    SUBMIT
 ===================================================== */
 
-form.addEventListener("submit",function(e){
+form.addEventListener(
+  "submit",
+  function(e){
 
-  e.preventDefault();
+    e.preventDefault();
 
-  if(loadingQuestion) return;
+    initAudio();
 
-  if(!currentAnswer){
+    if(loadingQuestion) return;
 
-    getQuestion();
+    if(!currentAnswer){
 
-    return;
+      getQuestion();
+
+      return;
+
+    }
+
+
+    const userAnswer =
+      answerEl.value
+      .trim()
+      .toUpperCase()
+      .replace(/\s+/g," ");
+
+
+    if(!userAnswer){
+
+      showToast(
+        "Isi jawabannya dulu woi 😭"
+      );
+
+      answerEl.focus();
+
+      return;
+
+    }
+
+
+    checkAnswer(userAnswer);
+
   }
-
-  const userAnswer =
-    answerEl.value
-    .trim()
-    .toUpperCase()
-    .replace(/\s+/g," ");
-
-  if(!userAnswer){
-
-    showToast("Isi jawabannya dulu woi 😭");
-
-    answerEl.focus();
-
-    return;
-  }
-
-  checkAnswer(userAnswer);
-
-});
+);
 
 
-function checkAnswer(userAnswer){
+/* =====================================================
+   CHECK
+===================================================== */
 
-  if(userAnswer === currentAnswer){
+function checkAnswer(
+  userAnswer
+){
+
+  stopTimer();
+
+
+  if(
+    userAnswer === currentAnswer
+  ){
 
     handleCorrect();
 
@@ -1103,55 +2137,114 @@ function handleCorrect(){
 
   streak++;
 
-  score += 10;
 
-  if(streak >= 3){
-    score += 5;
+  /*
+    Base score 10.
+    Bonus berdasarkan sisa waktu.
+  */
+
+  let gained =
+    10;
+
+
+  if(timeLeft >= 15){
+
+    gained += 5;
+
+  }else if(timeLeft >= 10){
+
+    gained += 3;
+
   }
 
+
+  if(streak >= 3){
+
+    gained += 5;
+
+  }
+
+
+  score += gained;
+
+
   saveStats();
+
   updateStats();
 
-  gameCard.classList.add("shake");
+
+  gameCard.classList.add(
+    "shake"
+  );
+
 
   setTimeout(function(){
-    gameCard.classList.remove("shake");
+
+    gameCard.classList.remove(
+      "shake"
+    );
+
   },350);
 
-  statusEl.textContent =
-    "NAHH BENER! otak masih nyala 🔥";
 
-  statusEl.className = "status good";
+  statusEl.textContent =
+    "+" + gained +
+    " poin! BENER 🔥";
+
+  statusEl.className =
+    "status good";
+
 
   answerEl.disabled = true;
+
   submitBtn.disabled = true;
 
+
   createConfetti();
+
 
   setTimeout(function(){
 
     popupIcon.textContent =
-      streak >= 3 ? "🔥" : "🎉";
+      streak >= 3
+      ? "🔥"
+      : "🎉";
+
 
     popupTitle.textContent =
       streak >= 3
-      ? "GILA, STREAK!"
+      ? "STREAK GILA!"
       : "BENER WOI!";
 
+
     popupMessage.textContent =
-      streak >= 3
-      ? "Streak kamu udah " + streak + ". lanjut terus sebelum otak logout."
-      : "Jawaban kamu tepat. lumayan lah 😎";
+      "Jawaban kamu tepat. +" +
+      gained +
+      " poin. " +
+      (
+        timeLeft > 0
+        ? "Masih sisa " +
+          timeLeft +
+          " detik!"
+        : ""
+      );
+
 
     popupAnswer.textContent =
       currentAnswer;
 
+
     popupButton.textContent =
       "SOAL BERIKUTNYA →";
 
-    nextAction = "next";
 
-    overlay.classList.add("show");
+    nextAction =
+      "next";
+
+
+    overlay.classList.add(
+      "show"
+    );
 
   },450);
 
@@ -1170,39 +2263,63 @@ function handleWrong(){
 
   streak = 0;
 
+
   saveStats();
+
   updateStats();
 
   updateLives();
 
-  gameCard.classList.remove("shake");
+
+  gameCard.classList.remove(
+    "shake"
+  );
 
   void gameCard.offsetWidth;
 
-  gameCard.classList.add("shake");
+  gameCard.classList.add(
+    "shake"
+  );
+
 
   setTimeout(function(){
-    gameCard.classList.remove("shake");
+
+    gameCard.classList.remove(
+      "shake"
+    );
+
   },350);
+
 
   if(chances > 0){
 
     statusEl.textContent =
-      "Salah 😭 masih ada " +
+      "Salah 😭 tinggal " +
       chances +
       " kesempatan.";
 
-    statusEl.className = "status bad";
+    statusEl.className =
+      "status bad";
+
 
     showToast(
       chances === 2
-      ? "Belum tepat. santai dulu 😭"
-      : "Salah lagi. tinggal 1 kesempatan 💀"
+      ? "Belum tepat 😭"
+      : "Salah lagi... jangan panik 💀"
     );
+
 
     answerEl.value = "";
 
     answerEl.focus();
+
+
+    /*
+      Timer di-reset setelah jawaban salah.
+    */
+
+    startTimer();
+
 
   }else{
 
@@ -1214,42 +2331,66 @@ function handleWrong(){
 
 
 /* =====================================================
-   GAME OVER / JUMPSCARE
+   GAME OVER
 ===================================================== */
 
 function handleGameOver(){
 
+  stopTimer();
+
+
   answerEl.disabled = true;
+
   submitBtn.disabled = true;
+
 
   statusEl.textContent =
     "kesempatan habis... 💀";
 
-  statusEl.className = "status bad";
+  statusEl.className =
+    "status bad";
 
-  /* JUMPSCARE */
+
+  /*
+    JUMPSCARE HORROR
+  */
+
   triggerScare();
+
 
   setTimeout(function(){
 
-    popupIcon.textContent = "💀";
+    popupIcon.textContent =
+      "💀";
 
-    popupTitle.textContent = "YAHH KALAH 😭";
+
+    popupTitle.textContent =
+      "YAHH KALAH 😭";
+
 
     popupMessage.textContent =
-      "Tiga kali salah. katanya cuma game santai...";
+      "Tiga kesempatan habis. " +
+      "Tadi dia udah ngasih kesempatan loh...";
+
 
     popupAnswer.textContent =
-      "Jawabannya: " + currentAnswer;
+      "Jawabannya: " +
+      currentAnswer;
+
 
     popupButton.textContent =
       "COBA SOAL LAIN →";
 
-    nextAction = "next";
 
-    overlay.classList.add("show");
+    nextAction =
+      "next";
 
-  },800);
+
+    overlay.classList.add(
+      "show"
+    );
+
+  },2400);
 
 }
 
@@ -1261,17 +2402,30 @@ function handleGameOver(){
 function updateLives(){
 
   const lives =
-    livesEl.querySelectorAll(".life");
+    livesEl.querySelectorAll(
+      ".life"
+    );
 
-  lives.forEach(function(life,index){
 
-    if(index < chances){
-      life.classList.remove("dead");
-    }else{
-      life.classList.add("dead");
+  lives.forEach(
+    function(life,index){
+
+      if(index < chances){
+
+        life.classList.remove(
+          "dead"
+        );
+
+      }else{
+
+        life.classList.add(
+          "dead"
+        );
+
+      }
+
     }
-
-  });
+  );
 
 }
 
@@ -1282,39 +2436,33 @@ function updateLives(){
 
 function updateStats(){
 
-  scoreEl.textContent = score;
-  correctEl.textContent = correct;
-  wrongEl.textContent = wrong;
-  streakEl.textContent = streak;
+  scoreEl.textContent =
+    score;
+
+  correctEl.textContent =
+    correct;
+
+  wrongEl.textContent =
+    wrong;
+
+  streakEl.textContent =
+    streak;
 
 }
 
 
 /* =====================================================
-   POPUP BUTTON
+   POPUP
 ===================================================== */
 
-popupButton.addEventListener("click",function(){
+popupButton.addEventListener(
+  "click",
+  function(){
 
-  overlay.classList.remove("show");
+    overlay.classList.remove(
+      "show"
+    );
 
-  if(nextAction === "next"){
-
-    nextAction = null;
-
-    getQuestion();
-
-  }
-
-});
-
-
-/* Klik area gelap untuk tutup popup */
-overlay.addEventListener("click",function(e){
-
-  if(e.target === overlay){
-
-    overlay.classList.remove("show");
 
     if(nextAction === "next"){
 
@@ -1325,38 +2473,89 @@ overlay.addEventListener("click",function(e){
     }
 
   }
+);
 
-});
+
+overlay.addEventListener(
+  "click",
+  function(e){
+
+    if(e.target === overlay){
+
+      overlay.classList.remove(
+        "show"
+      );
+
+
+      if(nextAction === "next"){
+
+        nextAction = null;
+
+        getQuestion();
+
+      }
+
+    }
+
+  }
+);
 
 
 /* =====================================================
-   JUMPSCARE
+   HORROR
 ===================================================== */
 
 function triggerScare(){
 
-  scare.classList.remove("show");
+  initAudio();
+
+  horrorSound();
+
+
+  scare.classList.remove(
+    "show"
+  );
+
 
   void scare.offsetWidth;
 
-  scare.classList.add("show");
 
-  /* Haptic Android kalau browser mendukung */
+  scare.classList.add(
+    "show"
+  );
+
+
+  /*
+    Haptic lebih panjang.
+    Hanya bekerja kalau browser/HP mendukung.
+  */
+
   try{
 
     if(navigator.vibrate){
+
       navigator.vibrate([
-        60,30,60,30,100
+        80,
+        40,
+        130,
+        50,
+        180,
+        70,
+        220
       ]);
+
     }
 
   }catch(e){}
 
+
   setTimeout(function(){
 
-    scare.classList.remove("show");
+    scare.classList.remove(
+      "show"
+    );
 
-  },750);
+  },2400);
 
 }
 
@@ -1367,17 +2566,31 @@ function triggerScare(){
 
 function showToast(message){
 
-  toast.textContent = message;
+  toast.textContent =
+    message;
 
-  toast.classList.add("show");
 
-  clearTimeout(toastTimer);
+  toast.classList.add(
+    "show"
+  );
 
-  toastTimer = setTimeout(function(){
 
-    toast.classList.remove("show");
+  clearTimeout(
+    toastTimer
+  );
 
-  },1800);
+
+  toastTimer =
+    setTimeout(
+      function(){
+
+        toast.classList.remove(
+          "show"
+        );
+
+      },
+      1800
+    );
 
 }
 
@@ -1389,39 +2602,77 @@ function showToast(message){
 function createConfetti(){
 
   const amount =
-    window.innerWidth < 500 ? 14 : 22;
+    window.innerWidth < 500
+    ? 14
+    : 22;
 
-  for(let i=0;i<amount;i++){
+
+  for(
+    let i = 0;
+    i < amount;
+    i++
+  ){
 
     const el =
-      document.createElement("div");
+      document.createElement(
+        "div"
+      );
 
-    el.className = "confetti";
+
+    el.className =
+      "confetti";
+
 
     el.style.left =
-      Math.random() * 100 + "vw";
+      Math.random() *
+      100 +
+      "vw";
+
 
     el.style.setProperty(
       "--x",
-      ((Math.random() - .5) * 180) + "px"
+      (
+        (Math.random() - .5) *
+        180
+      ) +
+      "px"
     );
 
+
     el.style.animationDelay =
-      (Math.random() * .15) + "s";
+      (
+        Math.random() *
+        .15
+      ) +
+      "s";
+
 
     const shapes =
       ["●","■","◆"];
 
+
     el.textContent =
-      shapes[Math.floor(Math.random()*shapes.length)];
+      shapes[
+        Math.floor(
+          Math.random() *
+          shapes.length
+        )
+      ];
 
-    document.body.appendChild(el);
 
-    setTimeout(function(){
+    document.body.appendChild(
+      el
+    );
 
-      el.remove();
 
-    },1000);
+    setTimeout(
+      function(){
+
+        el.remove();
+
+      },
+      1000
+    );
 
   }
 
@@ -1429,24 +2680,27 @@ function createConfetti(){
 
 
 /* =====================================================
-   ENTER / KEYBOARD
+   KEYBOARD
 ===================================================== */
 
-answerEl.addEventListener("keydown",function(e){
+answerEl.addEventListener(
+  "keydown",
+  function(e){
 
-  if(e.key === "Enter"){
+    if(e.key === "Enter"){
 
-    e.preventDefault();
+      e.preventDefault();
 
-    form.requestSubmit();
+      form.requestSubmit();
+
+    }
 
   }
-
-});
+);
 
 
 /* =====================================================
-   START
+   INIT
 ===================================================== */
 
 updateLives();
