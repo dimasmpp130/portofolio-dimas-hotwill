@@ -2,2711 +2,482 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<meta name="theme-color" content="#07080b">
-<meta name="description" content="WHAT WORD? - Game tebak kata dengan timer dan jumpscare horror.">
-<title>WHAT WORD? — Horror Edition</title>
-
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="theme-color" content="#0b0b0f">
+<meta name="description" content="Remini Image Enhancer">
+<title>Remini Enhancer</title>
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-  -webkit-tap-highlight-color:transparent;
-}
-
-html,body{
-  width:100%;
-  min-height:100%;
-  background:#07080b;
-}
-
-body{
-  font-family:Arial,Helvetica,sans-serif;
-  color:#f4f5f8;
-  overflow-x:hidden;
-  user-select:none;
-  -webkit-user-select:none;
-}
-
-button,input{
-  font-family:inherit;
-}
-
-button{
-  border:0;
-  outline:0;
-  cursor:pointer;
-}
-
-.app{
-  min-height:100vh;
-  min-height:100dvh;
-  position:relative;
-  overflow:hidden;
-  background:
-    radial-gradient(circle at 50% -10%,rgba(99,86,255,.14),transparent 38%),
-    #07080b;
-}
-
-.bg-orb{
-  position:absolute;
-  width:180px;
-  height:180px;
-  border-radius:50%;
-  filter:blur(70px);
-  opacity:.11;
-  pointer-events:none;
-}
-
-.orb1{
-  background:#685cff;
-  left:-100px;
-  top:18%;
-}
-
-.orb2{
-  background:#00c8ff;
-  right:-110px;
-  bottom:10%;
-}
-
-
-/* =========================
-   HEADER
-========================= */
-
-.topbar{
-  width:min(700px,calc(100% - 28px));
-  margin:auto;
-  padding:20px 0 10px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  position:relative;
-  z-index:2;
-}
-
-.brand{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-
-.logo{
-  width:38px;
-  height:38px;
-  border-radius:12px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:linear-gradient(135deg,#7065ff,#5044d5);
-  box-shadow:0 8px 25px rgba(92,78,255,.22);
-  font-size:19px;
-}
-
-.brand-text strong{
-  display:block;
-  font-size:14px;
-  letter-spacing:1px;
-}
-
-.brand-text span{
-  display:block;
-  color:#858a99;
-  font-size:10px;
-  margin-top:2px;
-}
-
-.score-box{
-  min-width:75px;
-  padding:8px 11px;
-  border:1px solid #1e2230;
-  background:#0d0f15;
-  border-radius:11px;
-  text-align:center;
-}
-
-.score-box small{
-  display:block;
-  color:#7d8290;
-  font-size:9px;
-  text-transform:uppercase;
-  letter-spacing:1px;
-}
-
-.score-box b{
-  font-size:16px;
-}
-
-
-/* =========================
-   GAME
-========================= */
-
-.game{
-  width:min(700px,calc(100% - 28px));
-  margin:12px auto 0;
-  position:relative;
-  z-index:2;
-}
-
-.card{
-  border:1px solid #1d2130;
-  background:rgba(13,15,22,.95);
-  border-radius:22px;
-  padding:22px;
-  box-shadow:0 20px 60px rgba(0,0,0,.22);
-  overflow:hidden;
-}
-
-
-/* =========================
-   CATEGORY
-========================= */
-
-.category{
-  display:inline-flex;
-  align-items:center;
-  gap:7px;
-  padding:7px 11px;
-  border-radius:999px;
-  background:#15172a;
-  border:1px solid #292d4a;
-  color:#a9a4ff;
-  font-size:11px;
-  font-weight:bold;
-}
-
-.category-dot{
-  width:6px;
-  height:6px;
-  border-radius:50%;
-  background:#8b82ff;
-}
-
-
-/* =========================
-   QUESTION
-========================= */
-
-.question-title{
-  margin-top:18px;
-  color:#777d8c;
-  font-size:12px;
-}
-
-.word{
-  min-height:82px;
-  margin-top:7px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:5px;
-  flex-wrap:wrap;
-
-  /*
-    Ukuran sedang.
-    Tidak lagi segede versi sebelumnya.
-  */
-  font-size:clamp(21px,5vw,32px);
-
-  font-weight:800;
-  letter-spacing:3px;
-  line-height:1.35;
-
-  color:#fff;
-  text-align:center;
-
-  overflow-wrap:anywhere;
-  word-break:break-word;
-  max-width:100%;
-}
-
-.letter{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.info{
-  text-align:center;
-  color:#777d8c;
-  font-size:11px;
-  margin-top:2px;
-}
-
-
-/* =========================
-   TIMER
-========================= */
-
-.timer-box{
-  margin-top:17px;
-}
-
-.timer-top{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:7px;
-}
-
-.timer-label{
-  font-size:10px;
-  color:#777d8c;
-  text-transform:uppercase;
-  letter-spacing:1px;
-}
-
-.timer-number{
-  font-size:13px;
-  font-weight:bold;
-  color:#a9a4ff;
-  min-width:42px;
-  text-align:right;
-}
-
-.timer-track{
-  height:6px;
-  width:100%;
-  border-radius:999px;
-  background:#1b1e27;
-  overflow:hidden;
-}
-
-.timer-bar{
-  height:100%;
-  width:100%;
-  border-radius:999px;
-  background:#665cff;
-  transition:width 1s linear,background .2s ease;
-}
-
-
-/* =========================
-   LIVES
-========================= */
-
-.lives{
-  display:flex;
-  justify-content:center;
-  gap:8px;
-  margin:18px 0 17px;
-}
-
-.life{
-  width:34px;
-  height:10px;
-  border-radius:99px;
-  background:#665cff;
-  box-shadow:0 0 10px rgba(102,92,255,.22);
-  transition:.18s ease;
-}
-
-.life.dead{
-  background:#292c36;
-  box-shadow:none;
-}
-
-
-/* =========================
-   INPUT
-========================= */
-
-.input-wrap{
-  display:flex;
-  gap:8px;
-}
-
-.answer{
-  width:100%;
-  min-width:0;
-  height:50px;
-  padding:0 15px;
-  border-radius:13px;
-  border:1px solid #272b38;
-  background:#090b10;
-  color:#fff;
-  font-size:15px;
-  outline:none;
-  text-transform:uppercase;
-  transition:border-color .15s ease,box-shadow .15s ease;
-}
-
-.answer:focus{
-  border-color:#675cff;
-  box-shadow:0 0 0 3px rgba(103,92,255,.09);
-}
-
-.answer::placeholder{
-  color:#505562;
-  text-transform:none;
-}
-
-.submit{
-  flex:0 0 105px;
-  height:50px;
-  border-radius:13px;
-  color:#fff;
-  font-size:13px;
-  font-weight:bold;
-  background:linear-gradient(135deg,#7167ff,#5146dc);
-  box-shadow:0 9px 25px rgba(87,73,220,.22);
-  transition:transform .12s ease,opacity .12s ease;
-}
-
-.submit:active{
-  transform:scale(.97);
-}
-
-.submit:disabled{
-  opacity:.45;
-}
-
-
-/* =========================
-   STATUS
-========================= */
-
-.status{
-  min-height:24px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  margin-top:13px;
-  font-size:12px;
-  color:#8b91a0;
-}
-
-.status.good{
-  color:#68e6a5;
-}
-
-.status.bad{
-  color:#ff737e;
-}
-
-
-/* =========================
-   STATS
-========================= */
-
-.stats{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:8px;
-  margin-top:10px;
-}
-
-.stat{
-  background:#0d0f15;
-  border:1px solid #1c202b;
-  border-radius:14px;
-  padding:12px 8px;
-  text-align:center;
-}
-
-.stat small{
-  display:block;
-  color:#696f7e;
-  font-size:9px;
-  text-transform:uppercase;
-  letter-spacing:.8px;
-  margin-bottom:4px;
-}
-
-.stat b{
-  font-size:15px;
-}
-
-
-/* =========================
-   FOOTER
-========================= */
-
-.footer{
-  width:min(700px,calc(100% - 28px));
-  margin:14px auto 24px;
-  text-align:center;
-  color:#454a57;
-  font-size:10px;
-  position:relative;
-  z-index:2;
-}
-
-
-/* =========================
-   LOADING
-========================= */
-
-.loading{
-  position:fixed;
-  inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:#07080b;
-  z-index:500;
-  transition:opacity .2s ease;
-}
-
-.loading.hide{
-  opacity:0;
-  pointer-events:none;
-}
-
-.loader{
-  text-align:center;
-}
-
-.loader-icon{
-  width:52px;
-  height:52px;
-  border-radius:16px;
-  margin:auto;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:#11131d;
-  border:1px solid #24283a;
-  font-size:24px;
-  animation:pulse 1s infinite;
-}
-
-.loader p{
-  color:#777d8b;
-  font-size:11px;
-  margin-top:10px;
-}
-
-@keyframes pulse{
-  50%{
-    transform:scale(.94);
-    opacity:.65;
-  }
-}
-
-
-/* =========================
-   SHAKE
-========================= */
-
-.shake{
-  animation:shake .32s ease;
-}
-
-@keyframes shake{
-  0%,100%{transform:translateX(0)}
-  20%{transform:translateX(-7px)}
-  40%{transform:translateX(7px)}
-  60%{transform:translateX(-5px)}
-  80%{transform:translateX(5px)}
-}
-
-
-/* =========================
-   POPUP
-========================= */
-
-.overlay{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.74);
-  backdrop-filter:blur(3px);
-  -webkit-backdrop-filter:blur(3px);
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  padding:20px;
-
-  opacity:0;
-  pointer-events:none;
-
-  transition:opacity .16s ease;
-
-  z-index:100;
-}
-
-.overlay.show{
-  opacity:1;
-  pointer-events:auto;
-}
-
-.popup{
-  width:min(360px,100%);
-  background:#0e1017;
-  border:1px solid #252938;
-  border-radius:21px;
-  padding:24px 20px;
-  text-align:center;
-  box-shadow:0 30px 80px rgba(0,0,0,.55);
-
-  transform:scale(.94);
-
-  transition:transform .16s ease;
-}
-
-.overlay.show .popup{
-  transform:scale(1);
-}
-
-.popup-icon{
-  font-size:42px;
-  margin-bottom:10px;
-}
-
-.popup h2{
-  font-size:21px;
-  margin-bottom:7px;
-}
-
-.popup p{
-  color:#858b99;
-  font-size:12px;
-  line-height:1.6;
-}
-
-.popup-answer{
-  margin:14px 0;
-  padding:11px;
-  border-radius:11px;
-  background:#090b10;
-  color:#aaa5ff;
-  font-size:18px;
-  font-weight:900;
-  letter-spacing:2px;
-}
-
-.popup-btn{
-  width:100%;
-  height:45px;
-  border-radius:12px;
-  background:#6258ee;
-  color:#fff;
-  font-weight:bold;
-}
-
-
-/* =========================
-   HORROR SCREEN
-========================= */
-
-.scare{
-  position:fixed;
-  inset:0;
-  z-index:900;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  background:
-    radial-gradient(
-      circle,
-      rgba(100,0,0,.22),
-      #000 55%
-    );
-
-  opacity:0;
-  pointer-events:none;
-  overflow:hidden;
-}
-
-.scare.show{
-  animation:horrorScreen 2.3s ease forwards;
-}
-
-.scare-flash{
-  position:absolute;
-  inset:0;
-  background:#6e0000;
-  opacity:0;
-}
-
-.scare.show .scare-flash{
-  animation:flashRed 2.1s ease;
-}
-
-
-/* HORROR FACE */
-
-.scare-face{
-  width:210px;
-  height:250px;
-
-  position:relative;
-
-  background:
-    radial-gradient(
-      ellipse at 50% 42%,
-      #272727 0%,
-      #0a0a0a 65%
-    );
-
-  border-radius:48% 48% 42% 42%;
-
-  box-shadow:
-    0 0 0 4px #050505,
-    0 0 45px rgba(255,0,0,.20);
-
-  transform:scale(.1);
-  opacity:0;
-}
-
-.scare.show .scare-face{
-  animation:monsterAppear 1.8s cubic-bezier(.15,.8,.15,1) forwards;
-}
-
-
-/* EYES */
-
-.eye{
-  position:absolute;
-
-  width:48px;
-  height:62px;
-
-  top:72px;
-
-  border-radius:50%;
-
-  background:
-    radial-gradient(
-      ellipse at center,
-      #000 0 22%,
-      #eee 24% 55%,
-      #6e0000 57% 100%
-    );
-
-  box-shadow:
-    0 0 12px rgba(255,0,0,.5);
-}
-
-.eye.left{
-  left:37px;
-  transform:rotate(-7deg);
-}
-
-.eye.right{
-  right:37px;
-  transform:rotate(7deg);
-}
-
-
-/* MOUTH */
-
-.mouth{
-  position:absolute;
-
-  width:115px;
-  height:68px;
-
-  left:50%;
-  transform:translateX(-50%);
-
-  bottom:35px;
-
-  border-radius:8px 8px 50% 50%;
-
-  background:#020202;
-
-  border:2px solid #242424;
-
-  overflow:hidden;
-}
-
-.mouth:before{
-  content:"";
-
-  position:absolute;
-
-  width:100%;
-  height:15px;
-
-  top:0;
-  left:0;
-
-  background:
-    repeating-linear-gradient(
-      90deg,
-      #eee 0 9px,
-      #080808 9px 15px
-    );
-}
-
-
-/* BLOOD / SCRATCH */
-
-.scare-face:before,
-.scare-face:after{
-  content:"";
-  position:absolute;
-
-  width:3px;
-  height:50px;
-
-  background:#640000;
-
-  opacity:.8;
-}
-
-.scare-face:before{
-  left:22px;
-  top:35px;
-  transform:rotate(25deg);
-}
-
-.scare-face:after{
-  right:20px;
-  top:110px;
-  transform:rotate(-18deg);
-}
-
-
-/* HORROR TEXT */
-
-.scare-text{
-  position:absolute;
-
-  bottom:13%;
-
-  color:#b50000;
-
-  font-size:13px;
-  font-weight:bold;
-
-  letter-spacing:4px;
-
-  text-shadow:
-    0 0 10px #700000;
-
-  opacity:0;
-}
-
-.scare.show .scare-text{
-  animation:textHorror 2s ease forwards;
-}
-
-
-@keyframes monsterAppear{
-
-  0%{
-    transform:scale(.08) rotate(-8deg);
-    opacity:0;
-  }
-
-  15%{
-    opacity:1;
-    transform:scale(.65) rotate(4deg);
-  }
-
-  27%{
-    transform:scale(1.12) rotate(-2deg);
-  }
-
-  40%{
-    transform:scale(.95) rotate(1deg);
-  }
-
-  55%{
-    transform:scale(1.03);
-  }
-
-  75%{
-    transform:scale(1);
-  }
-
-  100%{
-    transform:scale(1);
-    opacity:1;
-  }
-
-}
-
-@keyframes horrorScreen{
-
-  0%{
-    opacity:0;
-  }
-
-  8%{
-    opacity:1;
-  }
-
-  12%{
-    opacity:.25;
-  }
-
-  17%{
-    opacity:1;
-  }
-
-  70%{
-    opacity:1;
-  }
-
-  100%{
-    opacity:0;
-  }
-
-}
-
-@keyframes flashRed{
-
-  0%,100%{
-    opacity:0;
-  }
-
-  8%{
-    opacity:.65;
-  }
-
-  12%{
-    opacity:0;
-  }
-
-  18%{
-    opacity:.4;
-  }
-
-  25%{
-    opacity:0;
-  }
-
-}
-
-@keyframes textHorror{
-
-  0%,30%{
-    opacity:0;
-    transform:translateY(10px);
-  }
-
-  45%{
-    opacity:1;
-    transform:translateY(0);
-  }
-
-  80%{
-    opacity:1;
-  }
-
-  100%{
-    opacity:0;
-  }
-
-}
-
-
-/* =========================
-   TOAST
-========================= */
-
-.toast{
-  position:fixed;
-
-  left:50%;
-  bottom:25px;
-
-  transform:translate(-50%,20px);
-
-  z-index:950;
-
-  width:max-content;
-  max-width:calc(100% - 30px);
-
-  padding:11px 15px;
-
-  border-radius:12px;
-
-  background:#151821;
-  border:1px solid #292e3c;
-
-  color:#fff;
-
-  font-size:11px;
-
-  opacity:0;
-
-  pointer-events:none;
-
-  transition:.2s ease;
-
-  text-align:center;
-}
-
-.toast.show{
-  opacity:1;
-  transform:translate(-50%,0);
-}
-
-
-/* =========================
-   CONFETTI
-========================= */
-
-.confetti{
-  position:fixed;
-
-  width:6px;
-  height:10px;
-
-  top:-20px;
-
-  z-index:250;
-
-  pointer-events:none;
-
-  background:#fff;
-
-  animation:fall 800ms linear forwards;
-}
-
-@keyframes fall{
-
-  to{
-    transform:
-      translate3d(var(--x),110vh,0)
-      rotate(500deg);
-
-    opacity:0;
-  }
-
-}
-
-
-/* =========================
-   MOBILE
-========================= */
-
-@media(max-width:480px){
-
-  .topbar{
-    padding-top:15px;
-  }
-
-  .card{
-    padding:18px 15px;
-    border-radius:18px;
-  }
-
-  .word{
-    min-height:78px;
-    font-size:clamp(19px,5vw,27px);
-    letter-spacing:2px;
-    gap:4px;
-  }
-
-  .submit{
-    flex-basis:90px;
-  }
-
-  .scare-face{
-    width:180px;
-    height:215px;
-  }
-
-  .eye{
-    width:40px;
-    height:54px;
-    top:61px;
-  }
-
-  .eye.left{
-    left:31px;
-  }
-
-  .eye.right{
-    right:31px;
-  }
-
-  .mouth{
-    width:100px;
-    bottom:30px;
-  }
-
-}
-
-
-@media(max-width:340px){
-
-  .brand-text span{
-    display:none;
-  }
-
-  .score-box{
-    min-width:65px;
-  }
-
-  .submit{
-    flex-basis:78px;
-    font-size:11px;
-  }
-
-  .word{
-    font-size:19px;
-  }
-
-}
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;padding:16px 12px;background:#0b0b0f;color:#f5f5f5;font-family:Arial,sans-serif}
+.wrap{max-width:500px;margin:auto}
+.card{padding:18px;background:#121218;border:1px solid #24242d;border-radius:18px}
+.head{text-align:center;margin-bottom:18px}
+.logo{width:58px;height:58px;margin:auto;border-radius:16px;background:linear-gradient(135deg,#ff3158,#ff719c);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:bold}
+h1{font-size:23px;margin-top:10px}
+.sub{font-size:12px;color:#888;margin-top:5px}
+.drop{display:block;padding:25px 14px;text-align:center;border:1px dashed #3a3a45;border-radius:15px;background:#0f0f14;cursor:pointer}
+.drop:active{transform:scale(.99)}
+.drop-icon{font-size:30px;margin-bottom:7px}
+.drop b{font-size:14px}
+.drop p{margin-top:6px;color:#777;font-size:11px}
+input{display:none}
+.preview{display:none;margin-top:13px;overflow:hidden;border:1px solid #292933;border-radius:14px;background:#0d0d12}
+.preview img{display:block;width:100%;max-height:330px;object-fit:contain}
+.info{padding:9px;font-size:11px;color:#999;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+button{width:100%;padding:13px;margin-top:12px;border:0;border-radius:12px;font-weight:bold;font-size:14px}
+.main{background:#ff4169;color:#fff}
+.main:disabled{opacity:.45}
+.secondary{background:#24242d;color:#fff}
+.status{display:none;margin-top:13px;padding:11px;border-radius:11px;font-size:12px;line-height:1.5}
+.status.show{display:block}
+.ok{background:#14251c;border:1px solid #285339;color:#a8e6bd}
+.err{background:#28151a;border:1px solid #542833;color:#ff9baa}
+.loading{display:none;text-align:center;padding:14px 0;color:#aaa;font-size:12px}
+.loading.show{display:block}
+.spin{display:inline-block;width:15px;height:15px;border:2px solid #555;border-top-color:#ff4169;border-radius:50%;vertical-align:-4px;margin-right:6px;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.result{display:none;margin-top:18px}
+.result h2{font-size:15px;margin-bottom:9px}
+.result img{width:100%;display:block;border-radius:14px;border:1px solid #292933;background:#08080b}
+.save{display:none}
+.reset{background:#24242d;color:#fff}
+.footer{text-align:center;margin-top:14px;color:#555;font-size:10px}
 </style>
 </head>
-
 <body>
 
-<div class="app">
-
-  <div class="bg-orb orb1"></div>
-  <div class="bg-orb orb2"></div>
-
-  <!-- LOADING -->
-  <div class="loading" id="loading">
-
-    <div class="loader">
-
-      <div class="loader-icon">
-        🧠
-      </div>
-
-      <p>
-        Lagi nyari soal...
-      </p>
-
-    </div>
-
-  </div>
-
-
-  <!-- HEADER -->
-  <header class="topbar">
-
-    <div class="brand">
-
-      <div class="logo">
-        ?
-      </div>
-
-      <div class="brand-text">
-
-        <strong>
-          WHAT WORD?
-        </strong>
-
-        <span>
-          tebak kata • jangan nyontek 😭
-        </span>
-
-      </div>
-
-    </div>
-
-
-    <div class="score-box">
-
-      <small>
-        Score
-      </small>
-
-      <b id="score">
-        0
-      </b>
-
-    </div>
-
-  </header>
-
-
-  <!-- GAME -->
-  <main class="game">
-
-    <section class="card" id="gameCard">
-
-
-      <!-- CATEGORY -->
-      <div class="category">
-
-        <span class="category-dot"></span>
-
-        <span id="category">
-          Loading...
-        </span>
-
-      </div>
-
-
-      <!-- QUESTION -->
-      <div class="question-title">
-
-        Susun huruf di bawah jadi kata yang bener
-
-      </div>
-
-
-      <div class="word" id="word">
-
-        • • •
-
-      </div>
-
-
-      <div class="info">
-
-        jangan sampai salah baca 😭
-
-      </div>
-
-
-      <!-- TIMER -->
-      <div class="timer-box">
-
-        <div class="timer-top">
-
-          <span class="timer-label">
-            Waktu
-          </span>
-
-          <span class="timer-number" id="timerNumber">
-            20s
-          </span>
-
-        </div>
-
-        <div class="timer-track">
-
-          <div
-            class="timer-bar"
-            id="timerBar">
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <!-- LIVES -->
-      <div class="lives" id="lives">
-
-        <div class="life"></div>
-        <div class="life"></div>
-        <div class="life"></div>
-
-      </div>
-
-
-      <!-- INPUT -->
-      <form class="input-wrap" id="form">
-
-        <input
-          class="answer"
-          id="answer"
-          type="text"
-          autocomplete="off"
-          autocapitalize="characters"
-          spellcheck="false"
-          placeholder="ketik jawaban di sini..."
-        >
-
-        <button
-          class="submit"
-          id="submit"
-          type="submit">
-
-          JAWAB
-
-        </button>
-
-      </form>
-
-
-      <!-- STATUS -->
-      <div
-        class="status"
-        id="status">
-
-        3 kesempatan. waktu jalan terus 😈
-
-      </div>
-
-    </section>
-
-
-    <!-- STATS -->
-    <section class="stats">
-
-      <div class="stat">
-
-        <small>
-          Benar
-        </small>
-
-        <b id="correct">
-          0
-        </b>
-
-      </div>
-
-
-      <div class="stat">
-
-        <small>
-          Salah
-        </small>
-
-        <b id="wrong">
-          0
-        </b>
-
-      </div>
-
-
-      <div class="stat">
-
-        <small>
-          Streak
-        </small>
-
-        <b id="streak">
-          0
-        </b>
-
-      </div>
-
-    </section>
-
-  </main>
-
-
-  <footer class="footer">
-
-    WHAT WORD? • cepat jawabnya, jangan sampai dia datang 👁️
-
-  </footer>
-
+<div class="wrap">
+<div class="card">
+
+<div class="head">
+<div class="logo">R</div>
+<h1>Remini Enhancer</h1>
+<div class="sub">Pilih foto, biarkan sisanya otomatis.</div>
 </div>
 
+<label class="drop" id="drop">
+<div class="drop-icon">＋</div>
+<b>Pilih Foto</b>
+<p>JPG, JPEG atau PNG • maksimal 10 MB</p>
+<input id="file" type="file" accept="image/jpeg,image/png">
+</label>
 
-<!-- RESULT POPUP -->
-<div
-  class="overlay"
-  id="overlay">
-
-  <div class="popup">
-
-    <div
-      class="popup-icon"
-      id="popupIcon">
-
-      🎉
-
-    </div>
-
-
-    <h2 id="popupTitle">
-
-      Mantap!
-
-    </h2>
-
-
-    <p id="popupMessage">
-
-      Jawaban kamu benar.
-
-    </p>
-
-
-    <div
-      class="popup-answer"
-      id="popupAnswer">
-
-      MELON
-
-    </div>
-
-
-    <button
-      class="popup-btn"
-      id="popupButton">
-
-      LANJUT →
-
-    </button>
-
-  </div>
-
+<div class="preview" id="preview">
+<img id="previewImg" alt="Preview">
+<div class="info" id="fileInfo"></div>
 </div>
 
+<button class="main" id="process" disabled>
+✨ Tingkatkan Foto
+</button>
 
-<!-- HORROR -->
-<div
-  class="scare"
-  id="scare">
-
-  <div class="scare-flash"></div>
-
-
-  <div class="scare-face">
-
-    <div class="eye left"></div>
-
-    <div class="eye right"></div>
-
-    <div class="mouth"></div>
-
-  </div>
-
-
-  <div class="scare-text">
-
-    KOK SALAH TERUS...?
-
-  </div>
-
+<div class="loading" id="loading">
+<span class="spin"></span>
+<span id="loadingText">Menyiapkan...</span>
 </div>
 
+<div class="status" id="status"></div>
 
-<!-- TOAST -->
-<div
-  class="toast"
-  id="toast">
+<div class="result" id="result">
+<h2>Hasil Foto</h2>
+<img id="resultImg" alt="Hasil Remini">
+
+<button class="save" id="save">
+⬇ Simpan Hasil
+</button>
+
+<button class="reset" id="reset">
+Pilih Foto Lain
+</button>
 </div>
 
+<div class="footer">Remini Enhancer</div>
+
+</div>
+</div>
 
 <script>
-
-/* =====================================================
-   CONFIG
-===================================================== */
-
-const API_URL =
-  "https://api.neoxr.eu/api/whatword?apikey=gBw4bfj5haqY";
-
-/*
-  Waktu setiap soal.
-  Bisa kamu ubah:
-
-  20 = normal
-  15 = lebih tegang
-  30 = santai
-*/
-
-const QUESTION_TIME = 20;
-
-
-/* =====================================================
-   ELEMENT
-===================================================== */
-
-const loading =
-  document.getElementById("loading");
-
-const categoryEl =
-  document.getElementById("category");
-
-const wordEl =
-  document.getElementById("word");
-
-const answerEl =
-  document.getElementById("answer");
-
-const form =
-  document.getElementById("form");
-
-const submitBtn =
-  document.getElementById("submit");
-
-const statusEl =
-  document.getElementById("status");
-
-const gameCard =
-  document.getElementById("gameCard");
-
-const scoreEl =
-  document.getElementById("score");
-
-const correctEl =
-  document.getElementById("correct");
-
-const wrongEl =
-  document.getElementById("wrong");
-
-const streakEl =
-  document.getElementById("streak");
-
-const livesEl =
-  document.getElementById("lives");
-
-const timerNumber =
-  document.getElementById("timerNumber");
-
-const timerBar =
-  document.getElementById("timerBar");
-
-const overlay =
-  document.getElementById("overlay");
-
-const popupIcon =
-  document.getElementById("popupIcon");
-
-const popupTitle =
-  document.getElementById("popupTitle");
-
-const popupMessage =
-  document.getElementById("popupMessage");
-
-const popupAnswer =
-  document.getElementById("popupAnswer");
-
-const popupButton =
-  document.getElementById("popupButton");
-
-const scare =
-  document.getElementById("scare");
-
-const toast =
-  document.getElementById("toast");
-
-
-/* =====================================================
-   STATE
-===================================================== */
-
-let currentAnswer = "";
-
-let currentCategory = "";
-
-let chances = 3;
-
-let score = 0;
-
-let correct = 0;
-
-let wrong = 0;
-
-let streak = 0;
-
-let loadingQuestion = false;
-
-let nextAction = null;
-
-let timeLeft = QUESTION_TIME;
-
-let timer = null;
-
-let toastTimer = null;
-
-let audioContext = null;
-
-
-/* =====================================================
-   LOCAL STORAGE
-===================================================== */
-
-try{
-
-  score =
-    parseInt(
-      localStorage.getItem("ww_score") || "0",
-      10
-    );
-
-  correct =
-    parseInt(
-      localStorage.getItem("ww_correct") || "0",
-      10
-    );
-
-  wrong =
-    parseInt(
-      localStorage.getItem("ww_wrong") || "0",
-      10
-    );
-
-  streak =
-    parseInt(
-      localStorage.getItem("ww_streak") || "0",
-      10
-    );
-
-}catch(e){}
-
-
-updateStats();
-
-
-function saveStats(){
-
-  try{
-
-    localStorage.setItem(
-      "ww_score",
-      score
-    );
-
-    localStorage.setItem(
-      "ww_correct",
-      correct
-    );
-
-    localStorage.setItem(
-      "ww_wrong",
-      wrong
-    );
-
-    localStorage.setItem(
-      "ww_streak",
-      streak
-    );
-
-  }catch(e){}
-
-}
-
-
-/* =====================================================
-   AUDIO
-   Horror sound dibuat menggunakan Web Audio API.
-   Tidak perlu MP3 eksternal.
-===================================================== */
-
-function initAudio(){
-
-  try{
-
-    if(!audioContext){
-
-      const AudioCtx =
-        window.AudioContext ||
-        window.webkitAudioContext;
-
-      if(AudioCtx){
-
-        audioContext =
-          new AudioCtx();
-
-      }
-
-    }
-
-    if(
-      audioContext &&
-      audioContext.state === "suspended"
-    ){
-
-      audioContext.resume();
-
-    }
-
-  }catch(e){}
-
-}
-
-
-function horrorSound(){
-
-  try{
-
-    initAudio();
-
-    if(!audioContext) return;
-
-    const now =
-      audioContext.currentTime;
-
-    const osc =
-      audioContext.createOscillator();
-
-    const gain =
-      audioContext.createGain();
-
-    osc.type = "sawtooth";
-
-    osc.frequency.setValueAtTime(
-      85,
-      now
-    );
-
-    osc.frequency.exponentialRampToValueAtTime(
-      38,
-      now + 1.3
-    );
-
-    gain.gain.setValueAtTime(
-      0.0001,
-      now
-    );
-
-    gain.gain.exponentialRampToValueAtTime(
-      0.12,
-      now + .08
-    );
-
-    gain.gain.exponentialRampToValueAtTime(
-      0.0001,
-      now + 1.45
-    );
-
-    osc.connect(gain);
-
-    gain.connect(
-      audioContext.destination
-    );
-
-    osc.start(now);
-
-    osc.stop(now + 1.5);
-
-  }catch(e){}
-
-}
-
-
-/* =====================================================
-   TIMER
-===================================================== */
-
-function startTimer(){
-
-  stopTimer();
-
-  timeLeft =
-    QUESTION_TIME;
-
-  updateTimerUI();
-
-  timer =
-    setInterval(function(){
-
-      timeLeft--;
-
-      updateTimerUI();
-
-      if(timeLeft <= 0){
-
-        stopTimer();
-
-        timeOut();
-
-      }
-
-    },1000);
-
-}
-
-
-function stopTimer(){
-
-  if(timer){
-
-    clearInterval(timer);
-
-    timer = null;
-
+const API_KEY="gBw4bfj5haqY";
+const REMINI_API="https://api.neoxr.eu/api/remini";
+const PONE_API="https://pone.rs/upload";
+
+const fileInput=document.getElementById("file");
+const drop=document.getElementById("drop");
+const preview=document.getElementById("preview");
+const previewImg=document.getElementById("previewImg");
+const fileInfo=document.getElementById("fileInfo");
+const processBtn=document.getElementById("process");
+const loading=document.getElementById("loading");
+const loadingText=document.getElementById("loadingText");
+const statusBox=document.getElementById("status");
+const result=document.getElementById("result");
+const resultImg=document.getElementById("resultImg");
+const saveBtn=document.getElementById("save");
+const resetBtn=document.getElementById("reset");
+
+let selectedFile=null;
+let resultUrl="";
+
+drop.addEventListener("click",()=>{
+  fileInput.click();
+});
+
+fileInput.addEventListener("change",()=>{
+  if(fileInput.files[0]){
+    setFile(fileInput.files[0]);
+  }
+});
+
+function setFile(file){
+  resetView();
+
+  if(!/^image\/(jpeg|png)$/i.test(file.type)){
+    showError("Foto harus JPG, JPEG atau PNG.");
+    return;
   }
 
-}
-
-
-function updateTimerUI(){
-
-  timerNumber.textContent =
-    timeLeft + "s";
-
-  const percentage =
-    Math.max(
-      0,
-      (timeLeft / QUESTION_TIME) * 100
-    );
-
-  timerBar.style.width =
-    percentage + "%";
-
-
-  if(timeLeft <= 5){
-
-    timerBar.style.background =
-      "#e34b55";
-
-    timerNumber.style.color =
-      "#ff6972";
-
-  }else if(timeLeft <= 10){
-
-    timerBar.style.background =
-      "#d59b39";
-
-    timerNumber.style.color =
-      "#e0ad54";
-
-  }else{
-
-    timerBar.style.background =
-      "#665cff";
-
-    timerNumber.style.color =
-      "#a9a4ff";
-
+  if(file.size>10*1024*1024){
+    showError("Ukuran foto maksimal 10 MB.");
+    return;
   }
 
+  selectedFile=file;
+
+  const reader=new FileReader();
+
+  reader.onload=function(){
+    previewImg.src=reader.result;
+    preview.style.display="block";
+  };
+
+  reader.readAsDataURL(file);
+
+  fileInfo.textContent=file.name+" • "+formatSize(file.size);
+  processBtn.disabled=false;
 }
 
-
-/* =====================================================
-   TIME OUT
-===================================================== */
-
-function timeOut(){
-
-  if(!currentAnswer) return;
-
-  chances--;
-
-  wrong++;
-
-  streak = 0;
-
-  saveStats();
-
-  updateStats();
-
-  updateLives();
-
-  gameCard.classList.remove("shake");
-
-  void gameCard.offsetWidth;
-
-  gameCard.classList.add("shake");
-
-  statusEl.textContent =
-    "WAKTU HABIS 😭 kesempatan berkurang.";
-
-  statusEl.className =
-    "status bad";
-
-  showToast(
-    "Keburu waktunya habis 💀"
-  );
-
-
-  if(chances > 0){
-
-    answerEl.value = "";
-
-    answerEl.focus();
-
-    /*
-      Kasih waktu baru untuk soal yang sama.
-      Jadi timeout tidak langsung ganti soal.
-    */
-
-    startTimer();
-
-  }else{
-
-    handleGameOver();
-
-  }
-
+function formatSize(size){
+  if(size<1024)return size+" B";
+  if(size<1048576)return (size/1024).toFixed(1)+" KB";
+  return (size/1048576).toFixed(2)+" MB";
 }
 
+function showError(text){
+  statusBox.className="status show err";
+  statusBox.textContent=text;
+}
 
-/* =====================================================
-   API
-===================================================== */
+function showOk(text){
+  statusBox.className="status show ok";
+  statusBox.textContent=text;
+}
 
-async function getQuestion(){
+function hideStatus(){
+  statusBox.className="status";
+  statusBox.textContent="";
+}
 
-  if(loadingQuestion) return;
+function setLoading(text){
+  loadingText.textContent=text;
+  loading.classList.add("show");
+  processBtn.disabled=true;
+}
 
-  loadingQuestion = true;
+function stopLoading(){
+  loading.classList.remove("show");
+}
 
-  stopTimer();
+function resetView(){
+  hideStatus();
+  result.style.display="none";
+  saveBtn.style.display="none";
+  resultUrl="";
+}
 
-  loading.classList.remove("hide");
+function getTimeout(ms){
+  const controller=new AbortController();
+  const timer=setTimeout(()=>controller.abort(),ms);
 
-  submitBtn.disabled = true;
+  return{
+    signal:controller.signal,
+    clear:()=>clearTimeout(timer)
+  };
+}
 
-  answerEl.disabled = true;
+async function uploadPone(file){
+  const form=new FormData();
 
+  form.append("files[]",file,file.name);
+
+  const timeout=getTimeout(60000);
 
   try{
-
-    const controller =
-      new AbortController();
-
-    const timeout =
-      setTimeout(function(){
-
-        controller.abort();
-
-      },10000);
-
-
-    const response =
-      await fetch(
-        API_URL,
-        {
-          method:"GET",
-          cache:"no-store",
-          signal:controller.signal
-        }
-      );
-
-
-    clearTimeout(timeout);
-
+    const response=await fetch(PONE_API,{
+      method:"POST",
+      body:form,
+      signal:timeout.signal,
+      cache:"no-store"
+    });
 
     if(!response.ok){
-
-      throw new Error(
-        "HTTP " + response.status
-      );
-
+      throw new Error("Pone HTTP "+response.status);
     }
 
+    const text=await response.text();
 
-    const json =
-      await response.json();
+    let data;
 
-
-    if(
-      !json ||
-      json.status !== true ||
-      !json.data
-    ){
-
-      throw new Error(
-        "Data API tidak valid"
-      );
-
+    try{
+      data=JSON.parse(text);
+    }catch(e){
+      data=text;
     }
 
+    const url=findImageUrl(data);
 
-    const data =
-      json.data;
-
-
-    currentCategory =
-      String(
-        data.tipe || "Umum"
-      );
-
-
-    currentAnswer =
-      String(
-        data.jawaban || ""
-      )
-      .trim()
-      .toUpperCase();
-
-
-    const question =
-      String(
-        data.pertanyaan || ""
-      )
-      .trim()
-      .toUpperCase();
-
-
-    if(
-      !currentAnswer ||
-      !question
-    ){
-
-      throw new Error(
-        "Soal kosong"
-      );
-
+    if(!url){
+      throw new Error("Pone tidak memberikan URL foto.");
     }
 
-
-    categoryEl.textContent =
-      currentCategory;
-
-
-    renderWord(question);
-
-
-    chances = 3;
-
-    updateLives();
-
-
-    answerEl.value = "";
-
-    answerEl.disabled = false;
-
-    submitBtn.disabled = false;
-
-    submitBtn.textContent =
-      "JAWAB";
-
-
-    statusEl.textContent =
-      "3 kesempatan. waktu jalan terus 😈";
-
-    statusEl.className =
-      "status";
-
-
-    loading.classList.add("hide");
-
-
-    startTimer();
-
-
-    setTimeout(function(){
-
-      answerEl.focus();
-
-    },80);
-
+    return url;
 
   }catch(error){
 
-    console.error(error);
+    if(error.name==="AbortError"){
+      throw new Error("Upload terlalu lama. Coba foto yang lebih kecil.");
+    }
 
+    if(error.message==="Failed to fetch"){
+      throw new Error("Upload Pone tidak dapat diakses dari browser ini.");
+    }
 
-    categoryEl.textContent =
-      "ERROR";
-
-
-    wordEl.textContent =
-      "😵";
-
-
-    statusEl.textContent =
-      "Soalnya gagal diambil. cek koneksi.";
-
-    statusEl.className =
-      "status bad";
-
-
-    loading.classList.add("hide");
-
-
-    answerEl.disabled = true;
-
-    submitBtn.disabled = false;
-
-    submitBtn.textContent =
-      "COBA LAGI";
-
+    throw error;
 
   }finally{
-
-    loadingQuestion = false;
-
+    timeout.clear();
   }
-
 }
 
+function findImageUrl(data){
 
-/* =====================================================
-   RENDER WORD
-===================================================== */
+  if(typeof data==="string"){
+    const match=data.match(/https?:\/\/[^\s"'<>]+/i);
 
-function renderWord(text){
-
-  wordEl.innerHTML = "";
-
-  const chars =
-    text.split("");
-
-
-  chars.forEach(function(char){
-
-    const span =
-      document.createElement("span");
-
-    span.className =
-      "letter";
-
-
-    if(
-      char === "-" ||
-      char === " "
-    ){
-
-      span.textContent =
-        char;
-
-      span.style.opacity =
-        ".45";
-
-    }else{
-
-      span.textContent =
-        char;
-
+    if(match){
+      return match[0];
     }
 
-
-    wordEl.appendChild(span);
-
-  });
-
-}
-
-
-/* =====================================================
-   SUBMIT
-===================================================== */
-
-form.addEventListener(
-  "submit",
-  function(e){
-
-    e.preventDefault();
-
-    initAudio();
-
-    if(loadingQuestion) return;
-
-    if(!currentAnswer){
-
-      getQuestion();
-
-      return;
-
-    }
-
-
-    const userAnswer =
-      answerEl.value
-      .trim()
-      .toUpperCase()
-      .replace(/\s+/g," ");
-
-
-    if(!userAnswer){
-
-      showToast(
-        "Isi jawabannya dulu woi 😭"
-      );
-
-      answerEl.focus();
-
-      return;
-
-    }
-
-
-    checkAnswer(userAnswer);
-
-  }
-);
-
-
-/* =====================================================
-   CHECK
-===================================================== */
-
-function checkAnswer(
-  userAnswer
-){
-
-  stopTimer();
-
-
-  if(
-    userAnswer === currentAnswer
-  ){
-
-    handleCorrect();
-
-  }else{
-
-    handleWrong();
-
+    return null;
   }
 
-}
+  if(Array.isArray(data)){
 
+    for(const item of data){
 
-/* =====================================================
-   CORRECT
-===================================================== */
+      const found=findImageUrl(item);
 
-function handleCorrect(){
-
-  correct++;
-
-  streak++;
-
-
-  /*
-    Base score 10.
-    Bonus berdasarkan sisa waktu.
-  */
-
-  let gained =
-    10;
-
-
-  if(timeLeft >= 15){
-
-    gained += 5;
-
-  }else if(timeLeft >= 10){
-
-    gained += 3;
-
-  }
-
-
-  if(streak >= 3){
-
-    gained += 5;
-
-  }
-
-
-  score += gained;
-
-
-  saveStats();
-
-  updateStats();
-
-
-  gameCard.classList.add(
-    "shake"
-  );
-
-
-  setTimeout(function(){
-
-    gameCard.classList.remove(
-      "shake"
-    );
-
-  },350);
-
-
-  statusEl.textContent =
-    "+" + gained +
-    " poin! BENER 🔥";
-
-  statusEl.className =
-    "status good";
-
-
-  answerEl.disabled = true;
-
-  submitBtn.disabled = true;
-
-
-  createConfetti();
-
-
-  setTimeout(function(){
-
-    popupIcon.textContent =
-      streak >= 3
-      ? "🔥"
-      : "🎉";
-
-
-    popupTitle.textContent =
-      streak >= 3
-      ? "STREAK GILA!"
-      : "BENER WOI!";
-
-
-    popupMessage.textContent =
-      "Jawaban kamu tepat. +" +
-      gained +
-      " poin. " +
-      (
-        timeLeft > 0
-        ? "Masih sisa " +
-          timeLeft +
-          " detik!"
-        : ""
-      );
-
-
-    popupAnswer.textContent =
-      currentAnswer;
-
-
-    popupButton.textContent =
-      "SOAL BERIKUTNYA →";
-
-
-    nextAction =
-      "next";
-
-
-    overlay.classList.add(
-      "show"
-    );
-
-  },450);
-
-}
-
-
-/* =====================================================
-   WRONG
-===================================================== */
-
-function handleWrong(){
-
-  chances--;
-
-  wrong++;
-
-  streak = 0;
-
-
-  saveStats();
-
-  updateStats();
-
-  updateLives();
-
-
-  gameCard.classList.remove(
-    "shake"
-  );
-
-  void gameCard.offsetWidth;
-
-  gameCard.classList.add(
-    "shake"
-  );
-
-
-  setTimeout(function(){
-
-    gameCard.classList.remove(
-      "shake"
-    );
-
-  },350);
-
-
-  if(chances > 0){
-
-    statusEl.textContent =
-      "Salah 😭 tinggal " +
-      chances +
-      " kesempatan.";
-
-    statusEl.className =
-      "status bad";
-
-
-    showToast(
-      chances === 2
-      ? "Belum tepat 😭"
-      : "Salah lagi... jangan panik 💀"
-    );
-
-
-    answerEl.value = "";
-
-    answerEl.focus();
-
-
-    /*
-      Timer di-reset setelah jawaban salah.
-    */
-
-    startTimer();
-
-
-  }else{
-
-    handleGameOver();
-
-  }
-
-}
-
-
-/* =====================================================
-   GAME OVER
-===================================================== */
-
-function handleGameOver(){
-
-  stopTimer();
-
-
-  answerEl.disabled = true;
-
-  submitBtn.disabled = true;
-
-
-  statusEl.textContent =
-    "kesempatan habis... 💀";
-
-  statusEl.className =
-    "status bad";
-
-
-  /*
-    JUMPSCARE HORROR
-  */
-
-  triggerScare();
-
-
-  setTimeout(function(){
-
-    popupIcon.textContent =
-      "💀";
-
-
-    popupTitle.textContent =
-      "YAHH KALAH 😭";
-
-
-    popupMessage.textContent =
-      "Tiga kesempatan habis. " +
-      "Tadi dia udah ngasih kesempatan loh...";
-
-
-    popupAnswer.textContent =
-      "Jawabannya: " +
-      currentAnswer;
-
-
-    popupButton.textContent =
-      "COBA SOAL LAIN →";
-
-
-    nextAction =
-      "next";
-
-
-    overlay.classList.add(
-      "show"
-    );
-
-  },2400);
-
-}
-
-
-/* =====================================================
-   LIVES
-===================================================== */
-
-function updateLives(){
-
-  const lives =
-    livesEl.querySelectorAll(
-      ".life"
-    );
-
-
-  lives.forEach(
-    function(life,index){
-
-      if(index < chances){
-
-        life.classList.remove(
-          "dead"
-        );
-
-      }else{
-
-        life.classList.add(
-          "dead"
-        );
-
+      if(found){
+        return found;
       }
-
-    }
-  );
-
-}
-
-
-/* =====================================================
-   STATS
-===================================================== */
-
-function updateStats(){
-
-  scoreEl.textContent =
-    score;
-
-  correctEl.textContent =
-    correct;
-
-  wrongEl.textContent =
-    wrong;
-
-  streakEl.textContent =
-    streak;
-
-}
-
-
-/* =====================================================
-   POPUP
-===================================================== */
-
-popupButton.addEventListener(
-  "click",
-  function(){
-
-    overlay.classList.remove(
-      "show"
-    );
-
-
-    if(nextAction === "next"){
-
-      nextAction = null;
-
-      getQuestion();
-
     }
 
+    return null;
   }
-);
 
+  if(data&&typeof data==="object"){
 
-overlay.addEventListener(
-  "click",
-  function(e){
+    const keys=[
+      "url",
+      "link",
+      "src",
+      "file",
+      "download",
+      "download_url",
+      "direct",
+      "direct_url"
+    ];
 
-    if(e.target === overlay){
+    for(const key of keys){
 
-      overlay.classList.remove(
-        "show"
-      );
+      if(typeof data[key]==="string"&&
+         /^https?:\/\//i.test(data[key])){
 
-
-      if(nextAction === "next"){
-
-        nextAction = null;
-
-        getQuestion();
-
+        return data[key];
       }
-
     }
 
+    for(const key in data){
+
+      const found=findImageUrl(data[key]);
+
+      if(found){
+        return found;
+      }
+    }
   }
-);
 
+  return null;
+}
 
-/* =====================================================
-   HORROR
-===================================================== */
+async function runRemini(imageUrl){
 
-function triggerScare(){
+  const url=
+    REMINI_API+
+    "?image="+encodeURIComponent(imageUrl)+
+    "&apikey="+encodeURIComponent(API_KEY);
 
-  initAudio();
-
-  horrorSound();
-
-
-  scare.classList.remove(
-    "show"
-  );
-
-
-  void scare.offsetWidth;
-
-
-  scare.classList.add(
-    "show"
-  );
-
-
-  /*
-    Haptic lebih panjang.
-    Hanya bekerja kalau browser/HP mendukung.
-  */
+  const timeout=getTimeout(120000);
 
   try{
 
-    if(navigator.vibrate){
+    const response=await fetch(url,{
+      method:"GET",
+      signal:timeout.signal,
+      cache:"no-store"
+    });
 
-      navigator.vibrate([
-        80,
-        40,
-        130,
-        50,
-        180,
-        70,
-        220
-      ]);
-
+    if(!response.ok){
+      throw new Error("Remini HTTP "+response.status);
     }
 
-  }catch(e){}
+    const data=await response.json();
 
+    if(!data||data.status!==true){
+      throw new Error("API Remini gagal memproses foto.");
+    }
 
-  setTimeout(function(){
+    if(!data.data||!data.data.url){
+      throw new Error("API tidak mengirim URL hasil foto.");
+    }
 
-    scare.classList.remove(
-      "show"
-    );
+    return data.data.url;
 
-  },2400);
+  }catch(error){
 
+    if(error.name==="AbortError"){
+      throw new Error("Proses Remini terlalu lama. Coba lagi.");
+    }
+
+    if(error.message==="Failed to fetch"){
+      throw new Error("API Remini tidak bisa diakses langsung dari browser.");
+    }
+
+    throw error;
+
+  }finally{
+    timeout.clear();
+  }
 }
 
+processBtn.addEventListener("click",async()=>{
 
-/* =====================================================
-   TOAST
-===================================================== */
+  if(!selectedFile)return;
 
-function showToast(message){
+  try{
 
-  toast.textContent =
-    message;
+    hideStatus();
+    result.style.display="none";
+    saveBtn.style.display="none";
 
+    setLoading("Mengupload foto ke Pone...");
 
-  toast.classList.add(
-    "show"
-  );
+    const uploadedUrl=await uploadPone(selectedFile);
 
+    setLoading("Foto berhasil diupload. Memproses Remini...");
 
-  clearTimeout(
-    toastTimer
-  );
+    resultUrl=await runRemini(uploadedUrl);
 
+    resultImg.onload=function(){
 
-  toastTimer =
-    setTimeout(
-      function(){
+      stopLoading();
 
-        toast.classList.remove(
-          "show"
-        );
+      result.style.display="block";
+      saveBtn.style.display="block";
 
-      },
-      1800
-    );
+      showOk("Selesai. Foto hasil Remini sudah muncul.");
 
-}
+      setTimeout(()=>{
+        result.scrollIntoView({
+          behavior:"smooth",
+          block:"start"
+        });
+      },100);
+    };
 
+    resultImg.onerror=function(){
 
-/* =====================================================
-   CONFETTI
-===================================================== */
+      stopLoading();
+      processBtn.disabled=false;
 
-function createConfetti(){
-
-  const amount =
-    window.innerWidth < 500
-    ? 14
-    : 22;
-
-
-  for(
-    let i = 0;
-    i < amount;
-    i++
-  ){
-
-    const el =
-      document.createElement(
-        "div"
+      showError(
+        "URL hasil Remini sudah diterima, tetapi gambar hasil tidak dapat ditampilkan."
       );
+    };
 
+    resultImg.src=resultUrl;
 
-    el.className =
-      "confetti";
+  }catch(error){
 
+    stopLoading();
+    processBtn.disabled=false;
 
-    el.style.left =
-      Math.random() *
-      100 +
-      "vw";
-
-
-    el.style.setProperty(
-      "--x",
-      (
-        (Math.random() - .5) *
-        180
-      ) +
-      "px"
+    showError(
+      error.message||
+      "Terjadi kesalahan. Silakan coba lagi."
     );
-
-
-    el.style.animationDelay =
-      (
-        Math.random() *
-        .15
-      ) +
-      "s";
-
-
-    const shapes =
-      ["●","■","◆"];
-
-
-    el.textContent =
-      shapes[
-        Math.floor(
-          Math.random() *
-          shapes.length
-        )
-      ];
-
-
-    document.body.appendChild(
-      el
-    );
-
-
-    setTimeout(
-      function(){
-
-        el.remove();
-
-      },
-      1000
-    );
-
   }
+});
 
-}
+saveBtn.addEventListener("click",async()=>{
 
+  if(!resultUrl)return;
 
-/* =====================================================
-   KEYBOARD
-===================================================== */
+  try{
 
-answerEl.addEventListener(
-  "keydown",
-  function(e){
+    const response=await fetch(resultUrl,{
+      mode:"cors",
+      cache:"no-store"
+    });
 
-    if(e.key === "Enter"){
+    if(!response.ok)throw new Error();
 
-      e.preventDefault();
+    const blob=await response.blob();
+    const url=URL.createObjectURL(blob);
 
-      form.requestSubmit();
+    const a=document.createElement("a");
 
-    }
+    a.href=url;
+    a.download="remini-result.jpg";
 
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+
+    setTimeout(()=>{
+      URL.revokeObjectURL(url);
+    },2000);
+
+  }catch(e){
+
+    window.open(resultUrl,"_blank");
   }
-);
+});
 
+resetBtn.addEventListener("click",()=>{
+  selectedFile=null;
+  resultUrl="";
+  fileInput.value="";
+  preview.style.display="none";
+  result.style.display="none";
+  saveBtn.style.display="none";
+  processBtn.disabled=true;
+  hideStatus();
 
-/* =====================================================
-   INIT
-===================================================== */
-
-updateLives();
-
-getQuestion();
-
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+});
 </script>
 
 </body>
