@@ -6,478 +6,1158 @@
 <meta name="theme-color" content="#0b0b0f">
 <meta name="description" content="Remini Image Enhancer">
 <title>Remini Enhancer</title>
+
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{min-height:100vh;padding:16px 12px;background:#0b0b0f;color:#f5f5f5;font-family:Arial,sans-serif}
-.wrap{max-width:500px;margin:auto}
-.card{padding:18px;background:#121218;border:1px solid #24242d;border-radius:18px}
-.head{text-align:center;margin-bottom:18px}
-.logo{width:58px;height:58px;margin:auto;border-radius:16px;background:linear-gradient(135deg,#ff3158,#ff719c);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:bold}
-h1{font-size:23px;margin-top:10px}
-.sub{font-size:12px;color:#888;margin-top:5px}
-.drop{display:block;padding:25px 14px;text-align:center;border:1px dashed #3a3a45;border-radius:15px;background:#0f0f14;cursor:pointer}
-.drop:active{transform:scale(.99)}
-.drop-icon{font-size:30px;margin-bottom:7px}
-.drop b{font-size:14px}
-.drop p{margin-top:6px;color:#777;font-size:11px}
-input{display:none}
-.preview{display:none;margin-top:13px;overflow:hidden;border:1px solid #292933;border-radius:14px;background:#0d0d12}
-.preview img{display:block;width:100%;max-height:330px;object-fit:contain}
-.info{padding:9px;font-size:11px;color:#999;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-button{width:100%;padding:13px;margin-top:12px;border:0;border-radius:12px;font-weight:bold;font-size:14px}
-.main{background:#ff4169;color:#fff}
-.main:disabled{opacity:.45}
-.secondary{background:#24242d;color:#fff}
-.status{display:none;margin-top:13px;padding:11px;border-radius:11px;font-size:12px;line-height:1.5}
-.status.show{display:block}
-.ok{background:#14251c;border:1px solid #285339;color:#a8e6bd}
-.err{background:#28151a;border:1px solid #542833;color:#ff9baa}
-.loading{display:none;text-align:center;padding:14px 0;color:#aaa;font-size:12px}
-.loading.show{display:block}
-.spin{display:inline-block;width:15px;height:15px;border:2px solid #555;border-top-color:#ff4169;border-radius:50%;vertical-align:-4px;margin-right:6px;animation:spin .7s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.result{display:none;margin-top:18px}
-.result h2{font-size:15px;margin-bottom:9px}
-.result img{width:100%;display:block;border-radius:14px;border:1px solid #292933;background:#08080b}
-.save{display:none}
-.reset{background:#24242d;color:#fff}
-.footer{text-align:center;margin-top:14px;color:#555;font-size:10px}
+*{
+box-sizing:border-box;
+margin:0;
+padding:0
+}
+
+html,body{
+min-height:100%;
+background:#0b0b0f;
+color:#f5f5f5;
+font-family:Arial,sans-serif
+}
+
+body{
+padding:14px 11px
+}
+
+.wrap{
+width:100%;
+max-width:500px;
+margin:auto
+}
+
+.card{
+background:#121218;
+border:1px solid #25252e;
+border-radius:18px;
+padding:17px;
+box-shadow:0 8px 30px rgba(0,0,0,.3)
+}
+
+.head{
+text-align:center;
+margin-bottom:17px
+}
+
+.logo{
+width:58px;
+height:58px;
+margin:auto;
+border-radius:17px;
+background:linear-gradient(135deg,#ff3158,#ff719b);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:27px;
+font-weight:bold
+}
+
+h1{
+font-size:22px;
+margin-top:10px
+}
+
+.sub{
+font-size:12px;
+color:#888;
+margin-top:5px
+}
+
+.drop{
+display:block;
+padding:25px 12px;
+border:1px dashed #3a3a45;
+border-radius:15px;
+background:#0f0f14;
+text-align:center;
+cursor:pointer
+}
+
+.drop:active{
+transform:scale(.99)
+}
+
+.drop-icon{
+font-size:31px;
+margin-bottom:7px
+}
+
+.drop b{
+font-size:14px
+}
+
+.drop p{
+font-size:11px;
+color:#777;
+margin-top:6px
+}
+
+input{
+display:none
+}
+
+.preview{
+display:none;
+margin-top:13px;
+overflow:hidden;
+border:1px solid #292933;
+border-radius:14px;
+background:#0d0d12
+}
+
+.preview img{
+display:block;
+width:100%;
+max-height:330px;
+object-fit:contain
+}
+
+.info{
+padding:9px;
+font-size:11px;
+color:#999;
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis
+}
+
+button{
+width:100%;
+padding:13px;
+margin-top:12px;
+border:0;
+border-radius:12px;
+font-size:14px;
+font-weight:bold;
+cursor:pointer
+}
+
+.main{
+background:#ff4169;
+color:#fff
+}
+
+.main:disabled{
+opacity:.45;
+cursor:not-allowed
+}
+
+.dark{
+background:#24242d;
+color:#fff
+}
+
+.status{
+display:none;
+margin-top:13px;
+padding:11px;
+border-radius:11px;
+font-size:12px;
+line-height:1.5
+}
+
+.status.show{
+display:block
+}
+
+.status.ok{
+background:#14251c;
+border:1px solid #285339;
+color:#a8e6bd
+}
+
+.status.err{
+background:#28151a;
+border:1px solid #542833;
+color:#ff9baa
+}
+
+.loading{
+display:none;
+padding:14px 0;
+text-align:center;
+font-size:12px;
+color:#aaa
+}
+
+.loading.show{
+display:block
+}
+
+.spinner{
+display:inline-block;
+width:15px;
+height:15px;
+margin-right:6px;
+border:2px solid #555;
+border-top-color:#ff4169;
+border-radius:50%;
+vertical-align:-4px;
+animation:spin .7s linear infinite
+}
+
+@keyframes spin{
+to{
+transform:rotate(360deg)
+}
+}
+
+.result{
+display:none;
+margin-top:18px
+}
+
+.result-title{
+font-size:15px;
+font-weight:bold;
+margin-bottom:9px
+}
+
+.result img{
+display:block;
+width:100%;
+border-radius:14px;
+border:1px solid #292933;
+background:#08080b
+}
+
+.save{
+display:none;
+background:#24242d;
+color:#fff
+}
+
+.footer{
+text-align:center;
+margin-top:14px;
+font-size:10px;
+color:#555
+}
 </style>
 </head>
+
 <body>
 
 <div class="wrap">
+
 <div class="card">
 
 <div class="head">
 <div class="logo">R</div>
 <h1>Remini Enhancer</h1>
-<div class="sub">Pilih foto, biarkan sisanya otomatis.</div>
+<div class="sub">Pilih foto lalu tingkatkan kualitasnya.</div>
 </div>
 
 <label class="drop" id="drop">
+
 <div class="drop-icon">＋</div>
+
 <b>Pilih Foto</b>
-<p>JPG, JPEG atau PNG • maksimal 10 MB</p>
-<input id="file" type="file" accept="image/jpeg,image/png">
+
+<p>
+JPG, JPEG atau PNG • maksimal 10 MB
+</p>
+
+<input
+id="file"
+type="file"
+accept="image/jpeg,image/jpg,image/png"
+>
+
 </label>
 
 <div class="preview" id="preview">
-<img id="previewImg" alt="Preview">
-<div class="info" id="fileInfo"></div>
+
+<img
+id="previewImg"
+alt="Preview foto"
+>
+
+<div
+class="info"
+id="fileInfo"
+></div>
+
 </div>
 
-<button class="main" id="process" disabled>
+<button
+id="process"
+class="main"
+disabled
+>
 ✨ Tingkatkan Foto
 </button>
 
-<div class="loading" id="loading">
-<span class="spin"></span>
+<div
+id="loading"
+class="loading"
+>
+<span class="spinner"></span>
 <span id="loadingText">Menyiapkan...</span>
 </div>
 
-<div class="status" id="status"></div>
+<div
+id="status"
+class="status"
+></div>
 
-<div class="result" id="result">
-<h2>Hasil Foto</h2>
-<img id="resultImg" alt="Hasil Remini">
+<div
+id="result"
+class="result"
+>
 
-<button class="save" id="save">
+<div class="result-title">
+Hasil Remini
+</div>
+
+<img
+id="resultImg"
+alt="Hasil Remini"
+>
+
+<button
+id="save"
+class="save"
+>
 ⬇ Simpan Hasil
 </button>
 
-<button class="reset" id="reset">
+<button
+id="reset"
+class="dark"
+>
 Pilih Foto Lain
 </button>
-</div>
-
-<div class="footer">Remini Enhancer</div>
 
 </div>
+
+<div class="footer">
+Remini Enhancer
+</div>
+
+</div>
+
 </div>
 
 <script>
-const API_KEY="gBw4bfj5haqY";
-const REMINI_API="https://api.neoxr.eu/api/remini";
-const PONE_API="https://pone.rs/upload";
 
-const fileInput=document.getElementById("file");
-const drop=document.getElementById("drop");
-const preview=document.getElementById("preview");
-const previewImg=document.getElementById("previewImg");
-const fileInfo=document.getElementById("fileInfo");
-const processBtn=document.getElementById("process");
-const loading=document.getElementById("loading");
-const loadingText=document.getElementById("loadingText");
-const statusBox=document.getElementById("status");
-const result=document.getElementById("result");
-const resultImg=document.getElementById("resultImg");
-const saveBtn=document.getElementById("save");
-const resetBtn=document.getElementById("reset");
+const API_KEY=
+"gBw4bfj5haqY";
+
+const UPLOAD_API=
+"https://uguu.se/upload";
+
+const REMINI_API=
+"https://api.neoxr.eu/api/remini";
+
+const fileInput=
+document.getElementById("file");
+
+const drop=
+document.getElementById("drop");
+
+const preview=
+document.getElementById("preview");
+
+const previewImg=
+document.getElementById("previewImg");
+
+const fileInfo=
+document.getElementById("fileInfo");
+
+const processBtn=
+document.getElementById("process");
+
+const loading=
+document.getElementById("loading");
+
+const loadingText=
+document.getElementById("loadingText");
+
+const statusBox=
+document.getElementById("status");
+
+const result=
+document.getElementById("result");
+
+const resultImg=
+document.getElementById("resultImg");
+
+const saveBtn=
+document.getElementById("save");
+
+const resetBtn=
+document.getElementById("reset");
 
 let selectedFile=null;
+
 let resultUrl="";
 
-drop.addEventListener("click",()=>{
-  fileInput.click();
-});
 
-fileInput.addEventListener("change",()=>{
-  if(fileInput.files[0]){
-    setFile(fileInput.files[0]);
-  }
-});
-
-function setFile(file){
-  resetView();
-
-  if(!/^image\/(jpeg|png)$/i.test(file.type)){
-    showError("Foto harus JPG, JPEG atau PNG.");
-    return;
-  }
-
-  if(file.size>10*1024*1024){
-    showError("Ukuran foto maksimal 10 MB.");
-    return;
-  }
-
-  selectedFile=file;
-
-  const reader=new FileReader();
-
-  reader.onload=function(){
-    previewImg.src=reader.result;
-    preview.style.display="block";
-  };
-
-  reader.readAsDataURL(file);
-
-  fileInfo.textContent=file.name+" • "+formatSize(file.size);
-  processBtn.disabled=false;
+drop.addEventListener(
+"click",
+function(){
+fileInput.click();
 }
+);
+
+
+fileInput.addEventListener(
+"change",
+function(){
+
+if(
+fileInput.files &&
+fileInput.files[0]
+){
+
+selectFile(
+fileInput.files[0]
+);
+
+}
+
+}
+);
+
+
+function selectFile(file){
+
+selectedFile=null;
+
+resultUrl="";
+
+hideStatus();
+
+result.style.display=
+"none";
+
+saveBtn.style.display=
+"none";
+
+if(!file){
+return;
+}
+
+
+if(
+file.type!=="image/jpeg" &&
+file.type!=="image/jpg" &&
+file.type!=="image/png"
+){
+
+showError(
+"Format foto harus JPG, JPEG atau PNG."
+);
+
+return;
+}
+
+
+if(
+file.size >
+10*1024*1024
+){
+
+showError(
+"Ukuran foto maksimal 10 MB."
+);
+
+return;
+}
+
+
+selectedFile=file;
+
+
+const reader=
+new FileReader();
+
+
+reader.onload=
+function(){
+
+previewImg.src=
+reader.result;
+
+preview.style.display=
+"block";
+
+};
+
+
+reader.readAsDataURL(file);
+
+
+fileInfo.textContent=
+file.name+
+" • "+
+formatSize(file.size);
+
+
+processBtn.disabled=
+false;
+
+}
+
 
 function formatSize(size){
-  if(size<1024)return size+" B";
-  if(size<1048576)return (size/1024).toFixed(1)+" KB";
-  return (size/1048576).toFixed(2)+" MB";
+
+if(
+size <
+1024
+){
+
+return size+
+" B";
+
 }
+
+if(
+size <
+1024*1024
+){
+
+return (
+size/1024
+).toFixed(1)+
+" KB";
+
+}
+
+return (
+size/
+(1024*1024)
+).toFixed(2)+
+" MB";
+
+}
+
 
 function showError(text){
-  statusBox.className="status show err";
-  statusBox.textContent=text;
+
+statusBox.className=
+"status show err";
+
+statusBox.textContent=
+text;
+
 }
 
-function showOk(text){
-  statusBox.className="status show ok";
-  statusBox.textContent=text;
+
+function showSuccess(text){
+
+statusBox.className=
+"status show ok";
+
+statusBox.textContent=
+text;
+
 }
+
 
 function hideStatus(){
-  statusBox.className="status";
-  statusBox.textContent="";
+
+statusBox.className=
+"status";
+
+statusBox.textContent=
+"";
+
 }
 
-function setLoading(text){
-  loadingText.textContent=text;
-  loading.classList.add("show");
-  processBtn.disabled=true;
+
+function loadingStart(text){
+
+loadingText.textContent=
+text;
+
+loading.classList.add(
+"show"
+);
+
+processBtn.disabled=
+true;
+
 }
 
-function stopLoading(){
-  loading.classList.remove("show");
+
+function loadingStop(){
+
+loading.classList.remove(
+"show"
+);
+
 }
 
-function resetView(){
-  hideStatus();
-  result.style.display="none";
-  saveBtn.style.display="none";
-  resultUrl="";
+
+function makeTimeout(ms){
+
+const controller=
+new AbortController();
+
+const timer=
+setTimeout(
+function(){
+
+controller.abort();
+
+},
+ms
+);
+
+return{
+
+signal:
+controller.signal,
+
+clear:
+function(){
+
+clearTimeout(timer);
+
 }
 
-function getTimeout(ms){
-  const controller=new AbortController();
-  const timer=setTimeout(()=>controller.abort(),ms);
+};
 
-  return{
-    signal:controller.signal,
-    clear:()=>clearTimeout(timer)
-  };
 }
 
-async function uploadPone(file){
-  const form=new FormData();
 
-  form.append("files[]",file,file.name);
+/*
+Upload foto ke Uguu
+*/
 
-  const timeout=getTimeout(60000);
+async function uploadImage(file){
 
-  try{
-    const response=await fetch(PONE_API,{
-      method:"POST",
-      body:form,
-      signal:timeout.signal,
-      cache:"no-store"
-    });
+const form=
+new FormData();
 
-    if(!response.ok){
-      throw new Error("Pone HTTP "+response.status);
-    }
+form.append(
+"files[]",
+file,
+file.name
+);
 
-    const text=await response.text();
 
-    let data;
+const timeout=
+makeTimeout(
+60000
+);
 
-    try{
-      data=JSON.parse(text);
-    }catch(e){
-      data=text;
-    }
 
-    const url=findImageUrl(data);
+try{
 
-    if(!url){
-      throw new Error("Pone tidak memberikan URL foto.");
-    }
+const response=
+await fetch(
+UPLOAD_API,
+{
+method:"POST",
+body:form,
+signal:timeout.signal,
+cache:"no-store"
+}
+);
 
-    return url;
 
-  }catch(error){
+if(
+!response.ok
+){
 
-    if(error.name==="AbortError"){
-      throw new Error("Upload terlalu lama. Coba foto yang lebih kecil.");
-    }
+throw new Error(
+"Upload server HTTP "+
+response.status
+);
 
-    if(error.message==="Failed to fetch"){
-      throw new Error("Upload Pone tidak dapat diakses dari browser ini.");
-    }
-
-    throw error;
-
-  }finally{
-    timeout.clear();
-  }
 }
 
-function findImageUrl(data){
 
-  if(typeof data==="string"){
-    const match=data.match(/https?:\/\/[^\s"'<>]+/i);
+const data=
+await response.json();
 
-    if(match){
-      return match[0];
+
+let uploadedUrl=
+null;
+
+
+/*
+Format resmi Uguu:
+{
+  success:true,
+  files:[
+    {
+      url:"https://..."
     }
+  ]
+}
+*/
 
-    return null;
-  }
 
-  if(Array.isArray(data)){
+if(
+data &&
+Array.isArray(data.files)
+){
 
-    for(const item of data){
+for(
+let i=0;
+i<data.files.length;
+i++
+){
 
-      const found=findImageUrl(item);
+const item=
+data.files[i];
 
-      if(found){
-        return found;
-      }
-    }
+if(
+item &&
+typeof item.url===
+"string"
+){
 
-    return null;
-  }
+uploadedUrl=
+item.url;
 
-  if(data&&typeof data==="object"){
+break;
 
-    const keys=[
-      "url",
-      "link",
-      "src",
-      "file",
-      "download",
-      "download_url",
-      "direct",
-      "direct_url"
-    ];
-
-    for(const key of keys){
-
-      if(typeof data[key]==="string"&&
-         /^https?:\/\//i.test(data[key])){
-
-        return data[key];
-      }
-    }
-
-    for(const key in data){
-
-      const found=findImageUrl(data[key]);
-
-      if(found){
-        return found;
-      }
-    }
-  }
-
-  return null;
 }
 
-async function runRemini(imageUrl){
-
-  const url=
-    REMINI_API+
-    "?image="+encodeURIComponent(imageUrl)+
-    "&apikey="+encodeURIComponent(API_KEY);
-
-  const timeout=getTimeout(120000);
-
-  try{
-
-    const response=await fetch(url,{
-      method:"GET",
-      signal:timeout.signal,
-      cache:"no-store"
-    });
-
-    if(!response.ok){
-      throw new Error("Remini HTTP "+response.status);
-    }
-
-    const data=await response.json();
-
-    if(!data||data.status!==true){
-      throw new Error("API Remini gagal memproses foto.");
-    }
-
-    if(!data.data||!data.data.url){
-      throw new Error("API tidak mengirim URL hasil foto.");
-    }
-
-    return data.data.url;
-
-  }catch(error){
-
-    if(error.name==="AbortError"){
-      throw new Error("Proses Remini terlalu lama. Coba lagi.");
-    }
-
-    if(error.message==="Failed to fetch"){
-      throw new Error("API Remini tidak bisa diakses langsung dari browser.");
-    }
-
-    throw error;
-
-  }finally{
-    timeout.clear();
-  }
 }
 
-processBtn.addEventListener("click",async()=>{
+}
 
-  if(!selectedFile)return;
 
-  try{
+/*
+Fallback kalau server
+mengembalikan struktur berbeda
+*/
 
-    hideStatus();
-    result.style.display="none";
-    saveBtn.style.display="none";
+if(
+!uploadedUrl &&
+data &&
+typeof data.url===
+"string"
+){
 
-    setLoading("Mengupload foto ke Pone...");
+uploadedUrl=
+data.url;
 
-    const uploadedUrl=await uploadPone(selectedFile);
+}
 
-    setLoading("Foto berhasil diupload. Memproses Remini...");
 
-    resultUrl=await runRemini(uploadedUrl);
+if(
+!uploadedUrl
+){
 
-    resultImg.onload=function(){
+throw new Error(
+"Uguu tidak mengembalikan URL gambar."
+);
 
-      stopLoading();
+}
 
-      result.style.display="block";
-      saveBtn.style.display="block";
 
-      showOk("Selesai. Foto hasil Remini sudah muncul.");
+return uploadedUrl;
 
-      setTimeout(()=>{
-        result.scrollIntoView({
-          behavior:"smooth",
-          block:"start"
-        });
-      },100);
-    };
 
-    resultImg.onerror=function(){
+}catch(error){
 
-      stopLoading();
-      processBtn.disabled=false;
+if(
+error.name===
+"AbortError"
+){
 
-      showError(
-        "URL hasil Remini sudah diterima, tetapi gambar hasil tidak dapat ditampilkan."
-      );
-    };
+throw new Error(
+"Upload foto terlalu lama. Coba foto yang lebih kecil."
+);
 
-    resultImg.src=resultUrl;
+}
 
-  }catch(error){
 
-    stopLoading();
-    processBtn.disabled=false;
+if(
+error.message===
+"Failed to fetch"
+){
 
-    showError(
-      error.message||
-      "Terjadi kesalahan. Silakan coba lagi."
-    );
-  }
+throw new Error(
+"Uploader tidak bisa diakses dari browser. Coba buka website menggunakan HTTPS."
+);
+
+}
+
+
+throw error;
+
+
+}finally{
+
+timeout.clear();
+
+}
+
+}
+
+
+/*
+Kirim URL gambar ke Neoxr Remini
+*/
+
+async function processRemini(imageUrl){
+
+const requestUrl=
+REMINI_API+
+"?image="+
+encodeURIComponent(
+imageUrl
+)+
+"&apikey="+
+encodeURIComponent(
+API_KEY
+);
+
+
+const timeout=
+makeTimeout(
+120000
+);
+
+
+try{
+
+const response=
+await fetch(
+requestUrl,
+{
+method:"GET",
+cache:"no-store",
+signal:timeout.signal
+}
+);
+
+
+if(
+!response.ok
+){
+
+throw new Error(
+"Remini HTTP "+
+response.status
+);
+
+}
+
+
+const data=
+await response.json();
+
+
+if(
+!data ||
+data.status!==true
+){
+
+throw new Error(
+"API Remini gagal memproses foto."
+);
+
+}
+
+
+if(
+!data.data ||
+typeof data.data.url!=="string"
+){
+
+throw new Error(
+"API Remini tidak mengirim URL hasil."
+);
+
+}
+
+
+return data.data.url;
+
+
+}catch(error){
+
+if(
+error.name===
+"AbortError"
+){
+
+throw new Error(
+"Proses Remini terlalu lama. Coba lagi."
+);
+
+}
+
+
+if(
+error.message===
+"Failed to fetch"
+){
+
+throw new Error(
+"API Remini tidak dapat diakses dari browser."
+);
+
+}
+
+
+throw error;
+
+
+}finally{
+
+timeout.clear();
+
+}
+
+}
+
+
+/*
+Proses utama
+*/
+
+processBtn.addEventListener(
+"click",
+async function(){
+
+if(!selectedFile){
+return;
+}
+
+
+hideStatus();
+
+result.style.display=
+"none";
+
+saveBtn.style.display=
+"none";
+
+
+try{
+
+
+loadingStart(
+"Mengupload foto..."
+);
+
+
+const imageUrl=
+await uploadImage(
+selectedFile
+);
+
+
+loadingStart(
+"Foto sudah terupload. Memproses Remini..."
+);
+
+
+resultUrl=
+await processRemini(
+imageUrl
+);
+
+
+resultImg.onload=
+function(){
+
+loadingStop();
+
+result.style.display=
+"block";
+
+saveBtn.style.display=
+"block";
+
+showSuccess(
+"Berhasil! Hasil Remini sudah muncul."
+);
+
+
+setTimeout(
+function(){
+
+result.scrollIntoView({
+behavior:"smooth",
+block:"start"
 });
 
-saveBtn.addEventListener("click",async()=>{
+},
+100
+);
 
-  if(!resultUrl)return;
+};
 
-  try{
 
-    const response=await fetch(resultUrl,{
-      mode:"cors",
-      cache:"no-store"
-    });
+resultImg.onerror=
+function(){
 
-    if(!response.ok)throw new Error();
+loadingStop();
 
-    const blob=await response.blob();
-    const url=URL.createObjectURL(blob);
+processBtn.disabled=
+false;
 
-    const a=document.createElement("a");
+showError(
+"URL hasil diterima tetapi gambar hasil tidak dapat dibuka."
+);
 
-    a.href=url;
-    a.download="remini-result.jpg";
+};
 
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
 
-    setTimeout(()=>{
-      URL.revokeObjectURL(url);
-    },2000);
+resultImg.src=
+resultUrl;
 
-  }catch(e){
 
-    window.open(resultUrl,"_blank");
-  }
-});
+}catch(error){
 
-resetBtn.addEventListener("click",()=>{
-  selectedFile=null;
-  resultUrl="";
-  fileInput.value="";
-  preview.style.display="none";
-  result.style.display="none";
-  saveBtn.style.display="none";
-  processBtn.disabled=true;
-  hideStatus();
+loadingStop();
 
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-});
+processBtn.disabled=
+false;
+
+showError(
+error.message ||
+"Terjadi kesalahan saat memproses foto."
+);
+
+}
+
+}
+);
+
+
+/*
+Simpan hasil
+*/
+
+saveBtn.addEventListener(
+"click",
+async function(){
+
+if(!resultUrl){
+return;
+}
+
+
+try{
+
+const response=
+await fetch(
+resultUrl,
+{
+mode:"cors",
+cache:"no-store"
+}
+);
+
+
+if(
+!response.ok
+){
+
+throw new Error();
+
+}
+
+
+const blob=
+await response.blob();
+
+
+const blobUrl=
+URL.createObjectURL(
+blob
+);
+
+
+const a=
+document.createElement(
+"a"
+);
+
+a.href=
+blobUrl;
+
+a.download=
+"remini-result.jpg";
+
+
+document.body.appendChild(a);
+
+a.click();
+
+a.remove();
+
+
+setTimeout(
+function(){
+
+URL.revokeObjectURL(
+blobUrl
+);
+
+},
+2000
+);
+
+
+}catch(error){
+
+window.open(
+resultUrl,
+"_blank"
+);
+
+}
+
+}
+);
+
+
+/*
+Reset
+*/
+
+resetBtn.addEventListener(
+"click",
+function(){
+
+selectedFile=null;
+
+resultUrl="";
+
+fileInput.value="";
+
+preview.style.display=
+"none";
+
+result.style.display=
+"none";
+
+saveBtn.style.display=
+"none";
+
+processBtn.disabled=
+true;
+
+hideStatus();
+
+window.scrollTo(
+{
+top:0,
+behavior:"smooth"
+}
+);
+
+}
+);
+
 </script>
 
 </body>
