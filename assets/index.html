@@ -2,27 +2,24 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta name="theme-color" content="#080a0f">
-<meta name="description" content="DIMZLINK — Premium URL Shortener">
+<meta name="description" content="DIMZLINK - Premium URL Shortener">
 <title>DIMZLINK — Premium URL Shortener</title>
 
 <style>
 :root{
   --bg:#080a0f;
-  --panel:#10141c;
-  --panel2:#141923;
-  --line:#252c38;
-  --line2:#323a49;
+  --panel:#0e1118;
+  --panel2:#121620;
+  --line:#202632;
   --text:#f4f6fa;
-  --muted:#8b95a6;
-  --muted2:#606b7c;
-  --purple:#8d72ff;
-  --purple2:#634be7;
-  --green:#42d392;
-  --red:#ff6570;
-  --yellow:#e5b95c;
-  --blue:#63a9ff;
+  --muted:#8e97a8;
+  --accent:#8b5cf6;
+  --accent2:#6d4aff;
+  --green:#22c55e;
+  --red:#ef4444;
+  --shadow:0 20px 60px rgba(0,0,0,.35);
 }
 
 *{
@@ -37,33 +34,17 @@ html{
 
 body{
   min-height:100vh;
-  color:var(--text);
   background:
-    radial-gradient(
-      circle at 50% -15%,
-      rgba(111,82,255,.13),
-      transparent 32%
-    ),
+    radial-gradient(circle at 50% -10%,rgba(139,92,246,.12),transparent 35%),
     var(--bg);
-  font-family:
-    Inter,
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    sans-serif;
-  font-size:14px;
+  color:var(--text);
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
 }
 
 button,
 input,
 select{
   font:inherit;
-}
-
-button,
-a{
-  -webkit-tap-highlight-color:transparent;
 }
 
 button{
@@ -75,90 +56,80 @@ a{
   text-decoration:none;
 }
 
-button:focus-visible,
-a:focus-visible,
-input:focus-visible,
-select:focus-visible{
-  outline:2px solid var(--purple);
-  outline-offset:2px;
+.container{
+  width:min(1080px,calc(100% - 30px));
+  margin:auto;
 }
-
-.hidden{
-  display:none!important;
-}
-
-/* HEADER */
 
 .header{
-  width:min(1080px,calc(100% - 30px));
-  height:68px;
-  margin:auto;
+  height:72px;
+  border-bottom:1px solid rgba(255,255,255,.055);
+  background:rgba(8,10,15,.82);
+  backdrop-filter:blur(14px);
+  position:sticky;
+  top:0;
+  z-index:20;
+}
+
+.header-inner{
+  height:100%;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  border-bottom:1px solid rgba(37,44,56,.65);
+  gap:20px;
 }
 
 .brand{
   display:flex;
   align-items:center;
   gap:10px;
-  font-weight:850;
-  letter-spacing:-.4px;
+  font-weight:800;
+  letter-spacing:-.5px;
 }
 
-.logo{
-  width:36px;
-  height:36px;
-  border-radius:11px;
+.brand-icon{
+  width:34px;
+  height:34px;
+  border-radius:10px;
   display:grid;
   place-items:center;
-  background:linear-gradient(
-    135deg,
-    #9b80ff,
-    #6158e9
-  );
-  box-shadow:
-    0 8px 25px rgba(111,82,255,.23);
+  background:linear-gradient(135deg,var(--accent),#4f46e5);
+  box-shadow:0 8px 25px rgba(124,58,237,.25);
+  font-size:15px;
+}
+
+.brand span{
   font-size:18px;
 }
 
-.brand-name{
-  font-size:17px;
-}
-
-.brand-name span{
-  color:#9c89ff;
-}
-
-.header-nav{
+.nav{
   display:flex;
-  align-items:center;
   gap:7px;
 }
 
-.nav-btn{
+.nav button{
   border:1px solid transparent;
   background:transparent;
-  color:#778295;
-  border-radius:8px;
-  padding:8px 11px;
-  font-size:10px;
-  font-weight:700;
+  color:var(--muted);
+  padding:9px 14px;
+  border-radius:9px;
+  font-size:13px;
+  transition:.2s;
 }
 
-.nav-btn:hover,
-.nav-btn.active{
-  color:#eee;
+.nav button:hover{
+  color:var(--text);
   background:#11151d;
-  border-color:var(--line);
 }
 
-/* MAIN */
+.nav button.active{
+  color:#fff;
+  background:#151923;
+  border-color:#252b38;
+}
 
 main{
-  width:min(1080px,calc(100% - 30px));
-  margin:auto;
+  padding:65px 0 80px;
 }
 
 .page{
@@ -169,635 +140,336 @@ main{
   display:block;
 }
 
-/* HERO */
-
 .hero{
+  max-width:760px;
+  margin:0 auto 38px;
   text-align:center;
-  padding:65px 0 30px;
 }
 
 .badge{
   display:inline-flex;
   align-items:center;
   gap:7px;
-  color:#ad9cff;
-  background:#15122a;
-  border:1px solid #30275a;
-  border-radius:30px;
-  padding:6px 10px;
-  font-size:8px;
-  font-weight:800;
-  letter-spacing:1px;
-  text-transform:uppercase;
+  padding:7px 11px;
+  border:1px solid rgba(139,92,246,.25);
+  background:rgba(139,92,246,.08);
+  border-radius:999px;
+  color:#bba8ff;
+  font-size:11px;
+  font-weight:700;
+  margin-bottom:18px;
 }
 
-.badge-dot{
-  width:5px;
-  height:5px;
-  background:var(--green);
+.badge i{
+  width:6px;
+  height:6px;
+  background:#a78bfa;
   border-radius:50%;
-  box-shadow:0 0 8px rgba(66,211,146,.7);
+  box-shadow:0 0 12px #8b5cf6;
 }
 
 .hero h1{
-  margin-top:17px;
-  font-size:clamp(34px,7vw,55px);
+  font-size:clamp(34px,6vw,58px);
   line-height:1.04;
   letter-spacing:-2.5px;
+  margin-bottom:16px;
 }
 
 .hero h1 span{
-  color:#9b85ff;
+  color:#9b7cff;
 }
 
 .hero p{
-  max-width:530px;
-  margin:15px auto 0;
+  max-width:590px;
+  margin:auto;
   color:var(--muted);
-  font-size:12px;
-  line-height:1.8;
+  font-size:15px;
+  line-height:1.7;
 }
 
-/* CREATE */
-
-.create-box{
-  width:min(720px,100%);
-  margin:0 auto;
-  background:
-    linear-gradient(
-      145deg,
-      rgba(17,21,30,.98),
-      rgba(12,15,22,.98)
-    );
+.card{
+  background:linear-gradient(180deg,rgba(18,22,32,.96),rgba(12,15,22,.96));
   border:1px solid var(--line);
-  border-radius:17px;
-  padding:21px;
-  box-shadow:
-    0 25px 70px rgba(0,0,0,.23);
+  border-radius:18px;
+  box-shadow:var(--shadow);
 }
 
-.box-title{
-  font-size:13px;
-  font-weight:800;
+.create-card{
+  max-width:760px;
+  margin:auto;
+  padding:24px;
 }
 
-.box-subtitle{
-  margin-top:4px;
-  color:var(--muted2);
-  font-size:9px;
-}
-
-.form{
-  margin-top:20px;
+.form-group{
+  margin-bottom:17px;
 }
 
 .label{
   display:block;
-  color:#b5bdc9;
-  font-size:9px;
-  font-weight:750;
-  margin-bottom:7px;
+  color:#dce1ea;
+  font-size:12px;
+  font-weight:700;
+  margin-bottom:8px;
 }
 
-.url-field{
-  height:45px;
-  display:flex;
-  align-items:center;
-  background:#0a0d13;
-  border:1px solid #2b3340;
+.input-wrap{
+  position:relative;
+}
+
+input,
+select{
+  width:100%;
+  height:48px;
+  border:1px solid #252b37;
+  background:#090c12;
+  color:#fff;
   border-radius:10px;
-  overflow:hidden;
+  outline:none;
+  padding:0 14px;
   transition:.2s;
 }
 
-.url-field:focus-within{
-  border-color:#6250ad;
-  box-shadow:
-    0 0 0 3px rgba(117,86,239,.07);
+input::placeholder{
+  color:#596273;
 }
 
-.url-prefix{
-  color:#687385;
-  padding-left:13px;
-  font-size:10px;
+input:focus,
+select:focus{
+  border-color:rgba(139,92,246,.7);
+  box-shadow:0 0 0 3px rgba(139,92,246,.09);
 }
 
-.url-field input{
-  width:100%;
-  min-width:0;
-  height:100%;
-  border:0;
-  outline:0;
-  background:transparent;
-  color:#edf0f6;
-  padding:0 12px;
-  font-size:11px;
-}
-
-.url-field input::placeholder{
-  color:#4f5969;
-}
-
-.form-grid{
-  display:grid;
-  grid-template-columns:1fr 180px;
-  gap:10px;
-  margin-top:13px;
-}
-
-.field{
-  height:42px;
-  width:100%;
-  background:#0a0d13;
-  color:#e9edf4;
-  border:1px solid #2b3340;
-  border-radius:9px;
-  padding:0 12px;
-  outline:0;
-  font-size:10px;
-}
-
-.field:focus{
-  border-color:#6250ad;
-}
-
-.alias{
+.alias-wrap{
   display:flex;
-  height:42px;
-  background:#0a0d13;
-  border:1px solid #2b3340;
-  border-radius:9px;
+  align-items:center;
+  border:1px solid #252b37;
+  background:#090c12;
+  border-radius:10px;
   overflow:hidden;
 }
 
 .alias-prefix{
-  display:flex;
-  align-items:center;
-  padding-left:11px;
-  color:#5e697b;
-  font-size:9px;
+  padding-left:13px;
+  color:#6f7787;
+  font-size:13px;
   white-space:nowrap;
 }
 
-.alias input{
-  width:100%;
-  min-width:0;
+.alias-wrap input{
   border:0;
-  outline:0;
-  color:#eee;
+  box-shadow:none;
   background:transparent;
-  padding:0 10px;
-  font-size:10px;
+  padding-left:5px;
+}
+
+.row{
+  display:grid;
+  grid-template-columns:1fr 180px;
+  gap:14px;
 }
 
 .create-btn{
   width:100%;
-  height:44px;
-  margin-top:13px;
+  height:50px;
   border:0;
-  border-radius:9px;
+  border-radius:11px;
   color:#fff;
-  font-size:11px;
   font-weight:800;
-  background:
-    linear-gradient(
-      135deg,
-      var(--purple),
-      var(--purple2)
-    );
-  box-shadow:
-    0 9px 25px rgba(102,76,224,.19);
+  background:linear-gradient(135deg,#8b5cf6,#6845e8);
+  box-shadow:0 10px 30px rgba(124,58,237,.2);
+  transition:.2s;
 }
 
 .create-btn:hover{
-  filter:brightness(1.08);
+  transform:translateY(-1px);
+  filter:brightness(1.06);
 }
 
-/* FEATURES */
+.create-btn:active{
+  transform:translateY(0);
+}
 
 .features{
-  width:min(720px,100%);
-  margin:14px auto 0;
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:9px;
+  gap:10px;
+  margin-top:15px;
 }
 
 .feature{
-  padding:14px;
-  border:1px solid var(--line);
-  background:rgba(15,19,27,.72);
+  border:1px solid #1d232e;
+  background:#0b0e14;
   border-radius:11px;
-}
-
-.feature-icon{
-  color:#a28eff;
-  font-size:14px;
+  padding:13px;
 }
 
 .feature strong{
   display:block;
-  margin-top:8px;
-  font-size:9px;
+  font-size:12px;
+  margin-bottom:4px;
 }
 
-.feature p{
-  margin-top:4px;
-  color:#687386;
-  font-size:8px;
-  line-height:1.6;
+.feature span{
+  color:#70798a;
+  font-size:10px;
 }
 
-/* AD */
-
-.ad-wrap{
-  width:min(720px,100%);
-  margin:17px auto 0;
-}
-
-.ad{
-  min-height:85px;
-  border:1px dashed #303847;
-  border-radius:11px;
-  background:
-    linear-gradient(
-      145deg,
-      #10141c,
-      #0c0f15
-    );
+.ad-box{
+  max-width:760px;
+  min-height:74px;
+  margin:18px auto 0;
+  border:1px dashed #252b35;
+  background:rgba(255,255,255,.012);
+  border-radius:12px;
   display:flex;
   align-items:center;
   justify-content:center;
-  text-align:center;
-  padding:14px;
-}
-
-.ad-label{
-  display:inline-block;
-  color:#566172;
-  border:1px solid #2b3340;
-  border-radius:4px;
-  padding:3px 5px;
-  font-size:7px;
-  letter-spacing:1px;
-  margin-bottom:6px;
-}
-
-.ad strong{
-  display:block;
-  color:#7d8797;
+  color:#525b6b;
   font-size:10px;
+  letter-spacing:.5px;
 }
 
-.ad small{
-  display:block;
-  color:#505a6a;
-  font-size:8px;
-  margin-top:3px;
+.section-title{
+  margin-bottom:18px;
 }
 
-/* LINKS PAGE */
-
-.links-head{
-  display:flex;
-  align-items:flex-end;
-  justify-content:space-between;
-  gap:15px;
-  padding:45px 0 20px;
+.section-title h2{
+  font-size:25px;
+  letter-spacing:-.7px;
+  margin-bottom:5px;
 }
 
-.links-head h2{
-  font-size:27px;
-  letter-spacing:-1px;
-}
-
-.links-head p{
-  margin-top:5px;
+.section-title p{
   color:var(--muted);
-  font-size:10px;
+  font-size:13px;
 }
 
-.secondary-btn{
-  height:37px;
-  border:1px solid var(--line2);
-  background:#121720;
-  color:#e5e8ee;
-  border-radius:9px;
-  padding:0 13px;
-  font-size:10px;
-  font-weight:750;
-}
-
-.secondary-btn:hover{
-  background:#181d27;
-}
-
-.links-panel{
-  border:1px solid var(--line);
-  border-radius:14px;
-  background:#10141c;
-  overflow:hidden;
-}
-
-.links-toolbar{
-  padding:13px;
-  border-bottom:1px solid var(--line);
+.links-tools{
   display:flex;
-  justify-content:space-between;
+  gap:10px;
+  margin-bottom:15px;
+}
+
+.links-tools input{
+  flex:1;
+}
+
+.count{
+  min-width:85px;
+  height:48px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  display:grid;
+  place-items:center;
+  color:#8e97a8;
+  background:#0e1118;
+  font-size:12px;
+}
+
+.links-list{
+  display:grid;
   gap:10px;
 }
 
-.search{
-  width:250px;
-  height:35px;
-  background:#0a0d13;
-  border:1px solid #2a3240;
-  border-radius:8px;
-  color:#eee;
-  padding:0 11px;
-  outline:0;
-  font-size:10px;
+.link-card{
+  padding:17px;
 }
 
-.search:focus{
-  border-color:#6250ad;
+.link-top{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
 }
 
-.link-item{
-  padding:15px;
-  border-bottom:1px solid rgba(37,44,56,.7);
-  display:grid;
-  grid-template-columns:minmax(0,1fr) auto;
-  gap:12px;
-  align-items:center;
-}
-
-.link-item:last-child{
-  border-bottom:0;
-}
-
-.link-info{
-  min-width:0;
-}
-
-.link-url{
-  color:#aa98ff;
-  font-size:11px;
-  font-weight:750;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
+.short-url{
+  color:#a78bfa;
+  font-size:14px;
+  font-weight:800;
+  word-break:break-all;
 }
 
 .original-url{
-  color:#596477;
-  font-size:8px;
-  margin-top:4px;
-  overflow:hidden;
-  text-overflow:ellipsis;
+  color:#737c8c;
+  font-size:11px;
+  margin-top:6px;
+  word-break:break-all;
+}
+
+.status{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  height:25px;
+  padding:0 9px;
+  border-radius:999px;
+  font-size:10px;
   white-space:nowrap;
+}
+
+.status.active{
+  color:#74e69b;
+  background:rgba(34,197,94,.08);
+  border:1px solid rgba(34,197,94,.15);
+}
+
+.status.expired{
+  color:#ff8585;
+  background:rgba(239,68,68,.08);
+  border:1px solid rgba(239,68,68,.15);
 }
 
 .link-meta{
   display:flex;
-  gap:7px;
-  flex-wrap:wrap;
-  margin-top:7px;
-}
-
-.status{
-  border-radius:5px;
-  padding:3px 6px;
-  font-size:7px;
-  font-weight:750;
-}
-
-.status.active{
-  color:#5be0a2;
-  background:#10291f;
-  border:1px solid #214b39;
-}
-
-.status.expired{
-  color:#ff7880;
-  background:#291317;
-  border:1px solid #4c2229;
-}
-
-.expiry{
-  color:#697486;
-  font-size:7px;
+  gap:14px;
+  color:#666f80;
+  font-size:10px;
+  margin-top:12px;
 }
 
 .link-actions{
   display:flex;
-  gap:5px;
-}
-
-.action{
-  width:29px;
-  height:29px;
-  display:grid;
-  place-items:center;
-  border:1px solid #2a323f;
-  background:#11151d;
-  color:#8993a5;
-  border-radius:7px;
-  font-size:11px;
-}
-
-.action:hover{
-  color:#fff;
-  border-color:#465064;
-}
-
-.empty{
-  padding:55px 20px;
-  text-align:center;
-  color:#687386;
-  font-size:10px;
-}
-
-.empty-icon{
-  width:43px;
-  height:43px;
-  margin:0 auto 11px;
-  display:grid;
-  place-items:center;
-  border-radius:12px;
-  background:#151a23;
-  border:1px solid var(--line);
-  color:#7e899b;
-  font-size:17px;
-}
-
-/* REDIRECT */
-
-.redirect-page{
-  min-height:100vh;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-}
-
-.redirect-page.active{
-  display:flex;
-}
-
-.redirect-container{
-  width:min(570px,100%);
-}
-
-.redirect-brand{
-  text-align:center;
-  margin-bottom:17px;
-}
-
-.redirect-brand .logo{
-  margin:0 auto 10px;
-}
-
-.redirect-brand strong{
-  font-size:15px;
-}
-
-.redirect-brand span{
-  color:#9b87ff;
-}
-
-.redirect-card{
-  background:
-    linear-gradient(
-      145deg,
-      #11151e,
-      #0d1017
-    );
-  border:1px solid var(--line);
-  border-radius:17px;
-  padding:24px;
-  box-shadow:
-    0 30px 80px rgba(0,0,0,.3);
-  text-align:center;
-}
-
-.redirect-status{
-  display:inline-flex;
-  align-items:center;
-  gap:6px;
-  color:#a99aff;
-  background:#17132b;
-  border:1px solid #30265a;
-  padding:6px 9px;
-  border-radius:20px;
-  font-size:8px;
-  font-weight:750;
-}
-
-.redirect-card h1{
-  margin-top:16px;
-  font-size:24px;
-  letter-spacing:-.8px;
-}
-
-.redirect-card > p{
-  color:#788395;
-  font-size:10px;
-  line-height:1.7;
-  margin-top:7px;
-}
-
-.target{
-  margin-top:17px;
-  padding:13px;
-  border:1px solid #29313e;
-  background:#0a0d13;
-  border-radius:9px;
-  color:#a595ff;
-  font-size:9px;
-  line-height:1.6;
-  word-break:break-all;
-}
-
-.redirect-ad{
+  flex-wrap:wrap;
+  gap:7px;
   margin-top:15px;
 }
 
-.count-wrap{
-  margin:17px auto 13px;
-  width:64px;
-  height:64px;
-  position:relative;
-  display:grid;
-  place-items:center;
+.small-btn{
+  height:34px;
+  padding:0 11px;
+  border-radius:8px;
+  border:1px solid #252b37;
+  background:#11151d;
+  color:#cbd1dc;
+  font-size:11px;
+  transition:.2s;
 }
 
-.count-ring{
-  position:absolute;
-  inset:0;
-  border-radius:50%;
-  border:3px solid #242b37;
-  border-top-color:#8d72ff;
-  animation:spin 1s linear infinite;
-}
-
-.count-number{
-  font-size:17px;
-  font-weight:850;
-}
-
-@keyframes spin{
-  to{
-    transform:rotate(360deg);
-  }
-}
-
-.continue{
-  width:100%;
-  height:44px;
-  border:0;
-  border-radius:9px;
+.small-btn:hover{
+  border-color:#3a4250;
   color:#fff;
-  font-size:10px;
-  font-weight:800;
-  background:
-    linear-gradient(
-      135deg,
-      var(--purple),
-      var(--purple2)
-    );
 }
 
-.continue:disabled{
-  opacity:.45;
-  cursor:not-allowed;
+.small-btn.primary{
+  border-color:rgba(139,92,246,.3);
+  color:#bba8ff;
+  background:rgba(139,92,246,.08);
 }
 
-.redirect-note{
-  margin-top:12px;
-  color:#555f70;
-  font-size:8px;
+.small-btn.danger{
+  color:#ff8181;
 }
 
-.back-home{
-  display:block;
-  margin-top:14px;
-  color:#777f90;
-  font-size:9px;
+.empty{
   text-align:center;
+  padding:45px 20px;
+  color:#656e7d;
 }
-
-.back-home:hover{
-  color:#b4a7ff;
-}
-
-/* MODAL */
 
 .modal{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.68);
-  backdrop-filter:blur(5px);
+  background:rgba(0,0,0,.72);
+  backdrop-filter:blur(7px);
   display:none;
   align-items:center;
   justify-content:center;
@@ -805,77 +477,250 @@ main{
   z-index:100;
 }
 
-.modal.active{
+.modal.show{
   display:flex;
 }
 
 .modal-box{
-  width:min(360px,100%);
-  background:#11151e;
-  border:1px solid var(--line2);
-  border-radius:15px;
-  padding:20px;
-  text-align:center;
-  box-shadow:0 25px 70px rgba(0,0,0,.4);
+  width:min(430px,100%);
+  background:#10141c;
+  border:1px solid #292f3b;
+  border-radius:18px;
+  padding:23px;
+  box-shadow:0 25px 80px rgba(0,0,0,.55);
+  animation:pop .18s ease-out;
 }
 
-.modal-box h3{
-  font-size:14px;
+@keyframes pop{
+  from{
+    opacity:0;
+    transform:scale(.97) translateY(5px);
+  }
+  to{
+    opacity:1;
+    transform:scale(1) translateY(0);
+  }
 }
 
-.modal-box p{
-  color:#727d8f;
-  font-size:9px;
-  line-height:1.6;
-  margin-top:5px;
+.modal-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:20px;
 }
 
-.qr{
-  width:210px;
-  height:210px;
-  padding:8px;
-  background:#fff;
-  border-radius:10px;
-  margin:17px auto;
+.modal-head h3{
+  font-size:17px;
 }
 
-.qr img{
-  width:100%;
-  height:100%;
-  display:block;
-}
-
-.modal-close{
-  width:100%;
-  height:38px;
-  border:1px solid var(--line2);
-  background:#161b24;
-  color:#ddd;
+.close{
+  width:32px;
+  height:32px;
+  border:0;
   border-radius:8px;
+  background:#191e27;
+  color:#9ba3b1;
+}
+
+.success-icon{
+  width:54px;
+  height:54px;
+  margin:0 auto 15px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:rgba(34,197,94,.1);
+  border:1px solid rgba(34,197,94,.2);
+  color:#4ade80;
+  font-size:23px;
+}
+
+.success-content{
+  text-align:center;
+}
+
+.success-content h3{
+  font-size:20px;
+  margin-bottom:7px;
+}
+
+.success-content p{
+  color:#7f8898;
+  font-size:12px;
+  line-height:1.6;
+}
+
+.short-result{
+  margin:18px 0;
+  padding:13px;
+  background:#090c12;
+  border:1px solid #262c37;
+  border-radius:10px;
+  text-align:left;
+}
+
+.short-result-label{
+  color:#687183;
   font-size:10px;
+  margin-bottom:7px;
+}
+
+.short-result-url{
+  color:#b49cff;
+  font-size:13px;
+  font-weight:800;
+  word-break:break-all;
+}
+
+.modal-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+
+.modal-actions button{
+  height:42px;
+  border-radius:9px;
+  border:1px solid #272e3a;
+  background:#171b24;
+  color:#d9dee7;
+  font-size:12px;
   font-weight:700;
 }
 
-/* TOAST */
+.modal-actions button.primary{
+  border:0;
+  background:linear-gradient(135deg,#8b5cf6,#6946e8);
+  color:#fff;
+}
+
+.modal-actions button.full{
+  grid-column:1/-1;
+}
+
+.qr-box{
+  text-align:center;
+}
+
+.qr-box img{
+  display:block;
+  width:240px;
+  height:240px;
+  max-width:100%;
+  margin:0 auto 17px;
+  background:#fff;
+  padding:8px;
+  border-radius:10px;
+}
+
+.redirect-page{
+  min-height:calc(100vh - 72px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:30px 15px;
+}
+
+.redirect-card{
+  width:min(560px,100%);
+  text-align:center;
+  padding:32px 23px;
+}
+
+.redirect-logo{
+  width:48px;
+  height:48px;
+  display:grid;
+  place-items:center;
+  margin:0 auto 20px;
+  border-radius:14px;
+  background:linear-gradient(135deg,#8b5cf6,#5b43d8);
+  font-weight:900;
+}
+
+.redirect-card h1{
+  font-size:26px;
+  letter-spacing:-.7px;
+  margin-bottom:9px;
+}
+
+.redirect-card>p{
+  color:#788192;
+  font-size:13px;
+  line-height:1.6;
+}
+
+.redirect-ad{
+  margin:24px 0 19px;
+  min-height:82px;
+}
+
+.progress{
+  width:100%;
+  height:5px;
+  background:#1b2029;
+  border-radius:99px;
+  overflow:hidden;
+  margin:20px 0 12px;
+}
+
+.progress-bar{
+  width:100%;
+  height:100%;
+  background:linear-gradient(90deg,#8b5cf6,#a78bfa);
+  transform-origin:left;
+  transition:width 1s linear;
+}
+
+.countdown{
+  color:#8e97a8;
+  font-size:11px;
+}
+
+.continue-btn{
+  width:100%;
+  height:48px;
+  margin-top:17px;
+  border:0;
+  border-radius:10px;
+  background:#282d37;
+  color:#777f8d;
+  font-weight:800;
+  cursor:not-allowed;
+}
+
+.continue-btn.ready{
+  background:linear-gradient(135deg,#8b5cf6,#6946e8);
+  color:#fff;
+  cursor:pointer;
+  box-shadow:0 10px 30px rgba(124,58,237,.18);
+}
+
+.redirect-note{
+  margin-top:14px;
+  color:#555e6e;
+  font-size:10px;
+}
 
 .toast{
   position:fixed;
   left:50%;
-  bottom:20px;
+  bottom:22px;
   transform:translate(-50%,20px);
-  background:#171c26;
-  border:1px solid #384151;
+  background:#171b24;
+  border:1px solid #2a303b;
+  color:#e6e9ef;
+  padding:10px 15px;
   border-radius:9px;
-  padding:10px 14px;
-  color:#edf0f5;
-  font-size:9px;
-  box-shadow:0 15px 40px rgba(0,0,0,.3);
+  font-size:11px;
   opacity:0;
   pointer-events:none;
-  transition:.25s;
-  z-index:200;
+  transition:.2s;
+  z-index:300;
+  white-space:nowrap;
   max-width:calc(100% - 30px);
-  text-align:center;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
 
 .toast.show{
@@ -883,47 +728,42 @@ main{
   transform:translate(-50%,0);
 }
 
-/* FOOTER */
-
-.footer{
-  width:min(720px,100%);
-  margin:40px auto 30px;
-  text-align:center;
-  color:#4f5969;
-  font-size:8px;
-  line-height:1.8;
+.hidden{
+  display:none!important;
 }
-
-.footer span{
-  color:#7566b4;
-}
-
-/* MOBILE */
 
 @media(max-width:650px){
-
   .header{
-    height:61px;
+    height:64px;
   }
 
-  .header-nav .nav-btn{
-    padding:7px 8px;
+  .brand span{
+    font-size:16px;
   }
 
-  .hero{
-    padding:45px 0 24px;
+  .nav button{
+    padding:8px 9px;
+    font-size:11px;
+  }
+
+  main{
+    padding:45px 0 60px;
   }
 
   .hero h1{
-    letter-spacing:-1.8px;
+    font-size:37px;
   }
 
-  .create-box{
-    padding:16px;
+  .hero p{
+    font-size:13px;
+  }
+
+  .create-card{
+    padding:17px;
     border-radius:14px;
   }
 
-  .form-grid{
+  .row{
     grid-template-columns:1fr;
   }
 
@@ -932,1780 +772,800 @@ main{
   }
 
   .feature{
-    display:grid;
-    grid-template-columns:25px 1fr;
-    column-gap:8px;
+    padding:11px;
   }
 
-  .feature-icon{
-    grid-row:1/3;
-  }
-
-  .feature strong{
-    margin-top:0;
-  }
-
-  .links-head{
-    padding-top:35px;
-    align-items:flex-start;
+  .link-top{
     flex-direction:column;
   }
 
-  .links-head .secondary-btn{
-    width:100%;
-  }
-
-  .links-toolbar{
+  .links-tools{
     flex-direction:column;
   }
 
-  .search{
+  .count{
     width:100%;
-  }
-
-  .link-item{
-    grid-template-columns:1fr;
-  }
-
-  .link-actions{
-    justify-content:flex-start;
   }
 
   .redirect-card{
-    padding:18px;
+    padding:25px 17px;
   }
-
-  .redirect-card h1{
-    font-size:21px;
-  }
-
-}
-
-@media(max-width:390px){
-
-  .header-nav .nav-btn{
-    font-size:9px;
-    padding:7px 6px;
-  }
-
-  .brand-name{
-    font-size:15px;
-  }
-
-  .logo{
-    width:33px;
-    height:33px;
-  }
-
 }
 </style>
 </head>
 
 <body>
 
-<header class="header">
+<header class="header" id="mainHeader">
+  <div class="container header-inner">
+    <a href="#" class="brand" onclick="showPage('create');return false;">
+      <div class="brand-icon">D</div>
+      <span>DIMZLINK</span>
+    </a>
 
-  <a href="./" class="brand" id="homeBrand">
-
-    <div class="logo">↗</div>
-
-    <div class="brand-name">
-      DIMZ<span>LINK</span>
-    </div>
-
-  </a>
-
-  <nav class="header-nav">
-
-    <button
-      class="nav-btn active"
-      data-page="create"
-    >
-      Create Link
-    </button>
-
-    <button
-      class="nav-btn"
-      data-page="links"
-    >
-      My Links
-    </button>
-
-  </nav>
-
+    <nav class="nav">
+      <button class="active" id="navCreate" onclick="showPage('create')">Create Link</button>
+      <button id="navLinks" onclick="showPage('links')">My Links</button>
+    </nav>
+  </div>
 </header>
 
+<main id="mainApp">
 
-<main>
+  <section class="page active" id="createPage">
+    <div class="container">
 
-  <!-- CREATE PAGE -->
-
-  <section
-    id="createPage"
-    class="page active"
-  >
-
-    <div class="hero">
-
-      <div class="badge">
-        <span class="badge-dot"></span>
-        Premium URL Shortener
-      </div>
-
-      <h1>
-        Make your links<br>
-        <span>short & simple.</span>
-      </h1>
-
-      <p>
-        Buat shortlink yang lebih rapi, mudah dibagikan,
-        dan terlihat profesional.
-      </p>
-
-    </div>
-
-
-    <div class="create-box">
-
-      <div class="box-title">
-        Create a short link
-      </div>
-
-      <div class="box-subtitle">
-        Masukkan URL tujuan untuk membuat shortlink baru.
-      </div>
-
-
-      <div class="form">
-
-        <label class="label">
-          Destination URL
-        </label>
-
-        <div class="url-field">
-
-          <span class="url-prefix">
-            https://
-          </span>
-
-          <input
-            id="destinationInput"
-            type="url"
-            placeholder="example.com/your-long-url"
-            autocomplete="off"
-          >
-
+      <div class="hero">
+        <div class="badge">
+          <i></i>
+          Premium URL Shortener
         </div>
 
+        <h1>Make your links <span>short & simple.</span></h1>
 
-        <div class="form-grid">
+        <p>
+          Create clean, memorable shortlinks with custom aliases,
+          expiration settings and a simple redirect experience.
+        </p>
+      </div>
 
-          <div>
+      <div class="card create-card">
 
-            <label class="label">
-              Custom Alias
-            </label>
+        <form id="createForm">
 
-            <div class="alias">
+          <div class="form-group">
+            <label class="label">Destination URL</label>
+            <input
+              type="url"
+              id="destination"
+              placeholder="https://example.com/your-long-url"
+              autocomplete="off"
+              required
+            >
+          </div>
 
-              <span class="alias-prefix">
-                dimzlink/
-              </span>
+          <div class="row">
 
-              <input
-                id="aliasInput"
-                type="text"
-                maxlength="40"
-                placeholder="my-link"
-                autocomplete="off"
-              >
+            <div class="form-group">
+              <label class="label">Custom Alias</label>
 
+              <div class="alias-wrap">
+                <span class="alias-prefix" id="aliasPrefix">dimzlink.local/</span>
+                <input
+                  type="text"
+                  id="alias"
+                  placeholder="my-link"
+                  maxlength="40"
+                  autocomplete="off"
+                >
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="label">Expiration</label>
+
+              <select id="expiration">
+                <option value="never">Never</option>
+                <option value="1">1 Day</option>
+                <option value="7">7 Days</option>
+                <option value="30">30 Days</option>
+                <option value="90">90 Days</option>
+              </select>
             </div>
 
           </div>
 
+          <button class="create-btn" type="submit">
+            Create Short Link
+          </button>
 
-          <div>
+        </form>
 
-            <label class="label">
-              Expiration
-            </label>
-
-            <select
-              id="expirationInput"
-              class="field"
-            >
-              <option value="0">
-                Never expires
-              </option>
-
-              <option value="1">
-                1 day
-              </option>
-
-              <option value="7">
-                7 days
-              </option>
-
-              <option value="30">
-                30 days
-              </option>
-
-              <option value="90">
-                90 days
-              </option>
-
-            </select>
-
+        <div class="features">
+          <div class="feature">
+            <strong>Clean URLs</strong>
+            <span>Short and easy to remember</span>
           </div>
 
+          <div class="feature">
+            <strong>Custom Alias</strong>
+            <span>Use your own short name</span>
+          </div>
+
+          <div class="feature">
+            <strong>QR Ready</strong>
+            <span>Generate QR instantly</span>
+          </div>
         </div>
 
+      </div>
 
-        <button
-          id="createButton"
-          class="create-btn"
-        >
-          Create Short Link ↗
-        </button>
-
+      <div class="ad-box">
+        ADVERTISEMENT
       </div>
 
     </div>
-
-
-    <div class="features">
-
-      <div class="feature">
-
-        <div class="feature-icon">↗</div>
-
-        <div>
-          <strong>Clean URLs</strong>
-          <p>
-            Link pendek yang lebih mudah dibagikan.
-          </p>
-        </div>
-
-      </div>
-
-
-      <div class="feature">
-
-        <div class="feature-icon">⌁</div>
-
-        <div>
-          <strong>Custom Alias</strong>
-          <p>
-            Gunakan nama link sesuai kebutuhan.
-          </p>
-        </div>
-
-      </div>
-
-
-      <div class="feature">
-
-        <div class="feature-icon">▦</div>
-
-        <div>
-          <strong>QR Ready</strong>
-          <p>
-            Buat QR code dari shortlink kamu.
-          </p>
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <div class="ad-wrap">
-
-      <div class="ad">
-
-        <div>
-
-          <span class="ad-label">
-            ADVERTISEMENT
-          </span>
-
-          <strong>
-            Premium sponsor placement
-          </strong>
-
-          <small>
-            Iklan ditampilkan tanpa menutupi konten.
-          </small>
-
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <div class="footer">
-
-      © <span id="year"></span> DIMZLINK.
-      Simple URL shortening service.
-
-    </div>
-
   </section>
 
+  <section class="page" id="linksPage">
+    <div class="container">
 
-  <!-- MY LINKS -->
-
-  <section
-    id="linksPage"
-    class="page"
-  >
-
-    <div class="links-head">
-
-      <div>
-
-        <h2>
-          My Links
-        </h2>
-
-        <p>
-          Kelola shortlink yang telah kamu buat.
-        </p>
-
+      <div class="section-title">
+        <h2>My Links</h2>
+        <p>Manage your created shortlinks from this device.</p>
       </div>
 
-      <button
-        class="secondary-btn"
-        id="newLinkButton"
-      >
-        + Create New Link
-      </button>
-
-    </div>
-
-
-    <div class="links-panel">
-
-      <div class="links-toolbar">
-
+      <div class="links-tools">
         <input
-          id="searchInput"
-          class="search"
           type="search"
+          id="searchLinks"
           placeholder="Search your links..."
+          autocomplete="off"
         >
 
-        <div
-          id="linkCount"
-          style="
-          color:#667183;
-          font-size:9px;
-          display:flex;
-          align-items:center;
-          "
-        >
-          0 links
-        </div>
-
+        <div class="count" id="linkCount">0 Links</div>
       </div>
 
-      <div id="linksList"></div>
+      <div class="links-list" id="linksList"></div>
 
     </div>
-
-
-    <div class="ad-wrap">
-
-      <div class="ad">
-
-        <div>
-
-          <span class="ad-label">
-            ADVERTISEMENT
-          </span>
-
-          <strong>
-            Sponsor placement
-          </strong>
-
-          <small>
-            Clean advertisement area.
-          </small>
-
-        </div>
-
-      </div>
-
-    </div>
-
   </section>
 
 </main>
 
+<section class="page" id="redirectPage">
 
-<!-- REDIRECT -->
+  <div class="redirect-page">
 
-<section
-  id="redirectPage"
-  class="redirect-page"
->
+    <div class="card redirect-card">
 
-  <div class="redirect-container">
+      <div class="redirect-logo">D</div>
 
-    <div class="redirect-brand">
-
-      <div class="logo">
-        ↗
-      </div>
-
-      <strong>
-        DIMZ<span>LINK</span>
-      </strong>
-
-    </div>
-
-
-    <div class="redirect-card">
-
-      <div class="redirect-status">
-        <span class="badge-dot"></span>
-        LINK READY
-      </div>
-
-
-      <h1>
-        Preparing your link
-      </h1>
+      <h1>Your destination is ready</h1>
 
       <p>
-        Kamu akan diarahkan ke website tujuan
-        setelah beberapa detik.
+        Please wait a moment while we prepare your destination.
       </p>
 
-
-      <div
-        id="redirectTarget"
-        class="target"
-      >
+      <div class="ad-box redirect-ad">
+        ADVERTISEMENT
       </div>
 
-
-      <div class="redirect-ad">
-
-        <div class="ad">
-
-          <div>
-
-            <span class="ad-label">
-              ADVERTISEMENT
-            </span>
-
-            <strong>
-              Sponsored content
-            </strong>
-
-            <small>
-              Iklan tidak menutupi tombol tujuan.
-            </small>
-
-          </div>
-
-        </div>
-
+      <div class="progress">
+        <div class="progress-bar" id="progressBar"></div>
       </div>
 
-
-      <div class="count-wrap">
-
-        <div class="count-ring"></div>
-
-        <div
-          id="countNumber"
-          class="count-number"
-        >
-          5
-        </div>
-
+      <div class="countdown" id="countdownText">
+        Preparing your link...
       </div>
-
 
       <button
-        id="continueButton"
-        class="continue"
+        class="continue-btn"
+        id="continueBtn"
         disabled
       >
-        Continue in 5s
+        Continue to destination
       </button>
 
-
       <div class="redirect-note">
-        Dengan melanjutkan, kamu akan membuka
-        alamat tujuan di atas.
+        You will continue automatically when the timer finishes.
       </div>
 
     </div>
-
-
-    <a
-      href="./"
-      class="back-home"
-    >
-      ← Back to DIMZLINK
-    </a>
 
   </div>
 
 </section>
 
-
-<!-- QR MODAL -->
-
-<div
-  id="qrModal"
-  class="modal"
->
-
+<div class="modal" id="successModal">
   <div class="modal-box">
 
-    <h3>
-      QR Code
-    </h3>
+    <div class="success-content">
 
-    <p>
-      Scan QR code untuk membuka shortlink.
-    </p>
+      <div class="success-icon">✓</div>
 
-    <div class="qr">
+      <h3>Shortlink created</h3>
 
-      <img
-        id="qrImage"
-        src=""
-        alt="QR Code"
-      >
+      <p>
+        Your shortlink has been created successfully.
+        You can copy or open it below.
+      </p>
+
+      <div class="short-result">
+        <div class="short-result-label">YOUR SHORTLINK</div>
+        <div class="short-result-url" id="createdShortUrl"></div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="primary" id="copyCreatedBtn">
+          Copy Shortlink
+        </button>
+
+        <button id="openCreatedBtn">
+          Open Link
+        </button>
+
+        <button class="full" id="qrCreatedBtn">
+          Generate QR Code
+        </button>
+      </div>
 
     </div>
 
-    <button
-      id="closeQR"
-      class="modal-close"
-    >
-      Close
-    </button>
-
   </div>
-
 </div>
 
+<div class="modal" id="qrModal">
+  <div class="modal-box">
 
-<div
-  id="toast"
-  class="toast"
-></div>
+    <div class="modal-head">
+      <h3>QR Code</h3>
+      <button class="close" onclick="closeModal('qrModal')">×</button>
+    </div>
 
+    <div class="qr-box">
+      <img id="qrImage" src="" alt="QR Code">
+
+      <button
+        class="small-btn primary"
+        style="width:100%;height:42px"
+        id="downloadQrBtn"
+      >
+        Download QR
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
 
 <script>
-(function(){
+const STORAGE_KEY="dimzlink_links_v3";
 
-"use strict";
+let links=JSON.parse(localStorage.getItem(STORAGE_KEY)||"[]");
+let currentCreatedUrl="";
+let currentQrUrl="";
 
-const STORAGE =
-  "dimzlink_links_v3";
+const $=id=>document.getElementById(id);
 
-let links =
-  loadLinks();
+function getBaseUrl(){
+  return location.origin+location.pathname.replace(/\/[^\/]*$/,"/");
+}
 
-let redirectTimer =
-  null;
-
-let redirectLink =
-  null;
-
-
-/* BASIC */
-
-const $ =
-  id => document.getElementById(id);
-
-
-$("year").textContent =
-  new Date().getFullYear();
-
-
-/* STORAGE */
-
-function loadLinks(){
-
-  try{
-
-    const data =
-      JSON.parse(
-        localStorage.getItem(STORAGE) || "[]"
-      );
-
-    return Array.isArray(data)
-      ? data
-      : [];
-
-  }catch{
-
-    return [];
-
-  }
-
+function getShortUrl(alias){
+  return getBaseUrl()+"?s="+encodeURIComponent(alias);
 }
 
 function saveLinks(){
+  localStorage.setItem(STORAGE_KEY,JSON.stringify(links));
+}
 
-  try{
+function normalizeUrl(url){
+  url=url.trim();
 
-    localStorage.setItem(
-      STORAGE,
-      JSON.stringify(links)
-    );
-
-  }catch{
-
-    toast(
-      "Penyimpanan browser tidak tersedia."
-    );
-
+  if(!/^https?:\/\//i.test(url)){
+    url="https://"+url;
   }
 
+  return url;
 }
 
-
-/* TOAST */
-
-let toastTimer;
-
-function toast(message){
-
-  const el =
-    $("toast");
-
-  el.textContent =
-    message;
-
-  el.classList.add("show");
-
-  clearTimeout(
-    toastTimer
-  );
-
-  toastTimer =
-    setTimeout(
-      () => {
-        el.classList.remove("show");
-      },
-      2400
-    );
-
-}
-
-
-/* URL */
-
-function normalizeUrl(value){
-
-  value =
-    value.trim();
-
-  if(
-    !/^https?:\/\//i.test(value)
-  ){
-
-    value =
-      "https://" + value;
-
-  }
-
-  return value;
-
-}
-
-function validUrl(value){
-
+function validUrl(url){
   try{
-
-    const url =
-      new URL(value);
-
-    return (
-      url.protocol === "http:" ||
-      url.protocol === "https:"
-    );
-
+    const u=new URL(url);
+    return u.protocol==="http:"||u.protocol==="https:";
   }catch{
-
     return false;
-
   }
-
 }
 
-
-/* CODE */
-
-function randomCode(){
-
-  const chars =
-    "abcdefghijklmnopqrstuvwxyz0123456789";
-
-  let code = "";
-
-  for(
-    let i=0;
-    i<7;
-    i++
-  ){
-
-    code +=
-      chars[
-        Math.floor(
-          Math.random() *
-          chars.length
-        )
-      ];
-
-  }
-
-  return code;
-
+function cleanAlias(value){
+  return value
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g,"-")
+    .replace(/[^a-z0-9_-]/g,"")
+    .slice(0,40);
 }
 
-function uniqueCode(){
-
-  let code;
-
-  do{
-
-    code =
-      randomCode();
-
-  }while(
-    links.some(
-      link =>
-        link.code === code
-    )
-  );
-
-  return code;
-
+function randomAlias(){
+  return Math.random().toString(36).slice(2,8);
 }
 
-
-/* CREATE */
-
-function createLink(){
-
-  let url =
-    normalizeUrl(
-      $("destinationInput").value
-    );
-
-  let alias =
-    $("aliasInput").value.trim();
-
-  const expiry =
-    Number(
-      $("expirationInput").value
-    );
-
-
-  if(
-    !url ||
-    !validUrl(url)
-  ){
-
-    toast(
-      "Masukkan URL tujuan yang valid."
-    );
-
-    return;
-
-  }
-
-
-  if(alias){
-
-    if(
-      !/^[a-zA-Z0-9_-]{1,40}$/.test(alias)
-    ){
-
-      toast(
-        "Alias hanya boleh huruf, angka, - dan _."
-      );
-
-      return;
-
-    }
-
-
-    if(
-      links.some(
-        link =>
-          link.code.toLowerCase() ===
-          alias.toLowerCase()
-      )
-    ){
-
-      toast(
-        "Alias tersebut sudah digunakan."
-      );
-
-      return;
-
-    }
-
-  }else{
-
-    alias =
-      uniqueCode();
-
-  }
-
-
-  const item = {
-
-    id:
-      Date.now().toString(36) +
-      Math.random()
-        .toString(36)
-        .slice(2),
-
-    code:
-      alias,
-
-    url:
-      url,
-
-    created:
-      Date.now(),
-
-    expires:
-      expiry > 0
-        ? Date.now() +
-          expiry * 86400000
-        : 0
-
-  };
-
-
-  links.unshift(
-    item
-  );
-
-  saveLinks();
-
-
-  $("destinationInput").value =
-    "";
-
-  $("aliasInput").value =
-    "";
-
-  $("expirationInput").value =
-    "0";
-
-
-  renderLinks();
-
-  toast(
-    "Shortlink berhasil dibuat."
-  );
-
-
-  setTimeout(
-    () => {
-
-      copyLink(
-        item
-      );
-
-    },
-    250
-  );
-
+function isExpired(link){
+  if(!link.expireAt) return false;
+  return Date.now()>link.expireAt;
 }
 
+function formatDate(timestamp){
+  if(!timestamp) return "Never";
 
-/* SHORT URL */
-
-function shortUrl(link){
-
-  return (
-    location.origin +
-    location.pathname +
-    "?s=" +
-    encodeURIComponent(
-      link.code
-    )
-  );
-
+  return new Date(timestamp).toLocaleDateString("id-ID",{
+    day:"2-digit",
+    month:"short",
+    year:"numeric"
+  });
 }
 
+function showToast(message){
+  const toast=$("toast");
 
-/* COPY */
+  toast.textContent=message;
+  toast.classList.add("show");
 
-async function copyLink(link){
+  clearTimeout(window.toastTimer);
 
-  const value =
-    shortUrl(link);
-
-  try{
-
-    await navigator.clipboard.writeText(
-      value
-    );
-
-    toast(
-      "Shortlink berhasil disalin."
-    );
-
-  }catch{
-
-    toast(
-      value
-    );
-
-  }
-
+  window.toastTimer=setTimeout(()=>{
+    toast.classList.remove("show");
+  },2200);
 }
-
-
-/* EXPIRED */
-
-function expired(link){
-
-  return (
-    link.expires > 0 &&
-    link.expires <= Date.now()
-  );
-
-}
-
-
-/* DATE */
-
-function dateText(timestamp){
-
-  return new Intl.DateTimeFormat(
-    "id-ID",
-    {
-      day:"2-digit",
-      month:"short",
-      year:"numeric"
-    }
-  ).format(
-    new Date(timestamp)
-  );
-
-}
-
-
-/* ESCAPE */
-
-function escapeHTML(value){
-
-  return String(value)
-    .replaceAll(
-      "&",
-      "&amp;"
-    )
-    .replaceAll(
-      "<",
-      "&lt;"
-    )
-    .replaceAll(
-      ">",
-      "&gt;"
-    )
-    .replaceAll(
-      '"',
-      "&quot;"
-    )
-    .replaceAll(
-      "'",
-      "&#039;"
-    );
-
-}
-
-
-/* RENDER LINKS */
-
-function renderLinks(){
-
-  const list =
-    $("linksList");
-
-  const query =
-    $("searchInput")
-      .value
-      .trim()
-      .toLowerCase();
-
-
-  const filtered =
-    links.filter(
-      link => {
-
-        return (
-          link.code
-            .toLowerCase()
-            .includes(query) ||
-
-          link.url
-            .toLowerCase()
-            .includes(query)
-        );
-
-      }
-    );
-
-
-  $("linkCount").textContent =
-    filtered.length +
-    (
-      filtered.length === 1
-        ? " link"
-        : " links"
-    );
-
-
-  if(!filtered.length){
-
-    list.innerHTML = `
-
-      <div class="empty">
-
-        <div class="empty-icon">
-          ↗
-        </div>
-
-        ${
-          links.length
-            ? "Shortlink tidak ditemukan."
-            : "Belum ada shortlink."
-        }
-
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-
-  list.innerHTML =
-    filtered
-      .map(
-        link => {
-
-          const isExpired =
-            expired(link);
-
-          const status =
-            isExpired
-              ? "Expired"
-              : "Active";
-
-
-          const expiryText =
-            link.expires
-              ? (
-                isExpired
-                  ? "Expired " +
-                    dateText(
-                      link.expires
-                    )
-                  : "Expires " +
-                    dateText(
-                      link.expires
-                    )
-              )
-              : "Never expires";
-
-
-          return `
-
-            <div class="link-item">
-
-              <div class="link-info">
-
-                <div class="link-url">
-                  ${escapeHTML(
-                    shortUrl(link)
-                  )}
-                </div>
-
-                <div class="original-url">
-                  ${escapeHTML(
-                    link.url
-                  )}
-                </div>
-
-                <div class="link-meta">
-
-                  <span
-                    class="status ${
-                      isExpired
-                        ? "expired"
-                        : "active"
-                    }"
-                  >
-                    ${status}
-                  </span>
-
-                  <span class="expiry">
-                    ${expiryText}
-                  </span>
-
-                  <span class="expiry">
-                    Created ${dateText(
-                      link.created
-                    )}
-                  </span>
-
-                </div>
-
-              </div>
-
-
-              <div class="link-actions">
-
-                <button
-                  class="action"
-                  title="Copy"
-                  data-copy="${link.id}"
-                >
-                  ⧉
-                </button>
-
-                <button
-                  class="action"
-                  title="Open"
-                  data-open="${link.id}"
-                >
-                  ↗
-                </button>
-
-                <button
-                  class="action"
-                  title="Share"
-                  data-share="${link.id}"
-                >
-                  ⤴
-                </button>
-
-                <button
-                  class="action"
-                  title="QR"
-                  data-qr="${link.id}"
-                >
-                  ▦
-                </button>
-
-                <button
-                  class="action"
-                  title="Delete"
-                  data-delete="${link.id}"
-                >
-                  ×
-                </button>
-
-              </div>
-
-            </div>
-
-          `;
-
-        }
-      )
-      .join("");
-
-
-  bindActions();
-
-}
-
-
-/* ACTIONS */
-
-function bindActions(){
-
-  document
-    .querySelectorAll(
-      "[data-copy]"
-    )
-    .forEach(
-      button => {
-
-        button.onclick =
-          () => {
-
-            const link =
-              links.find(
-                item =>
-                  item.id ===
-                  button.dataset.copy
-              );
-
-            if(link)
-              copyLink(link);
-
-          };
-
-      }
-    );
-
-
-  document
-    .querySelectorAll(
-      "[data-open]"
-    )
-    .forEach(
-      button => {
-
-        button.onclick =
-          () => {
-
-            const link =
-              links.find(
-                item =>
-                  item.id ===
-                  button.dataset.open
-              );
-
-            if(
-              link &&
-              !expired(link)
-            ){
-
-              window.open(
-                link.url,
-                "_blank",
-                "noopener,noreferrer"
-              );
-
-            }else{
-
-              toast(
-                "Link sudah expired."
-              );
-
-            }
-
-          };
-
-      }
-    );
-
-
-  document
-    .querySelectorAll(
-      "[data-share]"
-    )
-    .forEach(
-      button => {
-
-        button.onclick =
-          async () => {
-
-            const link =
-              links.find(
-                item =>
-                  item.id ===
-                  button.dataset.share
-              );
-
-            if(!link)
-              return;
-
-
-            const value =
-              shortUrl(link);
-
-
-            if(
-              navigator.share
-            ){
-
-              try{
-
-                await navigator.share({
-                  title:
-                    "DIMZLINK",
-                  text:
-                    "Check this link",
-                  url:
-                    value
-                });
-
-              }catch{}
-
-            }else{
-
-              copyLink(link);
-
-            }
-
-          };
-
-      }
-    );
-
-
-  document
-    .querySelectorAll(
-      "[data-qr]"
-    )
-    .forEach(
-      button => {
-
-        button.onclick =
-          () => {
-
-            const link =
-              links.find(
-                item =>
-                  item.id ===
-                  button.dataset.qr
-              );
-
-            if(link)
-              showQR(link);
-
-          };
-
-      }
-    );
-
-
-  document
-    .querySelectorAll(
-      "[data-delete]"
-    )
-    .forEach(
-      button => {
-
-        button.onclick =
-          () => {
-
-            const id =
-              button.dataset.delete;
-
-            const index =
-              links.findIndex(
-                item =>
-                  item.id === id
-              );
-
-            if(index === -1)
-              return;
-
-
-            links.splice(
-              index,
-              1
-            );
-
-            saveLinks();
-
-            renderLinks();
-
-            toast(
-              "Shortlink dihapus."
-            );
-
-          };
-
-      }
-    );
-
-}
-
-
-/* QR */
-
-function showQR(link){
-
-  const value =
-    encodeURIComponent(
-      shortUrl(link)
-    );
-
-
-  const qr =
-    "https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=" +
-    value;
-
-
-  $("qrImage").src =
-    qr;
-
-  $("qrModal")
-    .classList.add("active");
-
-}
-
-
-$("closeQR").onclick =
-  () => {
-
-    $("qrModal")
-      .classList.remove(
-        "active"
-      );
-
-  };
-
-
-$("qrModal").onclick =
-  event => {
-
-    if(
-      event.target ===
-      $("qrModal")
-    ){
-
-      $("qrModal")
-        .classList.remove(
-          "active"
-        );
-
-    }
-
-  };
-
-
-/* PAGE NAVIGATION */
 
 function showPage(page){
 
-  document
-    .querySelectorAll(".page")
-    .forEach(
-      item => {
+  if(page==="redirect") return;
 
-        item.classList.toggle(
-          "active",
-          item.id ===
-          page + "Page"
-        );
+  $("createPage").classList.toggle("active",page==="create");
+  $("linksPage").classList.toggle("active",page==="links");
 
-      }
+  $("navCreate").classList.toggle("active",page==="create");
+  $("navLinks").classList.toggle("active",page==="links");
+
+  $("mainHeader").style.display="block";
+  $("mainApp").style.display="block";
+  $("redirectPage").classList.remove("active");
+
+  if(page==="links"){
+    renderLinks();
+  }
+
+  window.scrollTo(0,0);
+}
+
+function openSuccessModal(shortUrl){
+
+  currentCreatedUrl=shortUrl;
+
+  $("createdShortUrl").textContent=shortUrl;
+  $("successModal").classList.add("show");
+}
+
+function closeModal(id){
+  $(id).classList.remove("show");
+}
+
+async function copyText(text){
+
+  try{
+    await navigator.clipboard.writeText(text);
+    showToast("Shortlink berhasil disalin");
+  }catch{
+
+    const temp=document.createElement("textarea");
+
+    temp.value=text;
+    document.body.appendChild(temp);
+    temp.select();
+
+    try{
+      document.execCommand("copy");
+      showToast("Shortlink berhasil disalin");
+    }catch{
+      showToast("Gagal menyalin link");
+    }
+
+    temp.remove();
+  }
+}
+
+$("createForm").addEventListener("submit",function(e){
+
+  e.preventDefault();
+
+  let destination=normalizeUrl($("destination").value);
+  let alias=cleanAlias($("alias").value);
+
+  if(!validUrl(destination)){
+    showToast("URL tujuan tidak valid");
+    return;
+  }
+
+  if(!alias){
+    alias=randomAlias();
+  }
+
+  if(links.some(x=>x.alias.toLowerCase()===alias.toLowerCase())){
+    showToast("Alias tersebut sudah digunakan");
+    return;
+  }
+
+  const expiration=$("expiration").value;
+
+  let expireAt=null;
+
+  if(expiration!=="never"){
+    expireAt=Date.now()+(
+      Number(expiration)*24*60*60*1000
     );
+  }
 
+  const item={
+    id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),
+    alias,
+    destination,
+    createdAt:Date.now(),
+    expireAt
+  };
 
-  document
-    .querySelectorAll(
-      ".nav-btn"
-    )
-    .forEach(
-      button => {
+  links.unshift(item);
 
-        button.classList.toggle(
-          "active",
-          button.dataset.page ===
-          page
-        );
+  saveLinks();
 
-      }
+  const shortUrl=getShortUrl(alias);
+
+  $("createForm").reset();
+
+  openSuccessModal(shortUrl);
+
+  renderLinks();
+});
+
+$("copyCreatedBtn").addEventListener("click",function(){
+  if(currentCreatedUrl){
+    copyText(currentCreatedUrl);
+  }
+});
+
+$("openCreatedBtn").addEventListener("click",function(){
+  if(currentCreatedUrl){
+    window.open(currentCreatedUrl,"_blank");
+  }
+});
+
+$("qrCreatedBtn").addEventListener("click",function(){
+
+  if(!currentCreatedUrl) return;
+
+  closeModal("successModal");
+  showQr(currentCreatedUrl);
+});
+
+function showQr(url){
+
+  currentQrUrl=url;
+
+  const qr=
+    "https://api.qrserver.com/v1/create-qr-code/?size=500x500&data="+
+    encodeURIComponent(url);
+
+  $("qrImage").src=qr;
+  $("qrModal").classList.add("show");
+}
+
+$("downloadQrBtn").addEventListener("click",async function(){
+
+  if(!currentQrUrl) return;
+
+  const qr=
+    "https://api.qrserver.com/v1/create-qr-code/?size=1000x1000&data="+
+    encodeURIComponent(currentQrUrl);
+
+  try{
+
+    const response=await fetch(qr);
+    const blob=await response.blob();
+
+    const url=URL.createObjectURL(blob);
+
+    const a=document.createElement("a");
+
+    a.href=url;
+    a.download="dimzlink-qr.png";
+
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+
+    URL.revokeObjectURL(url);
+
+  }catch{
+    window.open(qr,"_blank");
+  }
+});
+
+function renderLinks(){
+
+  const query=$("searchLinks").value.toLowerCase().trim();
+
+  const filtered=links.filter(link=>{
+    return (
+      link.alias.toLowerCase().includes(query) ||
+      link.destination.toLowerCase().includes(query)
     );
+  });
 
+  $("linkCount").textContent=filtered.length+" Links";
 
-  if(
-    page === "links"
-  ){
+  if(!filtered.length){
+
+    $("linksList").innerHTML=`
+      <div class="card empty">
+        ${
+          links.length
+          ?"No links found."
+          :"You haven't created any shortlinks yet."
+        }
+      </div>
+    `;
+
+    return;
+  }
+
+  $("linksList").innerHTML=filtered.map(link=>{
+
+    const expired=isExpired(link);
+    const shortUrl=getShortUrl(link.alias);
+
+    return `
+      <div class="card link-card">
+
+        <div class="link-top">
+
+          <div>
+            <div class="short-url">${escapeHtml(shortUrl)}</div>
+
+            <div class="original-url">
+              ${escapeHtml(link.destination)}
+            </div>
+          </div>
+
+          <div class="status ${expired?"expired":"active"}">
+            ${expired?"Expired":"Active"}
+          </div>
+
+        </div>
+
+        <div class="link-meta">
+          <span>Created ${formatDate(link.createdAt)}</span>
+          <span>
+            ${link.expireAt
+              ?"Expires "+formatDate(link.expireAt)
+              :"Never expires"}
+          </span>
+        </div>
+
+        <div class="link-actions">
+
+          <button
+            class="small-btn primary"
+            onclick="copyText('${escapeJs(shortUrl)}')"
+          >
+            Copy
+          </button>
+
+          <button
+            class="small-btn"
+            onclick="window.open('${escapeJs(shortUrl)}','_blank')"
+          >
+            Open
+          </button>
+
+          <button
+            class="small-btn"
+            onclick="shareLink('${escapeJs(shortUrl)}')"
+          >
+            Share
+          </button>
+
+          <button
+            class="small-btn"
+            onclick="showQr('${escapeJs(shortUrl)}')"
+          >
+            QR
+          </button>
+
+          <button
+            class="small-btn danger"
+            onclick="deleteLink('${escapeJs(link.id)}')"
+          >
+            Delete
+          </button>
+
+        </div>
+
+      </div>
+    `;
+
+  }).join("");
+}
+
+function escapeHtml(value){
+
+  return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+
+function escapeJs(value){
+
+  return String(value)
+    .replace(/\\/g,"\\\\")
+    .replace(/'/g,"\\'")
+    .replace(/\n/g,"\\n")
+    .replace(/\r/g,"\\r");
+}
+
+async function shareLink(url){
+
+  if(navigator.share){
+
+    try{
+      await navigator.share({
+        title:"DIMZLINK",
+        text:"Check this shortlink",
+        url
+      });
+
+      return;
+
+    }catch{}
+  }
+
+  copyText(url);
+}
+
+function deleteLink(id){
+
+  const index=links.findIndex(x=>x.id===id);
+
+  if(index===-1) return;
+
+  links.splice(index,1);
+
+  saveLinks();
+  renderLinks();
+
+  showToast("Shortlink dihapus");
+}
+
+$("searchLinks").addEventListener("input",renderLinks);
+
+function startRedirect(alias){
+
+  const link=links.find(
+    x=>x.alias.toLowerCase()===alias.toLowerCase()
+  );
+
+  if(!link || isExpired(link)){
+
+    $("mainHeader").style.display="none";
+    $("mainApp").style.display="none";
+    $("redirectPage").classList.add("active");
+
+    $("redirectPage").innerHTML=`
+      <div class="redirect-page">
+        <div class="card redirect-card">
+          <div class="redirect-logo">D</div>
+          <h1>Link unavailable</h1>
+          <p>
+            This shortlink does not exist or has expired.
+          </p>
+        </div>
+      </div>
+    `;
+
+    return;
+  }
+
+  $("mainHeader").style.display="none";
+  $("mainApp").style.display="none";
+  $("redirectPage").classList.add("active");
+
+  let seconds=5;
+
+  const countdown=$("countdownText");
+  const progress=$("progressBar");
+  const button=$("continueBtn");
+
+  countdown.textContent=
+    "Advertisement · Continue in "+seconds+"s";
+
+  progress.style.width="100%";
+
+  const timer=setInterval(()=>{
+
+    seconds--;
+
+    progress.style.width=(seconds/5*100)+"%";
+
+    if(seconds>0){
+
+      countdown.textContent=
+        "Advertisement · Continue in "+seconds+"s";
+
+    }else{
+
+      clearInterval(timer);
+
+      countdown.textContent=
+        "Your destination is ready";
+
+      button.disabled=false;
+      button.classList.add("ready");
+
+      button.textContent="Continue to destination";
+
+    }
+
+  },1000);
+
+  button.onclick=function(){
+
+    if(button.disabled) return;
+
+    window.location.href=link.destination;
+  };
+}
+
+function init(){
+
+  $("aliasPrefix").textContent=
+    location.host+"/";
+
+  const params=new URLSearchParams(location.search);
+  const alias=params.get("s");
+
+  if(alias){
+
+    startRedirect(alias);
+
+  }else{
 
     renderLinks();
 
   }
-
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-
 }
 
+$("successModal").addEventListener("click",function(e){
 
-/* NAV */
-
-document
-  .querySelectorAll(
-    ".nav-btn"
-  )
-  .forEach(
-    button => {
-
-      button.onclick =
-        () => {
-
-          showPage(
-            button.dataset.page
-          );
-
-        };
-
-    }
-  );
-
-
-$("newLinkButton").onclick =
-  () => {
-
-    showPage(
-      "create"
-    );
-
-  };
-
-
-$("homeBrand").onclick =
-  event => {
-
-    event.preventDefault();
-
-    history.replaceState(
-      null,
-      "",
-      location.pathname
-    );
-
-    showPage(
-      "create"
-    );
-
-  };
-
-
-$("searchInput").oninput =
-  renderLinks;
-
-
-/* CREATE BUTTON */
-
-$("createButton").onclick =
-  createLink;
-
-
-/* ENTER */
-
-$("destinationInput").addEventListener(
-  "keydown",
-  event => {
-
-    if(
-      event.key === "Enter"
-    ){
-
-      event.preventDefault();
-
-      createLink();
-
-    }
-
-  }
-);
-
-
-/* REDIRECT */
-
-function checkRedirect(){
-
-  const params =
-    new URLSearchParams(
-      location.search
-    );
-
-  const code =
-    params.get("s");
-
-
-  if(!code)
-    return false;
-
-
-  const link =
-    links.find(
-      item =>
-        item.code === code
-    );
-
-
-  if(!link){
-
-    showPage(
-      "create"
-    );
-
-    toast(
-      "Shortlink tidak ditemukan."
-    );
-
-    return true;
-
+  if(e.target===this){
+    closeModal("successModal");
   }
 
+});
 
-  if(expired(link)){
+$("qrModal").addEventListener("click",function(e){
 
-    showPage(
-      "create"
-    );
-
-    toast(
-      "Shortlink ini sudah expired."
-    );
-
-    return true;
-
+  if(e.target===this){
+    closeModal("qrModal");
   }
 
+});
 
-  redirectLink =
-    link;
-
-
-  document
-    .querySelector(".header")
-    .style.display =
-    "none";
-
-  document
-    .querySelector("main")
-    .style.display =
-    "none";
-
-
-  $("redirectPage")
-    .classList.add(
-      "active"
-    );
-
-
-  $("redirectTarget")
-    .textContent =
-    link.url;
-
-
-  startCountdown();
-
-
-  return true;
-
-}
-
-
-/* COUNTDOWN */
-
-function startCountdown(){
-
-  let count = 5;
-
-
-  $("countNumber")
-    .textContent =
-    count;
-
-
-  $("continueButton")
-    .disabled =
-    true;
-
-
-  $("continueButton")
-    .textContent =
-    "Continue in " +
-    count +
-    "s";
-
-
-  clearInterval(
-    redirectTimer
-  );
-
-
-  redirectTimer =
-    setInterval(
-      () => {
-
-        count--;
-
-
-        $("countNumber")
-          .textContent =
-          count;
-
-
-        if(count <= 0){
-
-          clearInterval(
-            redirectTimer
-          );
-
-
-          $("continueButton")
-            .disabled =
-            false;
-
-
-          $("continueButton")
-            .textContent =
-            "Continue to destination ↗";
-
-
-        }else{
-
-          $("continueButton")
-            .textContent =
-            "Continue in " +
-            count +
-            "s";
-
-        }
-
-      },
-      1000
-    );
-
-}
-
-
-/* CONTINUE */
-
-$("continueButton").onclick =
-  () => {
-
-    if(
-      !redirectLink
-    )
-      return;
-
-
-    location.href =
-      redirectLink.url;
-
-  };
-
-
-/* INITIAL */
-
-if(
-  !checkRedirect()
-){
-
-  renderLinks();
-
-}
-
-})();
+init();
 </script>
 
 </body>
