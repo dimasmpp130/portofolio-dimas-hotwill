@@ -2,29 +2,27 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
 <meta name="theme-color" content="#080a0f">
-<meta name="description" content="DIMZLINK - Premium URL Shortener">
+<meta name="description" content="DIMZLINK — Premium URL Shortener">
 <title>DIMZLINK — Premium URL Shortener</title>
 
 <style>
 :root{
   --bg:#080a0f;
-  --bg2:#0d1017;
-  --panel:#11151e;
-  --panel2:#151a24;
-  --line:#242b38;
-  --line2:#303847;
-  --text:#f5f7fb;
-  --muted:#8d97a8;
-  --muted2:#697385;
-  --primary:#8b6cff;
-  --primary2:#6549e8;
+  --panel:#10141c;
+  --panel2:#141923;
+  --line:#252c38;
+  --line2:#323a49;
+  --text:#f4f6fa;
+  --muted:#8b95a6;
+  --muted2:#606b7c;
+  --purple:#8d72ff;
+  --purple2:#634be7;
   --green:#42d392;
-  --red:#ff5e6c;
-  --yellow:#e8bd62;
-  --blue:#5da8ff;
-  --shadow:0 18px 50px rgba(0,0,0,.28);
+  --red:#ff6570;
+  --yellow:#e5b95c;
+  --blue:#63a9ff;
 }
 
 *{
@@ -39,27 +37,33 @@ html{
 
 body{
   min-height:100vh;
-  background:
-    radial-gradient(circle at 80% -10%,rgba(113,83,255,.12),transparent 30%),
-    radial-gradient(circle at 0% 40%,rgba(48,115,255,.05),transparent 30%),
-    var(--bg);
   color:var(--text);
+  background:
+    radial-gradient(
+      circle at 50% -15%,
+      rgba(111,82,255,.13),
+      transparent 32%
+    ),
+    var(--bg);
   font-family:
     Inter,
-    ui-sans-serif,
     system-ui,
     -apple-system,
     BlinkMacSystemFont,
     "Segoe UI",
     sans-serif;
   font-size:14px;
-  overflow-x:hidden;
 }
 
 button,
 input,
 select{
   font:inherit;
+}
+
+button,
+a{
+  -webkit-tap-highlight-color:transparent;
 }
 
 button{
@@ -71,18 +75,11 @@ a{
   text-decoration:none;
 }
 
-button,
-a,
-input,
-select{
-  -webkit-tap-highlight-color:transparent;
-}
-
 button:focus-visible,
 a:focus-visible,
 input:focus-visible,
 select:focus-visible{
-  outline:2px solid var(--primary);
+  outline:2px solid var(--purple);
   outline-offset:2px;
 }
 
@@ -90,438 +87,344 @@ select:focus-visible{
   display:none!important;
 }
 
-/* APP */
+/* HEADER */
 
-.app{
-  min-height:100vh;
+.header{
+  width:min(1080px,calc(100% - 30px));
+  height:68px;
+  margin:auto;
   display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid rgba(37,44,56,.65);
 }
 
-/* SIDEBAR */
-
-.sidebar{
-  width:245px;
-  flex:none;
-  min-height:100vh;
-  background:rgba(10,12,18,.88);
-  border-right:1px solid var(--line);
-  padding:22px 15px;
-  position:fixed;
-  left:0;
-  top:0;
-  bottom:0;
-  z-index:50;
-  backdrop-filter:blur(18px);
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight:850;
+  letter-spacing:-.4px;
 }
 
 .logo{
-  display:flex;
-  align-items:center;
-  gap:11px;
-  padding:2px 10px 26px;
-}
-
-.logo-icon{
-  width:37px;
-  height:37px;
+  width:36px;
+  height:36px;
   border-radius:11px;
   display:grid;
   place-items:center;
-  background:
-    linear-gradient(135deg,#9a7cff,#5f55e8);
+  background:linear-gradient(
+    135deg,
+    #9b80ff,
+    #6158e9
+  );
   box-shadow:
-    0 8px 25px rgba(120,91,255,.25);
-  font-size:19px;
-  font-weight:900;
+    0 8px 25px rgba(111,82,255,.23);
+  font-size:18px;
 }
 
-.logo-name{
+.brand-name{
   font-size:17px;
-  font-weight:850;
-  letter-spacing:-.5px;
 }
 
-.logo-name span{
-  color:#9b86ff;
+.brand-name span{
+  color:#9c89ff;
 }
 
-.nav-title{
-  color:#566073;
-  font-size:9px;
-  font-weight:800;
-  letter-spacing:1.6px;
-  text-transform:uppercase;
-  padding:0 11px 8px;
-}
-
-.nav{
-  display:grid;
-  gap:4px;
-}
-
-.nav button{
-  border:0;
-  background:transparent;
-  color:#8993a5;
-  width:100%;
-  padding:11px 12px;
-  border-radius:9px;
+.header-nav{
   display:flex;
   align-items:center;
-  gap:11px;
-  text-align:left;
-  font-size:12px;
-  font-weight:650;
+  gap:7px;
 }
 
-.nav button:hover{
-  background:#151922;
-  color:#e9ecf4;
+.nav-btn{
+  border:1px solid transparent;
+  background:transparent;
+  color:#778295;
+  border-radius:8px;
+  padding:8px 11px;
+  font-size:10px;
+  font-weight:700;
 }
 
-.nav button.active{
-  background:
-    linear-gradient(90deg,rgba(130,100,255,.16),rgba(130,100,255,.04));
-  color:#c8bcff;
-  border:1px solid rgba(132,104,255,.15);
-}
-
-.nav-icon{
-  width:18px;
-  text-align:center;
-  font-size:15px;
-}
-
-.sidebar-bottom{
-  position:absolute;
-  left:15px;
-  right:15px;
-  bottom:18px;
-}
-
-.account{
-  padding:13px;
-  border:1px solid var(--line);
-  background:#10141c;
-  border-radius:12px;
-}
-
-.account-name{
-  font-size:11px;
-  font-weight:750;
-}
-
-.account-plan{
-  color:#6e7789;
-  font-size:9px;
-  margin-top:4px;
-}
-
-.plan-badge{
-  color:#a99aff;
-  background:#1b1730;
-  border:1px solid #352b61;
-  border-radius:5px;
-  padding:3px 6px;
-  font-size:8px;
-  margin-left:4px;
+.nav-btn:hover,
+.nav-btn.active{
+  color:#eee;
+  background:#11151d;
+  border-color:var(--line);
 }
 
 /* MAIN */
 
-.main{
-  width:calc(100% - 245px);
-  margin-left:245px;
-  min-width:0;
+main{
+  width:min(1080px,calc(100% - 30px));
+  margin:auto;
 }
 
-.topbar{
-  height:67px;
-  border-bottom:1px solid var(--line);
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 30px;
-  background:rgba(8,10,15,.72);
-  backdrop-filter:blur(18px);
-  position:sticky;
-  top:0;
-  z-index:40;
-}
-
-.page-title{
-  font-size:14px;
-  font-weight:750;
-}
-
-.page-subtitle{
-  color:#687285;
-  font-size:10px;
-  margin-top:3px;
-}
-
-.top-actions{
-  display:flex;
-  align-items:center;
-  gap:8px;
-}
-
-.icon-btn{
-  width:34px;
-  height:34px;
-  display:grid;
-  place-items:center;
-  border-radius:9px;
-  background:#11151e;
-  border:1px solid var(--line);
-  color:#8993a5;
-}
-
-.icon-btn:hover{
-  color:#fff;
-  border-color:#3a4353;
-}
-
-.content{
-  width:min(1180px,calc(100% - 52px));
-  margin:0 auto;
-  padding:28px 0 55px;
-}
-
-/* VIEWS */
-
-.view{
+.page{
   display:none;
 }
 
-.view.active{
+.page.active{
   display:block;
 }
 
-/* DASHBOARD HEADER */
+/* HERO */
 
-.welcome{
-  display:flex;
-  align-items:flex-end;
-  justify-content:space-between;
-  gap:20px;
-  margin-bottom:24px;
+.hero{
+  text-align:center;
+  padding:65px 0 30px;
 }
 
-.welcome h1{
-  font-size:27px;
-  letter-spacing:-1px;
-}
-
-.welcome p{
-  color:var(--muted);
-  margin-top:6px;
-  font-size:12px;
-}
-
-.btn{
-  border:1px solid var(--line2);
-  background:#131821;
-  color:#e7eaf0;
-  min-height:38px;
-  padding:0 15px;
-  border-radius:9px;
-  font-size:11px;
-  font-weight:700;
-}
-
-.btn:hover{
-  border-color:#465064;
-  background:#171c26;
-}
-
-.btn.primary{
-  background:linear-gradient(135deg,var(--primary),var(--primary2));
-  border-color:transparent;
-  color:#fff;
-  box-shadow:0 8px 25px rgba(109,79,235,.2);
-}
-
-.btn.primary:hover{
-  filter:brightness(1.08);
-}
-
-/* STATS */
-
-.stats{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:12px;
-  margin-bottom:18px;
-}
-
-.stat{
-  background:
-    linear-gradient(145deg,rgba(19,24,34,.95),rgba(14,18,26,.95));
-  border:1px solid var(--line);
-  border-radius:13px;
-  padding:17px;
-  position:relative;
-  overflow:hidden;
-}
-
-.stat:after{
-  content:"";
-  position:absolute;
-  width:70px;
-  height:70px;
-  border-radius:50%;
-  right:-30px;
-  top:-35px;
-  background:rgba(128,100,255,.08);
-}
-
-.stat-top{
-  display:flex;
+.badge{
+  display:inline-flex;
   align-items:center;
-  justify-content:space-between;
-  color:#737e91;
-  font-size:10px;
-  font-weight:650;
-}
-
-.stat-icon{
-  width:28px;
-  height:28px;
-  display:grid;
-  place-items:center;
-  border-radius:8px;
-  background:#1a1e29;
-  color:#9e8cff;
-}
-
-.stat-value{
-  font-size:24px;
+  gap:7px;
+  color:#ad9cff;
+  background:#15122a;
+  border:1px solid #30275a;
+  border-radius:30px;
+  padding:6px 10px;
+  font-size:8px;
   font-weight:800;
-  letter-spacing:-1px;
-  margin-top:13px;
+  letter-spacing:1px;
+  text-transform:uppercase;
 }
 
-.stat-change{
-  color:var(--green);
-  font-size:9px;
-  margin-top:5px;
+.badge-dot{
+  width:5px;
+  height:5px;
+  background:var(--green);
+  border-radius:50%;
+  box-shadow:0 0 8px rgba(66,211,146,.7);
 }
 
-/* GRID */
-
-.dashboard-grid{
-  display:grid;
-  grid-template-columns:minmax(0,1fr) 305px;
-  gap:17px;
+.hero h1{
+  margin-top:17px;
+  font-size:clamp(34px,7vw,55px);
+  line-height:1.04;
+  letter-spacing:-2.5px;
 }
 
-/* CARD */
-
-.card{
-  background:rgba(16,20,29,.94);
-  border:1px solid var(--line);
-  border-radius:14px;
-  box-shadow:var(--shadow);
+.hero h1 span{
+  color:#9b85ff;
 }
 
-.card-header{
-  min-height:58px;
-  padding:0 18px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  border-bottom:1px solid var(--line);
-}
-
-.card-title{
+.hero p{
+  max-width:530px;
+  margin:15px auto 0;
+  color:var(--muted);
   font-size:12px;
-  font-weight:750;
+  line-height:1.8;
 }
 
-.card-subtitle{
-  color:#697386;
+/* CREATE */
+
+.create-box{
+  width:min(720px,100%);
+  margin:0 auto;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(17,21,30,.98),
+      rgba(12,15,22,.98)
+    );
+  border:1px solid var(--line);
+  border-radius:17px;
+  padding:21px;
+  box-shadow:
+    0 25px 70px rgba(0,0,0,.23);
+}
+
+.box-title{
+  font-size:13px;
+  font-weight:800;
+}
+
+.box-subtitle{
+  margin-top:4px;
+  color:var(--muted2);
   font-size:9px;
-  margin-top:3px;
 }
 
-.card-body{
-  padding:18px;
+.form{
+  margin-top:20px;
 }
 
-/* QUICK CREATE */
-
-.create-card{
-  margin-bottom:17px;
+.label{
+  display:block;
+  color:#b5bdc9;
+  font-size:9px;
+  font-weight:750;
+  margin-bottom:7px;
 }
 
-.url-input{
+.url-field{
+  height:45px;
   display:flex;
   align-items:center;
-  gap:0;
-  border:1px solid #2b3341;
-  background:#0b0e14;
+  background:#0a0d13;
+  border:1px solid #2b3340;
   border-radius:10px;
   overflow:hidden;
   transition:.2s;
 }
 
-.url-input:focus-within{
-  border-color:#6251b2;
-  box-shadow:0 0 0 3px rgba(112,82,230,.08);
+.url-field:focus-within{
+  border-color:#6250ad;
+  box-shadow:
+    0 0 0 3px rgba(117,86,239,.07);
 }
 
 .url-prefix{
-  color:#697487;
+  color:#687385;
   padding-left:13px;
+  font-size:10px;
+}
+
+.url-field input{
+  width:100%;
+  min-width:0;
+  height:100%;
+  border:0;
+  outline:0;
+  background:transparent;
+  color:#edf0f6;
+  padding:0 12px;
   font-size:11px;
 }
 
-.url-input input{
-  border:0;
-  outline:0;
-  color:#eef1f7;
-  background:transparent;
-  width:100%;
-  padding:13px 12px;
-  min-width:0;
+.url-field input::placeholder{
+  color:#4f5969;
 }
 
-.url-input input::placeholder{
-  color:#515b6c;
-}
-
-.create-actions{
+.form-grid{
   display:grid;
-  grid-template-columns:1fr 150px 110px;
-  gap:9px;
-  margin-top:10px;
+  grid-template-columns:1fr 180px;
+  gap:10px;
+  margin-top:13px;
 }
 
-.input{
-  height:39px;
-  border:1px solid #2b3341;
-  background:#0b0e14;
-  color:#e9ecf3;
+.field{
+  height:42px;
+  width:100%;
+  background:#0a0d13;
+  color:#e9edf4;
+  border:1px solid #2b3340;
   border-radius:9px;
   padding:0 12px;
   outline:0;
+  font-size:10px;
+}
+
+.field:focus{
+  border-color:#6250ad;
+}
+
+.alias{
+  display:flex;
+  height:42px;
+  background:#0a0d13;
+  border:1px solid #2b3340;
+  border-radius:9px;
+  overflow:hidden;
+}
+
+.alias-prefix{
+  display:flex;
+  align-items:center;
+  padding-left:11px;
+  color:#5e697b;
+  font-size:9px;
+  white-space:nowrap;
+}
+
+.alias input{
   width:100%;
+  min-width:0;
+  border:0;
+  outline:0;
+  color:#eee;
+  background:transparent;
+  padding:0 10px;
+  font-size:10px;
+}
+
+.create-btn{
+  width:100%;
+  height:44px;
+  margin-top:13px;
+  border:0;
+  border-radius:9px;
+  color:#fff;
   font-size:11px;
+  font-weight:800;
+  background:
+    linear-gradient(
+      135deg,
+      var(--purple),
+      var(--purple2)
+    );
+  box-shadow:
+    0 9px 25px rgba(102,76,224,.19);
 }
 
-.input:focus{
-  border-color:#6251b2;
+.create-btn:hover{
+  filter:brightness(1.08);
 }
 
-/* ADS */
+/* FEATURES */
+
+.features{
+  width:min(720px,100%);
+  margin:14px auto 0;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:9px;
+}
+
+.feature{
+  padding:14px;
+  border:1px solid var(--line);
+  background:rgba(15,19,27,.72);
+  border-radius:11px;
+}
+
+.feature-icon{
+  color:#a28eff;
+  font-size:14px;
+}
+
+.feature strong{
+  display:block;
+  margin-top:8px;
+  font-size:9px;
+}
+
+.feature p{
+  margin-top:4px;
+  color:#687386;
+  font-size:8px;
+  line-height:1.6;
+}
+
+/* AD */
+
+.ad-wrap{
+  width:min(720px,100%);
+  margin:17px auto 0;
+}
 
 .ad{
-  border:1px dashed #303746;
+  min-height:85px;
+  border:1px dashed #303847;
+  border-radius:11px;
   background:
-    linear-gradient(145deg,#10141c,#0d1017);
-  min-height:92px;
-  border-radius:10px;
+    linear-gradient(
+      145deg,
+      #10141c,
+      #0c0f15
+    );
   display:flex;
   align-items:center;
   justify-content:center;
@@ -529,74 +432,124 @@ select:focus-visible{
   padding:14px;
 }
 
-.ad-small{
-  min-height:75px;
-}
-
 .ad-label{
   display:inline-block;
-  color:#586273;
-  border:1px solid #2c3340;
+  color:#566172;
+  border:1px solid #2b3340;
   border-radius:4px;
+  padding:3px 5px;
   font-size:7px;
   letter-spacing:1px;
-  padding:3px 5px;
   margin-bottom:6px;
 }
 
 .ad strong{
   display:block;
+  color:#7d8797;
   font-size:10px;
-  color:#7d8798;
 }
 
-.ad span:not(.ad-label){
-  color:#535d6d;
+.ad small{
+  display:block;
+  color:#505a6a;
   font-size:8px;
+  margin-top:3px;
 }
 
-/* RECENT */
+/* LINKS PAGE */
 
-.table-head{
-  display:grid;
-  grid-template-columns:minmax(0,1fr) 100px 90px 100px;
-  gap:10px;
-  padding:10px 15px;
-  color:#5e6879;
-  font-size:8px;
+.links-head{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:15px;
+  padding:45px 0 20px;
+}
+
+.links-head h2{
+  font-size:27px;
+  letter-spacing:-1px;
+}
+
+.links-head p{
+  margin-top:5px;
+  color:var(--muted);
+  font-size:10px;
+}
+
+.secondary-btn{
+  height:37px;
+  border:1px solid var(--line2);
+  background:#121720;
+  color:#e5e8ee;
+  border-radius:9px;
+  padding:0 13px;
+  font-size:10px;
   font-weight:750;
-  text-transform:uppercase;
-  letter-spacing:.6px;
+}
+
+.secondary-btn:hover{
+  background:#181d27;
+}
+
+.links-panel{
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:#10141c;
+  overflow:hidden;
+}
+
+.links-toolbar{
+  padding:13px;
   border-bottom:1px solid var(--line);
-}
-
-.link-row{
-  display:grid;
-  grid-template-columns:minmax(0,1fr) 100px 90px 100px;
+  display:flex;
+  justify-content:space-between;
   gap:10px;
-  align-items:center;
-  padding:13px 15px;
-  border-bottom:1px solid rgba(36,43,56,.65);
 }
 
-.link-row:last-child{
+.search{
+  width:250px;
+  height:35px;
+  background:#0a0d13;
+  border:1px solid #2a3240;
+  border-radius:8px;
+  color:#eee;
+  padding:0 11px;
+  outline:0;
+  font-size:10px;
+}
+
+.search:focus{
+  border-color:#6250ad;
+}
+
+.link-item{
+  padding:15px;
+  border-bottom:1px solid rgba(37,44,56,.7);
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:12px;
+  align-items:center;
+}
+
+.link-item:last-child{
   border-bottom:0;
 }
 
-.link-main{
+.link-info{
   min-width:0;
 }
 
-.short{
-  color:#aa99ff;
+.link-url{
+  color:#aa98ff;
   font-size:11px;
-  font-weight:700;
+  font-weight:750;
   overflow:hidden;
   text-overflow:ellipsis;
   white-space:nowrap;
 }
 
-.original{
+.original-url{
   color:#596477;
   font-size:8px;
   margin-top:4px;
@@ -605,245 +558,77 @@ select:focus-visible{
   white-space:nowrap;
 }
 
-.clicks{
-  font-size:11px;
-  font-weight:700;
+.link-meta{
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap;
+  margin-top:7px;
 }
 
-.created{
-  color:#697386;
-  font-size:9px;
+.status{
+  border-radius:5px;
+  padding:3px 6px;
+  font-size:7px;
+  font-weight:750;
 }
 
-.row-actions{
+.status.active{
+  color:#5be0a2;
+  background:#10291f;
+  border:1px solid #214b39;
+}
+
+.status.expired{
+  color:#ff7880;
+  background:#291317;
+  border:1px solid #4c2229;
+}
+
+.expiry{
+  color:#697486;
+  font-size:7px;
+}
+
+.link-actions{
   display:flex;
   gap:5px;
-  justify-content:flex-end;
 }
 
-.mini-btn{
-  width:27px;
-  height:27px;
+.action{
+  width:29px;
+  height:29px;
   display:grid;
   place-items:center;
-  border:1px solid #29313e;
+  border:1px solid #2a323f;
   background:#11151d;
-  color:#8993a4;
+  color:#8993a5;
   border-radius:7px;
   font-size:11px;
 }
 
-.mini-btn:hover{
+.action:hover{
   color:#fff;
-  border-color:#414b5e;
+  border-color:#465064;
 }
 
 .empty{
-  padding:38px 20px;
+  padding:55px 20px;
   text-align:center;
-  color:#687385;
+  color:#687386;
   font-size:10px;
 }
 
-/* RIGHT */
-
-.side-card{
-  margin-bottom:17px;
-}
-
-.analytics{
-  display:grid;
-  gap:14px;
-}
-
-.analytics-row{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-
-.analytics-name{
-  color:#818b9d;
-  font-size:10px;
-}
-
-.analytics-value{
-  font-size:11px;
-  font-weight:750;
-}
-
-.progress{
-  height:4px;
-  border-radius:10px;
-  background:#1d232e;
-  overflow:hidden;
-  margin-top:7px;
-}
-
-.progress div{
-  height:100%;
-  width:0;
-  background:linear-gradient(90deg,#8064ff,#58a2ff);
-  border-radius:10px;
-  transition:width .4s ease;
-}
-
-/* CREATE PAGE */
-
-.create-layout{
-  display:grid;
-  grid-template-columns:minmax(0,1fr) 320px;
-  gap:17px;
-}
-
-.form-group{
-  margin-bottom:18px;
-}
-
-.form-label{
-  display:block;
-  color:#b5bdca;
-  font-size:10px;
-  font-weight:700;
-  margin-bottom:7px;
-}
-
-.form-hint{
-  color:#626d7f;
-  font-size:8px;
-  margin-top:6px;
-}
-
-.text-input{
-  width:100%;
-  height:42px;
-  background:#0b0e14;
-  border:1px solid #2b3341;
-  color:#edf0f6;
-  outline:0;
-  border-radius:9px;
-  padding:0 12px;
-  font-size:11px;
-}
-
-.text-input:focus{
-  border-color:#6251b2;
-}
-
-.alias-wrap{
-  display:flex;
-  align-items:center;
-  background:#0b0e14;
-  border:1px solid #2b3341;
-  border-radius:9px;
-  overflow:hidden;
-}
-
-.alias-domain{
-  color:#626c7d;
-  padding-left:12px;
-  font-size:10px;
-  white-space:nowrap;
-}
-
-.alias-wrap input{
-  border:0;
-  background:transparent;
-  color:#eee;
-  outline:0;
-  padding:12px;
-  width:100%;
-  min-width:0;
-}
-
-.options{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:9px;
-}
-
-.option{
-  border:1px solid #29313f;
-  border-radius:9px;
-  background:#0d1118;
-  padding:12px;
-}
-
-.option label{
-  display:block;
-  color:#a5aebb;
-  font-size:9px;
-  margin-bottom:7px;
-}
-
-.option select{
-  width:100%;
-  background:transparent;
-  border:0;
-  color:#e7eaf0;
-  outline:0;
-  font-size:10px;
-}
-
-.form-footer{
-  border-top:1px solid var(--line);
-  margin-top:20px;
-  padding-top:17px;
-  display:flex;
-  justify-content:flex-end;
-  gap:8px;
-}
-
-/* QR */
-
-.qr-box{
-  text-align:center;
-  padding:25px 15px;
-}
-
-.qr{
-  width:170px;
-  height:170px;
-  margin:0 auto 15px;
-  background:#fff;
-  padding:9px;
-  border-radius:9px;
+.empty-icon{
+  width:43px;
+  height:43px;
+  margin:0 auto 11px;
   display:grid;
   place-items:center;
-}
-
-.qr img{
-  width:100%;
-  height:100%;
-  display:block;
-}
-
-.qr-text{
-  color:#697386;
-  font-size:9px;
-  line-height:1.6;
-}
-
-/* LINKS VIEW */
-
-.search{
-  width:240px;
-  height:34px;
+  border-radius:12px;
+  background:#151a23;
   border:1px solid var(--line);
-  background:#0d1118;
-  border-radius:8px;
-  color:#eee;
-  padding:0 11px;
-  outline:0;
-  font-size:10px;
-}
-
-.links-toolbar{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  align-items:center;
-  margin-bottom:15px;
+  color:#7e899b;
+  font-size:17px;
 }
 
 /* REDIRECT */
@@ -860,895 +645,864 @@ select:focus-visible{
   display:flex;
 }
 
-.redirect-box{
-  width:min(520px,100%);
-  background:#10141c;
+.redirect-container{
+  width:min(570px,100%);
+}
+
+.redirect-brand{
+  text-align:center;
+  margin-bottom:17px;
+}
+
+.redirect-brand .logo{
+  margin:0 auto 10px;
+}
+
+.redirect-brand strong{
+  font-size:15px;
+}
+
+.redirect-brand span{
+  color:#9b87ff;
+}
+
+.redirect-card{
+  background:
+    linear-gradient(
+      145deg,
+      #11151e,
+      #0d1017
+    );
   border:1px solid var(--line);
   border-radius:17px;
   padding:24px;
+  box-shadow:
+    0 30px 80px rgba(0,0,0,.3);
   text-align:center;
-  box-shadow:var(--shadow);
 }
 
-.redirect-logo{
-  width:45px;
-  height:45px;
-  display:grid;
-  place-items:center;
-  margin:0 auto 16px;
-  border-radius:13px;
-  background:linear-gradient(135deg,#9478ff,#5b5ce8);
-  font-weight:900;
-  font-size:20px;
+.redirect-status{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  color:#a99aff;
+  background:#17132b;
+  border:1px solid #30265a;
+  padding:6px 9px;
+  border-radius:20px;
+  font-size:8px;
+  font-weight:750;
 }
 
-.redirect-box h2{
-  font-size:20px;
-  margin-bottom:7px;
+.redirect-card h1{
+  margin-top:16px;
+  font-size:24px;
+  letter-spacing:-.8px;
 }
 
-.redirect-box p{
-  color:#727d8f;
+.redirect-card > p{
+  color:#788395;
   font-size:10px;
   line-height:1.7;
+  margin-top:7px;
 }
 
-.target-preview{
-  margin:17px 0;
-  padding:12px;
-  border:1px solid #28303d;
+.target{
+  margin-top:17px;
+  padding:13px;
+  border:1px solid #29313e;
+  background:#0a0d13;
   border-radius:9px;
-  background:#0b0e14;
-  color:#9c8bff;
+  color:#a595ff;
   font-size:9px;
+  line-height:1.6;
   word-break:break-all;
 }
 
-.countdown{
-  margin:15px auto;
-  width:55px;
-  height:55px;
-  border:3px solid #252c38;
-  border-top-color:#8b6cff;
-  border-radius:50%;
+.redirect-ad{
+  margin-top:15px;
+}
+
+.count-wrap{
+  margin:17px auto 13px;
+  width:64px;
+  height:64px;
+  position:relative;
   display:grid;
   place-items:center;
-  font-size:15px;
-  font-weight:800;
 }
 
-.redirect-ad{
-  margin:17px 0;
+.count-ring{
+  position:absolute;
+  inset:0;
+  border-radius:50%;
+  border:3px solid #242b37;
+  border-top-color:#8d72ff;
+  animation:spin 1s linear infinite;
 }
 
-.redirect-button{
+.count-number{
+  font-size:17px;
+  font-weight:850;
+}
+
+@keyframes spin{
+  to{
+    transform:rotate(360deg);
+  }
+}
+
+.continue{
   width:100%;
+  height:44px;
+  border:0;
+  border-radius:9px;
+  color:#fff;
+  font-size:10px;
+  font-weight:800;
+  background:
+    linear-gradient(
+      135deg,
+      var(--purple),
+      var(--purple2)
+    );
+}
+
+.continue:disabled{
+  opacity:.45;
+  cursor:not-allowed;
+}
+
+.redirect-note{
+  margin-top:12px;
+  color:#555f70;
+  font-size:8px;
+}
+
+.back-home{
+  display:block;
+  margin-top:14px;
+  color:#777f90;
+  font-size:9px;
+  text-align:center;
+}
+
+.back-home:hover{
+  color:#b4a7ff;
+}
+
+/* MODAL */
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.68);
+  backdrop-filter:blur(5px);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  z-index:100;
+}
+
+.modal.active{
+  display:flex;
+}
+
+.modal-box{
+  width:min(360px,100%);
+  background:#11151e;
+  border:1px solid var(--line2);
+  border-radius:15px;
+  padding:20px;
+  text-align:center;
+  box-shadow:0 25px 70px rgba(0,0,0,.4);
+}
+
+.modal-box h3{
+  font-size:14px;
+}
+
+.modal-box p{
+  color:#727d8f;
+  font-size:9px;
+  line-height:1.6;
+  margin-top:5px;
+}
+
+.qr{
+  width:210px;
+  height:210px;
+  padding:8px;
+  background:#fff;
+  border-radius:10px;
+  margin:17px auto;
+}
+
+.qr img{
+  width:100%;
+  height:100%;
+  display:block;
+}
+
+.modal-close{
+  width:100%;
+  height:38px;
+  border:1px solid var(--line2);
+  background:#161b24;
+  color:#ddd;
+  border-radius:8px;
+  font-size:10px;
+  font-weight:700;
 }
 
 /* TOAST */
 
 .toast{
   position:fixed;
-  right:22px;
-  bottom:22px;
+  left:50%;
+  bottom:20px;
+  transform:translate(-50%,20px);
   background:#171c26;
-  border:1px solid #353e4d;
-  box-shadow:var(--shadow);
-  border-radius:10px;
-  padding:11px 14px;
-  font-size:10px;
-  z-index:100;
-  transform:translateY(20px);
+  border:1px solid #384151;
+  border-radius:9px;
+  padding:10px 14px;
+  color:#edf0f5;
+  font-size:9px;
+  box-shadow:0 15px 40px rgba(0,0,0,.3);
   opacity:0;
   pointer-events:none;
   transition:.25s;
+  z-index:200;
+  max-width:calc(100% - 30px);
+  text-align:center;
 }
 
 .toast.show{
-  transform:translateY(0);
   opacity:1;
+  transform:translate(-50%,0);
+}
+
+/* FOOTER */
+
+.footer{
+  width:min(720px,100%);
+  margin:40px auto 30px;
+  text-align:center;
+  color:#4f5969;
+  font-size:8px;
+  line-height:1.8;
+}
+
+.footer span{
+  color:#7566b4;
 }
 
 /* MOBILE */
 
-.mobile-menu{
-  display:none;
-}
+@media(max-width:650px){
 
-@media(max-width:950px){
-  .stats{
-    grid-template-columns:repeat(2,1fr);
+  .header{
+    height:61px;
   }
 
-  .dashboard-grid,
-  .create-layout{
+  .header-nav .nav-btn{
+    padding:7px 8px;
+  }
+
+  .hero{
+    padding:45px 0 24px;
+  }
+
+  .hero h1{
+    letter-spacing:-1.8px;
+  }
+
+  .create-box{
+    padding:16px;
+    border-radius:14px;
+  }
+
+  .form-grid{
     grid-template-columns:1fr;
   }
-}
 
-@media(max-width:720px){
-  .sidebar{
-    transform:translateX(-100%);
-    transition:.25s ease;
+  .features{
+    grid-template-columns:1fr;
   }
 
-  .sidebar.open{
-    transform:translateX(0);
-  }
-
-  .main{
-    width:100%;
-    margin-left:0;
-  }
-
-  .mobile-menu{
+  .feature{
     display:grid;
+    grid-template-columns:25px 1fr;
+    column-gap:8px;
   }
 
-  .topbar{
-    padding:0 15px;
+  .feature-icon{
+    grid-row:1/3;
   }
 
-  .content{
-    width:calc(100% - 26px);
-    padding-top:20px;
+  .feature strong{
+    margin-top:0;
   }
 
-  .welcome{
+  .links-head{
+    padding-top:35px;
     align-items:flex-start;
     flex-direction:column;
   }
 
-  .welcome .btn{
+  .links-head .secondary-btn{
     width:100%;
   }
 
-  .create-actions{
-    grid-template-columns:1fr;
-  }
-
-  .table-head{
-    display:none;
-  }
-
-  .link-row{
-    grid-template-columns:minmax(0,1fr) auto;
-  }
-
-  .clicks,
-  .created{
-    display:none;
-  }
-
-  .row-actions{
-    grid-column:2;
-    grid-row:1;
-  }
-
-  .link-main{
-    grid-column:1;
-    grid-row:1;
-  }
-
-  .options{
-    grid-template-columns:1fr;
+  .links-toolbar{
+    flex-direction:column;
   }
 
   .search{
     width:100%;
   }
 
-  .links-toolbar{
-    align-items:stretch;
-    flex-direction:column;
+  .link-item{
+    grid-template-columns:1fr;
   }
+
+  .link-actions{
+    justify-content:flex-start;
+  }
+
+  .redirect-card{
+    padding:18px;
+  }
+
+  .redirect-card h1{
+    font-size:21px;
+  }
+
 }
 
-@media(max-width:420px){
-  .stats{
-    gap:8px;
+@media(max-width:390px){
+
+  .header-nav .nav-btn{
+    font-size:9px;
+    padding:7px 6px;
   }
 
-  .stat{
-    padding:13px;
+  .brand-name{
+    font-size:15px;
   }
 
-  .stat-value{
-    font-size:20px;
+  .logo{
+    width:33px;
+    height:33px;
   }
 
-  .card-body{
-    padding:14px;
-  }
-
-  .card-header{
-    padding:0 14px;
-  }
 }
 </style>
 </head>
 
 <body>
 
-<div id="app" class="app">
+<header class="header">
 
-  <aside id="sidebar" class="sidebar">
+  <a href="./" class="brand" id="homeBrand">
 
-    <div class="logo">
-      <div class="logo-icon">↗</div>
-      <div class="logo-name">DIMZ<span>LINK</span></div>
+    <div class="logo">↗</div>
+
+    <div class="brand-name">
+      DIMZ<span>LINK</span>
     </div>
 
-    <div class="nav-title">Workspace</div>
+  </a>
 
-    <nav class="nav">
-      <button class="active" data-view="dashboard">
-        <span class="nav-icon">⌂</span>
-        Dashboard
-      </button>
+  <nav class="header-nav">
 
-      <button data-view="create">
-        <span class="nav-icon">＋</span>
-        Create link
-      </button>
+    <button
+      class="nav-btn active"
+      data-page="create"
+    >
+      Create Link
+    </button>
 
-      <button data-view="links">
-        <span class="nav-icon">↗</span>
-        My links
-      </button>
+    <button
+      class="nav-btn"
+      data-page="links"
+    >
+      My Links
+    </button>
 
-      <button data-view="analytics">
-        <span class="nav-icon">◒</span>
-        Analytics
-      </button>
-    </nav>
+  </nav>
 
-    <div class="nav-title" style="margin-top:24px">Account</div>
+</header>
 
-    <nav class="nav">
-      <button id="settingsBtn">
-        <span class="nav-icon">⚙</span>
-        Settings
-      </button>
-    </nav>
 
-    <div class="sidebar-bottom">
-      <div class="account">
-        <div class="account-name">
-          DIMMZZZSUM_ENAK
-          <span class="plan-badge">PRO</span>
-        </div>
-        <div class="account-plan">Premium workspace</div>
+<main>
+
+  <!-- CREATE PAGE -->
+
+  <section
+    id="createPage"
+    class="page active"
+  >
+
+    <div class="hero">
+
+      <div class="badge">
+        <span class="badge-dot"></span>
+        Premium URL Shortener
       </div>
+
+      <h1>
+        Make your links<br>
+        <span>short & simple.</span>
+      </h1>
+
+      <p>
+        Buat shortlink yang lebih rapi, mudah dibagikan,
+        dan terlihat profesional.
+      </p>
+
     </div>
 
-  </aside>
 
-  <main class="main">
+    <div class="create-box">
 
-    <header class="topbar">
+      <div class="box-title">
+        Create a short link
+      </div>
 
-      <div style="display:flex;align-items:center;gap:10px">
+      <div class="box-subtitle">
+        Masukkan URL tujuan untuk membuat shortlink baru.
+      </div>
 
-        <button id="mobileMenu" class="icon-btn mobile-menu">
-          ☰
+
+      <div class="form">
+
+        <label class="label">
+          Destination URL
+        </label>
+
+        <div class="url-field">
+
+          <span class="url-prefix">
+            https://
+          </span>
+
+          <input
+            id="destinationInput"
+            type="url"
+            placeholder="example.com/your-long-url"
+            autocomplete="off"
+          >
+
+        </div>
+
+
+        <div class="form-grid">
+
+          <div>
+
+            <label class="label">
+              Custom Alias
+            </label>
+
+            <div class="alias">
+
+              <span class="alias-prefix">
+                dimzlink/
+              </span>
+
+              <input
+                id="aliasInput"
+                type="text"
+                maxlength="40"
+                placeholder="my-link"
+                autocomplete="off"
+              >
+
+            </div>
+
+          </div>
+
+
+          <div>
+
+            <label class="label">
+              Expiration
+            </label>
+
+            <select
+              id="expirationInput"
+              class="field"
+            >
+              <option value="0">
+                Never expires
+              </option>
+
+              <option value="1">
+                1 day
+              </option>
+
+              <option value="7">
+                7 days
+              </option>
+
+              <option value="30">
+                30 days
+              </option>
+
+              <option value="90">
+                90 days
+              </option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+
+        <button
+          id="createButton"
+          class="create-btn"
+        >
+          Create Short Link ↗
         </button>
 
+      </div>
+
+    </div>
+
+
+    <div class="features">
+
+      <div class="feature">
+
+        <div class="feature-icon">↗</div>
+
         <div>
-          <div id="pageTitle" class="page-title">Dashboard</div>
-          <div class="page-subtitle">Manage your short links</div>
+          <strong>Clean URLs</strong>
+          <p>
+            Link pendek yang lebih mudah dibagikan.
+          </p>
         </div>
 
       </div>
 
-      <div class="top-actions">
-        <button class="icon-btn" id="refreshBtn" title="Refresh">↻</button>
-        <button class="icon-btn" id="themeBtn" title="Theme">◐</button>
+
+      <div class="feature">
+
+        <div class="feature-icon">⌁</div>
+
+        <div>
+          <strong>Custom Alias</strong>
+          <p>
+            Gunakan nama link sesuai kebutuhan.
+          </p>
+        </div>
+
       </div>
 
-    </header>
 
-    <div class="content">
+      <div class="feature">
 
-      <!-- DASHBOARD -->
+        <div class="feature-icon">▦</div>
 
-      <section id="view-dashboard" class="view active">
-
-        <div class="welcome">
-          <div>
-            <h1>Good evening 👋</h1>
-            <p>Kelola shortlink dan lihat performanya dari satu tempat.</p>
-          </div>
-
-          <button class="btn primary" data-view-action="create">
-            + Create short link
-          </button>
+        <div>
+          <strong>QR Ready</strong>
+          <p>
+            Buat QR code dari shortlink kamu.
+          </p>
         </div>
 
-        <div class="stats">
-
-          <div class="stat">
-            <div class="stat-top">
-              <span>Total links</span>
-              <span class="stat-icon">↗</span>
-            </div>
-            <div id="totalLinks" class="stat-value">0</div>
-            <div class="stat-change">Your active links</div>
-          </div>
-
-          <div class="stat">
-            <div class="stat-top">
-              <span>Total clicks</span>
-              <span class="stat-icon">◉</span>
-            </div>
-            <div id="totalClicks" class="stat-value">0</div>
-            <div class="stat-change">All time clicks</div>
-          </div>
-
-          <div class="stat">
-            <div class="stat-top">
-              <span>Today</span>
-              <span class="stat-icon">◷</span>
-            </div>
-            <div id="todayClicks" class="stat-value">0</div>
-            <div class="stat-change">Clicks today</div>
-          </div>
-
-          <div class="stat">
-            <div class="stat-top">
-              <span>Avg. clicks</span>
-              <span class="stat-icon">◌</span>
-            </div>
-            <div id="avgClicks" class="stat-value">0</div>
-            <div class="stat-change">Per link</div>
-          </div>
-
-        </div>
-
-        <div class="dashboard-grid">
-
-          <div>
-
-            <section class="card create-card">
-
-              <div class="card-header">
-                <div>
-                  <div class="card-title">Quick create</div>
-                  <div class="card-subtitle">Shorten a long URL instantly</div>
-                </div>
-              </div>
-
-              <div class="card-body">
-
-                <div class="url-input">
-                  <span class="url-prefix">https://</span>
-                  <input
-                    id="quickUrl"
-                    type="url"
-                    placeholder="example.com/your-long-url"
-                    autocomplete="off"
-                  >
-                </div>
-
-                <div class="create-actions">
-
-                  <input
-                    id="quickAlias"
-                    class="input"
-                    placeholder="Custom alias (optional)"
-                    maxlength="40"
-                  >
-
-                  <select id="quickExpiry" class="input">
-                    <option value="0">Never expires</option>
-                    <option value="1">1 day</option>
-                    <option value="7">7 days</option>
-                    <option value="30">30 days</option>
-                    <option value="90">90 days</option>
-                  </select>
-
-                  <button id="quickCreate" class="btn primary">
-                    Shorten ↗
-                  </button>
-
-                </div>
-
-              </div>
-
-            </section>
-
-            <section class="card">
-
-              <div class="card-header">
-
-                <div>
-                  <div class="card-title">Recent links</div>
-                  <div class="card-subtitle">Your latest shortened URLs</div>
-                </div>
-
-                <button class="btn" data-view-action="links">
-                  View all
-                </button>
-
-              </div>
-
-              <div id="recentLinks"></div>
-
-            </section>
-
-          </div>
-
-          <aside>
-
-            <section class="card side-card">
-
-              <div class="card-header">
-                <div>
-                  <div class="card-title">Advertisement</div>
-                  <div class="card-subtitle">Sponsor placement</div>
-                </div>
-              </div>
-
-              <div class="card-body">
-                <div class="ad">
-                  <div>
-                    <span class="ad-label">ADVERTISEMENT</span>
-                    <strong>Your ad goes here</strong>
-                    <span>Clean · Native · Non-intrusive</span>
-                  </div>
-                </div>
-              </div>
-
-            </section>
-
-            <section class="card side-card">
-
-              <div class="card-header">
-                <div>
-                  <div class="card-title">Overview</div>
-                  <div class="card-subtitle">Link activity</div>
-                </div>
-              </div>
-
-              <div class="card-body">
-
-                <div class="analytics">
-
-                  <div>
-                    <div class="analytics-row">
-                      <span class="analytics-name">Links created</span>
-                      <span id="overviewLinks" class="analytics-value">0</span>
-                    </div>
-                    <div class="progress">
-                      <div id="progressLinks"></div>
-                    </div>
-                  </div>
-
-                  <div>
-                    <div class="analytics-row">
-                      <span class="analytics-name">Clicks</span>
-                      <span id="overviewClicks" class="analytics-value">0</span>
-                    </div>
-                    <div class="progress">
-                      <div id="progressClicks"></div>
-                    </div>
-                  </div>
-
-                  <div>
-                    <div class="analytics-row">
-                      <span class="analytics-name">Active links</span>
-                      <span id="overviewActive" class="analytics-value">0</span>
-                    </div>
-                    <div class="progress">
-                      <div id="progressActive"></div>
-                    </div>
-                  </div>
-
-                </div>
-
-              </div>
-
-            </section>
-
-            <section class="card">
-
-              <div class="card-body">
-
-                <div class="ad ad-small">
-                  <div>
-                    <span class="ad-label">ADVERTISEMENT</span>
-                    <strong>Premium ad placement</strong>
-                  </div>
-                </div>
-
-              </div>
-
-            </section>
-
-          </aside>
-
-        </div>
-
-      </section>
-
-
-      <!-- CREATE -->
-
-      <section id="view-create" class="view">
-
-        <div class="welcome">
-
-          <div>
-            <h1>Create short link</h1>
-            <p>Buat tautan pendek dengan pengaturan lengkap.</p>
-          </div>
-
-        </div>
-
-        <div class="create-layout">
-
-          <section class="card">
-
-            <div class="card-header">
-              <div>
-                <div class="card-title">Link settings</div>
-                <div class="card-subtitle">Configure your short URL</div>
-              </div>
-            </div>
-
-            <div class="card-body">
-
-              <div class="form-group">
-
-                <label class="form-label">
-                  Destination URL
-                </label>
-
-                <input
-                  id="fullUrl"
-                  class="text-input"
-                  type="url"
-                  placeholder="https://example.com/your-page"
-                >
-
-                <div class="form-hint">
-                  URL tujuan harus menggunakan HTTP atau HTTPS.
-                </div>
-
-              </div>
-
-              <div class="form-group">
-
-                <label class="form-label">
-                  Custom alias
-                </label>
-
-                <div class="alias-wrap">
-                  <span class="alias-domain" id="aliasDomain">
-                    dimzlink.local/
-                  </span>
-                  <input
-                    id="fullAlias"
-                    maxlength="40"
-                    placeholder="my-link"
-                  >
-                </div>
-
-                <div class="form-hint">
-                  Gunakan huruf, angka, tanda hubung atau underscore.
-                </div>
-
-              </div>
-
-              <div class="form-group">
-
-                <label class="form-label">
-                  Link options
-                </label>
-
-                <div class="options">
-
-                  <div class="option">
-
-                    <label>Expiration</label>
-
-                    <select id="fullExpiry">
-                      <option value="0">Never expires</option>
-                      <option value="1">1 day</option>
-                      <option value="7">7 days</option>
-                      <option value="30">30 days</option>
-                      <option value="90">90 days</option>
-                    </select>
-
-                  </div>
-
-                  <div class="option">
-
-                    <label>Status</label>
-
-                    <select id="fullStatus">
-                      <option value="active">Active</option>
-                    </select>
-
-                  </div>
-
-                </div>
-
-              </div>
-
-              <div class="form-footer">
-
-                <button class="btn" data-view-action="dashboard">
-                  Cancel
-                </button>
-
-                <button id="fullCreate" class="btn primary">
-                  Create short link ↗
-                </button>
-
-              </div>
-
-            </div>
-
-          </section>
-
-          <aside>
-
-            <section class="card side-card">
-
-              <div class="card-header">
-                <div>
-                  <div class="card-title">Advertisement</div>
-                  <div class="card-subtitle">Sponsor placement</div>
-                </div>
-              </div>
-
-              <div class="card-body">
-
-                <div class="ad">
-                  <div>
-                    <span class="ad-label">ADVERTISEMENT</span>
-                    <strong>Native banner area</strong>
-                    <span>Doesn't cover the interface</span>
-                  </div>
-                </div>
-
-              </div>
-
-            </section>
-
-            <section class="card">
-
-              <div class="card-header">
-                <div>
-                  <div class="card-title">Tips</div>
-                  <div class="card-subtitle">For better shortlinks</div>
-                </div>
-              </div>
-
-              <div class="card-body">
-
-                <div style="display:grid;gap:13px">
-
-                  <div>
-                    <div style="font-size:10px;font-weight:700">
-                      Keep aliases short
-                    </div>
-                    <div style="font-size:8px;color:#687386;margin-top:4px">
-                      Short aliases are easier to remember and share.
-                    </div>
-                  </div>
-
-                  <div>
-                    <div style="font-size:10px;font-weight:700">
-                      Use descriptive names
-                    </div>
-                    <div style="font-size:8px;color:#687386;margin-top:4px">
-                      Example: download-apk or portfolio.
-                    </div>
-                  </div>
-
-                  <div>
-                    <div style="font-size:10px;font-weight:700">
-                      Track your clicks
-                    </div>
-                    <div style="font-size:8px;color:#687386;margin-top:4px">
-                      Analytics can help you understand traffic.
-                    </div>
-                  </div>
-
-                </div>
-
-              </div>
-
-            </section>
-
-          </aside>
-
-        </div>
-
-      </section>
-
-
-      <!-- LINKS -->
-
-      <section id="view-links" class="view">
-
-        <div class="welcome">
-
-          <div>
-            <h1>My links</h1>
-            <p>Semua shortlink yang sudah kamu buat.</p>
-          </div>
-
-          <button class="btn primary" data-view-action="create">
-            + Create link
-          </button>
-
-        </div>
-
-        <section class="card">
-
-          <div class="card-header">
-
-            <div>
-              <div class="card-title">All short links</div>
-              <div class="card-subtitle">Manage your URLs</div>
-            </div>
-
-            <input
-              id="searchLinks"
-              class="search"
-              placeholder="Search links..."
-            >
-
-          </div>
-
-          <div class="card-body" style="padding:12px">
-
-            <div id="allLinks"></div>
-
-          </div>
-
-        </section>
-
-      </section>
-
-
-      <!-- ANALYTICS -->
-
-      <section id="view-analytics" class="view">
-
-        <div class="welcome">
-
-          <div>
-            <h1>Analytics</h1>
-            <p>Ringkasan performa shortlink kamu.</p>
-          </div>
-
-        </div>
-
-        <div class="stats">
-
-          <div class="stat">
-            <div class="stat-top">
-              <span>Total clicks</span>
-              <span class="stat-icon">◉</span>
-            </div>
-            <div id="analyticsTotal" class="stat-value">0</div>
-            <div class="stat-change">All time</div>
-          </div>
-
-          <div class="stat">
-            <div class="stat-top">
-              <span>Today</span>
-              <span class="stat-icon">◷</span>
-            </div>
-            <div id="analyticsToday" class="stat-value">0</div>
-            <div class="stat-change">Today's traffic</div>
-          </div>
-
-          <div class="stat">
-            <div class="stat-top">
-              <span>Links</span>
-              <span class="stat-icon">↗</span>
-            </div>
-            <div id="analyticsLinks" class="stat-value">0</div>
-            <div class="stat-change">Created links</div>
-          </div>
-
-          <div class="stat">
-            <div class="stat-top">
-              <span>Average</span>
-              <span class="stat-icon">◌</span>
-            </div>
-            <div id="analyticsAverage" class="stat-value">0</div>
-            <div class="stat-change">Clicks / link</div>
-          </div>
-
-        </div>
-
-        <section class="card">
-
-          <div class="card-header">
-
-            <div>
-              <div class="card-title">Traffic overview</div>
-              <div class="card-subtitle">Click activity across your links</div>
-            </div>
-
-          </div>
-
-          <div class="card-body">
-
-            <div id="analyticsChart"
-                 style="
-                 height:250px;
-                 display:flex;
-                 align-items:flex-end;
-                 gap:7px;
-                 padding:20px 5px 0;
-                 border-bottom:1px solid #242b38;
-                 ">
-            </div>
-
-          </div>
-
-        </section>
-
-      </section>
+      </div>
 
     </div>
 
-  </main>
 
-</div>
-
-
-<!-- REDIRECT PAGE -->
-
-<section id="redirectPage" class="redirect-page">
-
-  <div class="redirect-box">
-
-    <div class="redirect-logo">↗</div>
-
-    <h2 id="redirectTitle">
-      Preparing your link
-    </h2>
-
-    <p>
-      Kamu akan diarahkan ke website tujuan.
-    </p>
-
-    <div id="redirectTarget" class="target-preview"></div>
-
-    <div id="countdown" class="countdown">
-      5
-    </div>
-
-    <div class="redirect-ad">
+    <div class="ad-wrap">
 
       <div class="ad">
+
         <div>
-          <span class="ad-label">ADVERTISEMENT</span>
-          <strong>Advertisement</strong>
-          <span>Sponsored content</span>
+
+          <span class="ad-label">
+            ADVERTISEMENT
+          </span>
+
+          <strong>
+            Premium sponsor placement
+          </strong>
+
+          <small>
+            Iklan ditampilkan tanpa menutupi konten.
+          </small>
+
         </div>
+
       </div>
 
     </div>
 
-    <button id="continueRedirect" class="btn primary redirect-button" disabled>
-      Continue in 5s
-    </button>
+
+    <div class="footer">
+
+      © <span id="year"></span> DIMZLINK.
+      Simple URL shortening service.
+
+    </div>
+
+  </section>
+
+
+  <!-- MY LINKS -->
+
+  <section
+    id="linksPage"
+    class="page"
+  >
+
+    <div class="links-head">
+
+      <div>
+
+        <h2>
+          My Links
+        </h2>
+
+        <p>
+          Kelola shortlink yang telah kamu buat.
+        </p>
+
+      </div>
+
+      <button
+        class="secondary-btn"
+        id="newLinkButton"
+      >
+        + Create New Link
+      </button>
+
+    </div>
+
+
+    <div class="links-panel">
+
+      <div class="links-toolbar">
+
+        <input
+          id="searchInput"
+          class="search"
+          type="search"
+          placeholder="Search your links..."
+        >
+
+        <div
+          id="linkCount"
+          style="
+          color:#667183;
+          font-size:9px;
+          display:flex;
+          align-items:center;
+          "
+        >
+          0 links
+        </div>
+
+      </div>
+
+      <div id="linksList"></div>
+
+    </div>
+
+
+    <div class="ad-wrap">
+
+      <div class="ad">
+
+        <div>
+
+          <span class="ad-label">
+            ADVERTISEMENT
+          </span>
+
+          <strong>
+            Sponsor placement
+          </strong>
+
+          <small>
+            Clean advertisement area.
+          </small>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+</main>
+
+
+<!-- REDIRECT -->
+
+<section
+  id="redirectPage"
+  class="redirect-page"
+>
+
+  <div class="redirect-container">
+
+    <div class="redirect-brand">
+
+      <div class="logo">
+        ↗
+      </div>
+
+      <strong>
+        DIMZ<span>LINK</span>
+      </strong>
+
+    </div>
+
+
+    <div class="redirect-card">
+
+      <div class="redirect-status">
+        <span class="badge-dot"></span>
+        LINK READY
+      </div>
+
+
+      <h1>
+        Preparing your link
+      </h1>
+
+      <p>
+        Kamu akan diarahkan ke website tujuan
+        setelah beberapa detik.
+      </p>
+
+
+      <div
+        id="redirectTarget"
+        class="target"
+      >
+      </div>
+
+
+      <div class="redirect-ad">
+
+        <div class="ad">
+
+          <div>
+
+            <span class="ad-label">
+              ADVERTISEMENT
+            </span>
+
+            <strong>
+              Sponsored content
+            </strong>
+
+            <small>
+              Iklan tidak menutupi tombol tujuan.
+            </small>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="count-wrap">
+
+        <div class="count-ring"></div>
+
+        <div
+          id="countNumber"
+          class="count-number"
+        >
+          5
+        </div>
+
+      </div>
+
+
+      <button
+        id="continueButton"
+        class="continue"
+        disabled
+      >
+        Continue in 5s
+      </button>
+
+
+      <div class="redirect-note">
+        Dengan melanjutkan, kamu akan membuka
+        alamat tujuan di atas.
+      </div>
+
+    </div>
+
+
+    <a
+      href="./"
+      class="back-home"
+    >
+      ← Back to DIMZLINK
+    </a>
 
   </div>
 
 </section>
 
 
-<div id="toast" class="toast"></div>
+<!-- QR MODAL -->
+
+<div
+  id="qrModal"
+  class="modal"
+>
+
+  <div class="modal-box">
+
+    <h3>
+      QR Code
+    </h3>
+
+    <p>
+      Scan QR code untuk membuka shortlink.
+    </p>
+
+    <div class="qr">
+
+      <img
+        id="qrImage"
+        src=""
+        alt="QR Code"
+      >
+
+    </div>
+
+    <button
+      id="closeQR"
+      class="modal-close"
+    >
+      Close
+    </button>
+
+  </div>
+
+</div>
+
+
+<div
+  id="toast"
+  class="toast"
+></div>
 
 
 <script>
@@ -1756,13 +1510,27 @@ select:focus-visible{
 
 "use strict";
 
-const STORAGE_KEY = "dimzlink_premium_links_v2";
+const STORAGE =
+  "dimzlink_links_v3";
 
-const $ = id => document.getElementById(id);
+let links =
+  loadLinks();
 
-let links = loadLinks();
-let redirectTarget = "";
-let redirectTimer = null;
+let redirectTimer =
+  null;
+
+let redirectLink =
+  null;
+
+
+/* BASIC */
+
+const $ =
+  id => document.getElementById(id);
+
+
+$("year").textContent =
+  new Date().getFullYear();
 
 
 /* STORAGE */
@@ -1772,9 +1540,13 @@ function loadLinks(){
   try{
 
     const data =
-      JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+      JSON.parse(
+        localStorage.getItem(STORAGE) || "[]"
+      );
 
-    return Array.isArray(data) ? data : [];
+    return Array.isArray(data)
+      ? data
+      : [];
 
   }catch{
 
@@ -1789,48 +1561,67 @@ function saveLinks(){
   try{
 
     localStorage.setItem(
-      STORAGE_KEY,
+      STORAGE,
       JSON.stringify(links)
     );
 
-  }catch{}
+  }catch{
 
-}
-
-
-/* HELPERS */
-
-function randomCode(){
-
-  const chars =
-    "abcdefghijklmnopqrstuvwxyz0123456789";
-
-  let code = "";
-
-  for(let i=0;i<7;i++){
-
-    code +=
-      chars[Math.floor(Math.random()*chars.length)];
+    toast(
+      "Penyimpanan browser tidak tersedia."
+    );
 
   }
 
-  return code;
+}
+
+
+/* TOAST */
+
+let toastTimer;
+
+function toast(message){
+
+  const el =
+    $("toast");
+
+  el.textContent =
+    message;
+
+  el.classList.add("show");
+
+  clearTimeout(
+    toastTimer
+  );
+
+  toastTimer =
+    setTimeout(
+      () => {
+        el.classList.remove("show");
+      },
+      2400
+    );
 
 }
 
-function generateUniqueCode(){
 
-  let code;
+/* URL */
 
-  do{
+function normalizeUrl(value){
 
-    code = randomCode();
+  value =
+    value.trim();
 
-  }while(
-    links.some(link => link.code === code)
-  );
+  if(
+    !/^https?:\/\//i.test(value)
+  ){
 
-  return code;
+    value =
+      "https://" + value;
+
+  }
+
+  return value;
 
 }
 
@@ -1838,7 +1629,8 @@ function validUrl(value){
 
   try{
 
-    const url = new URL(value);
+    const url =
+      new URL(value);
 
     return (
       url.protocol === "http:" ||
@@ -1853,228 +1645,88 @@ function validUrl(value){
 
 }
 
-function normalizeUrl(value){
 
-  value = value.trim();
+/* CODE */
 
-  if(!/^https?:\/\//i.test(value)){
+function randomCode(){
 
-    value = "https://" + value;
+  const chars =
+    "abcdefghijklmnopqrstuvwxyz0123456789";
+
+  let code = "";
+
+  for(
+    let i=0;
+    i<7;
+    i++
+  ){
+
+    code +=
+      chars[
+        Math.floor(
+          Math.random() *
+          chars.length
+        )
+      ];
 
   }
 
-  return value;
+  return code;
 
 }
 
-function formatNumber(value){
+function uniqueCode(){
 
-  return Number(value || 0).toLocaleString("id-ID");
+  let code;
 
-}
+  do{
 
-function formatDate(timestamp){
+    code =
+      randomCode();
 
-  return new Intl.DateTimeFormat(
-    "id-ID",
-    {
-      day:"2-digit",
-      month:"short",
-      year:"numeric"
-    }
-  ).format(new Date(timestamp));
-
-}
-
-function todayClicks(){
-
-  const today =
-    new Date().toISOString().slice(0,10);
-
-  return links.reduce(
-    (sum,link) => {
-
-      if(link.clickDates){
-
-        return sum +
-          (link.clickDates[today] || 0);
-
-      }
-
-      return sum;
-
-    },
-    0
+  }while(
+    links.some(
+      link =>
+        link.code === code
+    )
   );
 
-}
-
-function totalClicks(){
-
-  return links.reduce(
-    (sum,link) =>
-      sum + Number(link.clicks || 0),
-    0
-  );
+  return code;
 
 }
-
-function activeLinks(){
-
-  const now = Date.now();
-
-  return links.filter(link => {
-
-    return !link.expires ||
-      link.expires > now;
-
-  }).length;
-
-}
-
-
-/* TOAST */
-
-let toastTimer;
-
-function toast(message){
-
-  const el = $("toast");
-
-  el.textContent = message;
-
-  el.classList.add("show");
-
-  clearTimeout(toastTimer);
-
-  toastTimer = setTimeout(
-    () => el.classList.remove("show"),
-    2400
-  );
-
-}
-
-
-/* NAVIGATION */
-
-const viewTitles = {
-
-  dashboard:"Dashboard",
-  create:"Create short link",
-  links:"My links",
-  analytics:"Analytics"
-
-};
-
-function showView(name){
-
-  document
-    .querySelectorAll(".view")
-    .forEach(view => {
-
-      view.classList.toggle(
-        "active",
-        view.id === "view-" + name
-      );
-
-    });
-
-  document
-    .querySelectorAll(".nav button[data-view]")
-    .forEach(button => {
-
-      button.classList.toggle(
-        "active",
-        button.dataset.view === name
-      );
-
-    });
-
-  $("pageTitle").textContent =
-    viewTitles[name] || "Dashboard";
-
-  $("sidebar").classList.remove("open");
-
-  if(name === "dashboard"){
-    renderDashboard();
-  }
-
-  if(name === "links"){
-    renderAllLinks();
-  }
-
-  if(name === "analytics"){
-    renderAnalytics();
-  }
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-
-}
-
-
-/* NAV EVENTS */
-
-document
-  .querySelectorAll(".nav button[data-view]")
-  .forEach(button => {
-
-    button.addEventListener(
-      "click",
-      () => showView(button.dataset.view)
-    );
-
-  });
-
-document
-  .querySelectorAll("[data-view-action]")
-  .forEach(button => {
-
-    button.addEventListener(
-      "click",
-      () => showView(button.dataset.viewAction)
-    );
-
-  });
-
-$("mobileMenu").addEventListener(
-  "click",
-  () => $("sidebar").classList.toggle("open")
-);
-
-$("refreshBtn").addEventListener(
-  "click",
-  () => {
-
-    links = loadLinks();
-
-    renderDashboard();
-    renderAllLinks();
-    renderAnalytics();
-
-    toast("Data diperbarui");
-
-  }
-);
 
 
 /* CREATE */
 
-function createLink(url, alias, expiry){
+function createLink(){
 
-  url = normalizeUrl(url);
+  let url =
+    normalizeUrl(
+      $("destinationInput").value
+    );
 
-  if(!validUrl(url)){
+  let alias =
+    $("aliasInput").value.trim();
 
-    toast("URL tidak valid");
+  const expiry =
+    Number(
+      $("expirationInput").value
+    );
 
-    return false;
+
+  if(
+    !url ||
+    !validUrl(url)
+  ){
+
+    toast(
+      "Masukkan URL tujuan yang valid."
+    );
+
+    return;
 
   }
 
-  alias = alias.trim();
 
   if(alias){
 
@@ -2083,132 +1735,113 @@ function createLink(url, alias, expiry){
     ){
 
       toast(
-        "Alias hanya boleh huruf, angka, - dan _"
+        "Alias hanya boleh huruf, angka, - dan _."
       );
 
-      return false;
+      return;
 
     }
 
+
     if(
       links.some(
-        link => link.code.toLowerCase() ===
-                alias.toLowerCase()
+        link =>
+          link.code.toLowerCase() ===
+          alias.toLowerCase()
       )
     ){
 
-      toast("Alias sudah digunakan");
+      toast(
+        "Alias tersebut sudah digunakan."
+      );
 
-      return false;
+      return;
 
     }
 
   }else{
 
-    alias = generateUniqueCode();
+    alias =
+      uniqueCode();
 
   }
 
-  const expiryDays =
-    Number(expiry || 0);
 
-  const link = {
+  const item = {
 
     id:
       Date.now().toString(36) +
-      Math.random().toString(36).slice(2),
+      Math.random()
+        .toString(36)
+        .slice(2),
 
-    code:alias,
+    code:
+      alias,
 
-    url:url,
+    url:
+      url,
 
-    clicks:0,
-
-    created:Date.now(),
+    created:
+      Date.now(),
 
     expires:
-      expiryDays > 0
+      expiry > 0
         ? Date.now() +
-          expiryDays * 86400000
-        : 0,
-
-    clickDates:{}
+          expiry * 86400000
+        : 0
 
   };
 
-  links.unshift(link);
+
+  links.unshift(
+    item
+  );
 
   saveLinks();
 
-  toast("Shortlink berhasil dibuat");
 
-  return link;
+  $("destinationInput").value =
+    "";
+
+  $("aliasInput").value =
+    "";
+
+  $("expirationInput").value =
+    "0";
+
+
+  renderLinks();
+
+  toast(
+    "Shortlink berhasil dibuat."
+  );
+
+
+  setTimeout(
+    () => {
+
+      copyLink(
+        item
+      );
+
+    },
+    250
+  );
 
 }
 
 
-/* QUICK CREATE */
-
-$("quickCreate").addEventListener(
-  "click",
-  () => {
-
-    const link = createLink(
-      $("quickUrl").value,
-      $("quickAlias").value,
-      $("quickExpiry").value
-    );
-
-    if(!link) return;
-
-    $("quickUrl").value = "";
-    $("quickAlias").value = "";
-
-    renderDashboard();
-
-    copyShortLink(link);
-
-  }
-);
-
-
-/* FULL CREATE */
-
-$("fullCreate").addEventListener(
-  "click",
-  () => {
-
-    const link = createLink(
-      $("fullUrl").value,
-      $("fullAlias").value,
-      $("fullExpiry").value
-    );
-
-    if(!link) return;
-
-    $("fullUrl").value = "";
-    $("fullAlias").value = "";
-
-    showView("dashboard");
-
-    copyShortLink(link);
-
-  }
-);
-
-
 /* SHORT URL */
 
-function getShortUrl(link){
-
-  const base =
-    location.origin +
-    location.pathname;
+function shortUrl(link){
 
   return (
-    base +
+    location.origin +
+    location.pathname +
     "?s=" +
-    encodeURIComponent(link.code)
+    encodeURIComponent(
+      link.code
+    )
   );
 
 }
@@ -2216,154 +1849,58 @@ function getShortUrl(link){
 
 /* COPY */
 
-async function copyShortLink(link){
+async function copyLink(link){
 
-  const value = getShortUrl(link);
+  const value =
+    shortUrl(link);
 
   try{
 
-    await navigator.clipboard.writeText(value);
+    await navigator.clipboard.writeText(
+      value
+    );
 
-    toast("Shortlink disalin");
+    toast(
+      "Shortlink berhasil disalin."
+    );
 
   }catch{
 
-    toast(value);
-
-  }
-
-}
-
-
-/* OPEN */
-
-function openLink(link){
-
-  if(isExpired(link)){
-
-    toast("Link sudah expired");
-
-    return;
-
-  }
-
-  window.open(
-    link.url,
-    "_blank",
-    "noopener,noreferrer"
-  );
-
-}
-
-
-/* DELETE */
-
-function deleteLink(id){
-
-  const index =
-    links.findIndex(
-      link => link.id === id
+    toast(
+      value
     );
 
-  if(index < 0) return;
-
-  links.splice(index,1);
-
-  saveLinks();
-
-  renderDashboard();
-  renderAllLinks();
-  renderAnalytics();
-
-  toast("Shortlink dihapus");
+  }
 
 }
 
 
 /* EXPIRED */
 
-function isExpired(link){
+function expired(link){
 
   return (
-    link.expires &&
+    link.expires > 0 &&
     link.expires <= Date.now()
   );
 
 }
 
 
-/* LINK ROW */
+/* DATE */
 
-function linkHTML(link){
+function dateText(timestamp){
 
-  const expired = isExpired(link);
-
-  return `
-    <div class="link-row">
-
-      <div class="link-main">
-
-        <div class="short">
-          ${escapeHTML(
-            location.host +
-            location.pathname +
-            "?s=" +
-            link.code
-          )}
-        </div>
-
-        <div class="original">
-          ${escapeHTML(link.url)}
-        </div>
-
-      </div>
-
-      <div class="clicks">
-        ${formatNumber(link.clicks)}
-      </div>
-
-      <div class="created">
-        ${expired ? "Expired" : formatDate(link.created)}
-      </div>
-
-      <div class="row-actions">
-
-        <button
-          class="mini-btn"
-          title="Copy"
-          data-copy="${link.id}"
-        >
-          ⧉
-        </button>
-
-        <button
-          class="mini-btn"
-          title="Open"
-          data-open="${link.id}"
-        >
-          ↗
-        </button>
-
-        <button
-          class="mini-btn"
-          title="QR"
-          data-qr="${link.id}"
-        >
-          ▦
-        </button>
-
-        <button
-          class="mini-btn"
-          title="Delete"
-          data-delete="${link.id}"
-        >
-          ×
-        </button>
-
-      </div>
-
-    </div>
-  `;
+  return new Intl.DateTimeFormat(
+    "id-ID",
+    {
+      day:"2-digit",
+      month:"short",
+      year:"numeric"
+    }
+  ).format(
+    new Date(timestamp)
+  );
 
 }
 
@@ -2373,382 +1910,421 @@ function linkHTML(link){
 function escapeHTML(value){
 
   return String(value)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
+    .replaceAll(
+      "&",
+      "&amp;"
+    )
+    .replaceAll(
+      "<",
+      "&lt;"
+    )
+    .replaceAll(
+      ">",
+      "&gt;"
+    )
+    .replaceAll(
+      '"',
+      "&quot;"
+    )
+    .replaceAll(
+      "'",
+      "&#039;"
+    );
 
 }
 
 
-/* RECENT */
+/* RENDER LINKS */
 
-function renderRecent(){
+function renderLinks(){
 
-  const box = $("recentLinks");
-
-  if(!links.length){
-
-    box.innerHTML = `
-      <div class="empty">
-        Belum ada shortlink.
-        <br>
-        Buat shortlink pertama kamu di atas.
-      </div>
-    `;
-
-    return;
-
-  }
-
-  box.innerHTML =
-    `<div class="table-head">
-      <span>Short link</span>
-      <span>Clicks</span>
-      <span>Created</span>
-      <span></span>
-    </div>` +
-    links
-      .slice(0,6)
-      .map(linkHTML)
-      .join("");
-
-  bindLinkActions(box);
-
-}
-
-
-/* ALL LINKS */
-
-function renderAllLinks(){
-
-  const box = $("allLinks");
+  const list =
+    $("linksList");
 
   const query =
-    $("searchLinks").value
+    $("searchInput")
+      .value
       .trim()
       .toLowerCase();
 
+
   const filtered =
-    links.filter(link => {
+    links.filter(
+      link => {
 
-      return (
-        link.code.toLowerCase().includes(query) ||
-        link.url.toLowerCase().includes(query)
-      );
+        return (
+          link.code
+            .toLowerCase()
+            .includes(query) ||
 
-    });
+          link.url
+            .toLowerCase()
+            .includes(query)
+        );
+
+      }
+    );
+
+
+  $("linkCount").textContent =
+    filtered.length +
+    (
+      filtered.length === 1
+        ? " link"
+        : " links"
+    );
+
 
   if(!filtered.length){
 
-    box.innerHTML = `
+    list.innerHTML = `
+
       <div class="empty">
-        Tidak ada shortlink yang ditemukan.
+
+        <div class="empty-icon">
+          ↗
+        </div>
+
+        ${
+          links.length
+            ? "Shortlink tidak ditemukan."
+            : "Belum ada shortlink."
+        }
+
       </div>
+
     `;
 
     return;
 
   }
 
-  box.innerHTML =
-    `<div class="table-head">
-      <span>Short link</span>
-      <span>Clicks</span>
-      <span>Created</span>
-      <span></span>
-    </div>` +
-    filtered.map(linkHTML).join("");
 
-  bindLinkActions(box);
+  list.innerHTML =
+    filtered
+      .map(
+        link => {
+
+          const isExpired =
+            expired(link);
+
+          const status =
+            isExpired
+              ? "Expired"
+              : "Active";
+
+
+          const expiryText =
+            link.expires
+              ? (
+                isExpired
+                  ? "Expired " +
+                    dateText(
+                      link.expires
+                    )
+                  : "Expires " +
+                    dateText(
+                      link.expires
+                    )
+              )
+              : "Never expires";
+
+
+          return `
+
+            <div class="link-item">
+
+              <div class="link-info">
+
+                <div class="link-url">
+                  ${escapeHTML(
+                    shortUrl(link)
+                  )}
+                </div>
+
+                <div class="original-url">
+                  ${escapeHTML(
+                    link.url
+                  )}
+                </div>
+
+                <div class="link-meta">
+
+                  <span
+                    class="status ${
+                      isExpired
+                        ? "expired"
+                        : "active"
+                    }"
+                  >
+                    ${status}
+                  </span>
+
+                  <span class="expiry">
+                    ${expiryText}
+                  </span>
+
+                  <span class="expiry">
+                    Created ${dateText(
+                      link.created
+                    )}
+                  </span>
+
+                </div>
+
+              </div>
+
+
+              <div class="link-actions">
+
+                <button
+                  class="action"
+                  title="Copy"
+                  data-copy="${link.id}"
+                >
+                  ⧉
+                </button>
+
+                <button
+                  class="action"
+                  title="Open"
+                  data-open="${link.id}"
+                >
+                  ↗
+                </button>
+
+                <button
+                  class="action"
+                  title="Share"
+                  data-share="${link.id}"
+                >
+                  ⤴
+                </button>
+
+                <button
+                  class="action"
+                  title="QR"
+                  data-qr="${link.id}"
+                >
+                  ▦
+                </button>
+
+                <button
+                  class="action"
+                  title="Delete"
+                  data-delete="${link.id}"
+                >
+                  ×
+                </button>
+
+              </div>
+
+            </div>
+
+          `;
+
+        }
+      )
+      .join("");
+
+
+  bindActions();
 
 }
-
-$("searchLinks").addEventListener(
-  "input",
-  renderAllLinks
-);
 
 
 /* ACTIONS */
 
-function bindLinkActions(container){
+function bindActions(){
 
-  container
-    .querySelectorAll("[data-copy]")
-    .forEach(button => {
+  document
+    .querySelectorAll(
+      "[data-copy]"
+    )
+    .forEach(
+      button => {
 
-      button.addEventListener(
-        "click",
-        () => {
+        button.onclick =
+          () => {
 
-          const link =
-            links.find(
-              item =>
-                item.id === button.dataset.copy
-            );
+            const link =
+              links.find(
+                item =>
+                  item.id ===
+                  button.dataset.copy
+              );
 
-          if(link) copyShortLink(link);
+            if(link)
+              copyLink(link);
 
-        }
-      );
+          };
 
-    });
-
-  container
-    .querySelectorAll("[data-open]")
-    .forEach(button => {
-
-      button.addEventListener(
-        "click",
-        () => {
-
-          const link =
-            links.find(
-              item =>
-                item.id === button.dataset.open
-            );
-
-          if(link) openLink(link);
-
-        }
-      );
-
-    });
-
-  container
-    .querySelectorAll("[data-delete]")
-    .forEach(button => {
-
-      button.addEventListener(
-        "click",
-        () => {
-
-          deleteLink(button.dataset.delete);
-
-        }
-      );
-
-    });
-
-  container
-    .querySelectorAll("[data-qr]")
-    .forEach(button => {
-
-      button.addEventListener(
-        "click",
-        () => {
-
-          const link =
-            links.find(
-              item =>
-                item.id === button.dataset.qr
-            );
-
-          if(link) showQR(link);
-
-        }
-      );
-
-    });
-
-}
-
-
-/* DASHBOARD */
-
-function renderDashboard(){
-
-  const total =
-    links.length;
-
-  const clicks =
-    totalClicks();
-
-  const today =
-    todayClicks();
-
-  const average =
-    total
-      ? Math.round(clicks / total)
-      : 0;
-
-  $("totalLinks").textContent =
-    formatNumber(total);
-
-  $("totalClicks").textContent =
-    formatNumber(clicks);
-
-  $("todayClicks").textContent =
-    formatNumber(today);
-
-  $("avgClicks").textContent =
-    formatNumber(average);
-
-  $("overviewLinks").textContent =
-    formatNumber(total);
-
-  $("overviewClicks").textContent =
-    formatNumber(clicks);
-
-  $("overviewActive").textContent =
-    formatNumber(activeLinks());
-
-  $("progressLinks").style.width =
-    Math.min(100,total * 10) + "%";
-
-  $("progressClicks").style.width =
-    clicks
-      ? Math.min(
-          100,
-          Math.max(8,Math.log10(clicks+1)*35)
-        ) + "%"
-      : "0%";
-
-  $("progressActive").style.width =
-    total
-      ? (activeLinks()/total*100) + "%"
-      : "0%";
-
-  renderRecent();
-
-}
-
-
-/* ANALYTICS */
-
-function renderAnalytics(){
-
-  const total =
-    totalClicks();
-
-  const today =
-    todayClicks();
-
-  const count =
-    links.length;
-
-  $("analyticsTotal").textContent =
-    formatNumber(total);
-
-  $("analyticsToday").textContent =
-    formatNumber(today);
-
-  $("analyticsLinks").textContent =
-    formatNumber(count);
-
-  $("analyticsAverage").textContent =
-    formatNumber(
-      count ? Math.round(total/count) : 0
+      }
     );
 
-  renderChart();
 
-}
+  document
+    .querySelectorAll(
+      "[data-open]"
+    )
+    .forEach(
+      button => {
 
+        button.onclick =
+          () => {
 
-/* CHART */
+            const link =
+              links.find(
+                item =>
+                  item.id ===
+                  button.dataset.open
+              );
 
-function renderChart(){
+            if(
+              link &&
+              !expired(link)
+            ){
 
-  const box =
-    $("analyticsChart");
+              window.open(
+                link.url,
+                "_blank",
+                "noopener,noreferrer"
+              );
 
-  const days = [];
+            }else{
 
-  for(let i=6;i>=0;i--){
+              toast(
+                "Link sudah expired."
+              );
 
-    const date =
-      new Date();
+            }
 
-    date.setDate(
-      date.getDate() - i
+          };
+
+      }
     );
 
-    const key =
-      date.toISOString().slice(0,10);
 
-    let clicks = 0;
+  document
+    .querySelectorAll(
+      "[data-share]"
+    )
+    .forEach(
+      button => {
 
-    links.forEach(link => {
+        button.onclick =
+          async () => {
 
-      clicks +=
-        Number(
-          link.clickDates?.[key] || 0
-        );
+            const link =
+              links.find(
+                item =>
+                  item.id ===
+                  button.dataset.share
+              );
 
-    });
+            if(!link)
+              return;
 
-    days.push({
-      key,
-      clicks,
-      label:
-        date.toLocaleDateString(
-          "id-ID",
-          {weekday:"short"}
-        ).slice(0,3)
-    });
 
-  }
+            const value =
+              shortUrl(link);
 
-  const max =
-    Math.max(
-      1,
-      ...days.map(item => item.clicks)
+
+            if(
+              navigator.share
+            ){
+
+              try{
+
+                await navigator.share({
+                  title:
+                    "DIMZLINK",
+                  text:
+                    "Check this link",
+                  url:
+                    value
+                });
+
+              }catch{}
+
+            }else{
+
+              copyLink(link);
+
+            }
+
+          };
+
+      }
     );
 
-  box.innerHTML =
-    days.map(item => {
 
-      const height =
-        Math.max(
-          5,
-          item.clicks/max*180
-        );
+  document
+    .querySelectorAll(
+      "[data-qr]"
+    )
+    .forEach(
+      button => {
 
-      return `
-        <div
-          style="
-          flex:1;
-          height:100%;
-          display:flex;
-          flex-direction:column;
-          justify-content:flex-end;
-          align-items:center;
-          gap:7px;
-          "
-        >
+        button.onclick =
+          () => {
 
-          <div
-            title="${item.clicks} clicks"
-            style="
-            width:100%;
-            max-width:45px;
-            height:${height}px;
-            border-radius:6px 6px 2px 2px;
-            background:linear-gradient(
-              180deg,
-              #9275ff,
-              #5746a8
+            const link =
+              links.find(
+                item =>
+                  item.id ===
+                  button.dataset.qr
+              );
+
+            if(link)
+              showQR(link);
+
+          };
+
+      }
+    );
+
+
+  document
+    .querySelectorAll(
+      "[data-delete]"
+    )
+    .forEach(
+      button => {
+
+        button.onclick =
+          () => {
+
+            const id =
+              button.dataset.delete;
+
+            const index =
+              links.findIndex(
+                item =>
+                  item.id === id
+              );
+
+            if(index === -1)
+              return;
+
+
+            links.splice(
+              index,
+              1
             );
-            opacity:.9;
-            "
-          ></div>
 
-          <span
-            style="
-            color:#5d6879;
-            font-size:8px;
-            "
-          >
-            ${item.label}
-          </span>
+            saveLinks();
 
-        </div>
-      `;
+            renderLinks();
 
-    }).join("");
+            toast(
+              "Shortlink dihapus."
+            );
+
+          };
+
+      }
+    );
 
 }
 
@@ -2757,84 +2333,186 @@ function renderChart(){
 
 function showQR(link){
 
-  const url =
-    getShortUrl(link);
-
-  const encoded =
-    encodeURIComponent(url);
-
-  const qr =
-    "https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=" +
-    encoded;
-
-  const win =
-    window.open(
-      "",
-      "_blank",
-      "width=420,height=560"
+  const value =
+    encodeURIComponent(
+      shortUrl(link)
     );
 
-  if(!win){
 
-    toast("Popup browser diblokir");
+  const qr =
+    "https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=" +
+    value;
 
-    return;
+
+  $("qrImage").src =
+    qr;
+
+  $("qrModal")
+    .classList.add("active");
+
+}
+
+
+$("closeQR").onclick =
+  () => {
+
+    $("qrModal")
+      .classList.remove(
+        "active"
+      );
+
+  };
+
+
+$("qrModal").onclick =
+  event => {
+
+    if(
+      event.target ===
+      $("qrModal")
+    ){
+
+      $("qrModal")
+        .classList.remove(
+          "active"
+        );
+
+    }
+
+  };
+
+
+/* PAGE NAVIGATION */
+
+function showPage(page){
+
+  document
+    .querySelectorAll(".page")
+    .forEach(
+      item => {
+
+        item.classList.toggle(
+          "active",
+          item.id ===
+          page + "Page"
+        );
+
+      }
+    );
+
+
+  document
+    .querySelectorAll(
+      ".nav-btn"
+    )
+    .forEach(
+      button => {
+
+        button.classList.toggle(
+          "active",
+          button.dataset.page ===
+          page
+        );
+
+      }
+    );
+
+
+  if(
+    page === "links"
+  ){
+
+    renderLinks();
 
   }
 
-  win.document.write(`
-    <!DOCTYPE html>
-    <html>
-    <head>
-      <meta charset="UTF-8">
-      <title>QR — ${escapeHTML(link.code)}</title>
-      <style>
-        body{
-          margin:0;
-          min-height:100vh;
-          display:grid;
-          place-items:center;
-          background:#080a0f;
-          color:#fff;
-          font-family:system-ui,sans-serif;
-        }
-        main{
-          width:min(360px,calc(100% - 30px));
-          text-align:center;
-          padding:25px;
-          background:#11151e;
-          border:1px solid #242b38;
-          border-radius:17px;
-        }
-        img{
-          width:240px;
-          height:240px;
-          background:#fff;
-          padding:8px;
-          border-radius:10px;
-          max-width:100%;
-        }
-        h2{font-size:18px}
-        p{
-          color:#7e899b;
-          font-size:10px;
-          word-break:break-all;
-        }
-      </style>
-    </head>
-    <body>
-      <main>
-        <h2>DIMZLINK</h2>
-        <img src="${qr}" alt="QR Code">
-        <p>${escapeHTML(url)}</p>
-      </main>
-    </body>
-    </html>
-  `);
 
-  win.document.close();
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
 
 }
+
+
+/* NAV */
+
+document
+  .querySelectorAll(
+    ".nav-btn"
+  )
+  .forEach(
+    button => {
+
+      button.onclick =
+        () => {
+
+          showPage(
+            button.dataset.page
+          );
+
+        };
+
+    }
+  );
+
+
+$("newLinkButton").onclick =
+  () => {
+
+    showPage(
+      "create"
+    );
+
+  };
+
+
+$("homeBrand").onclick =
+  event => {
+
+    event.preventDefault();
+
+    history.replaceState(
+      null,
+      "",
+      location.pathname
+    );
+
+    showPage(
+      "create"
+    );
+
+  };
+
+
+$("searchInput").oninput =
+  renderLinks;
+
+
+/* CREATE BUTTON */
+
+$("createButton").onclick =
+  createLink;
+
+
+/* ENTER */
+
+$("destinationInput").addEventListener(
+  "keydown",
+  event => {
+
+    if(
+      event.key === "Enter"
+    ){
+
+      event.preventDefault();
+
+      createLink();
+
+    }
+
+  }
+);
 
 
 /* REDIRECT */
@@ -2849,140 +2527,181 @@ function checkRedirect(){
   const code =
     params.get("s");
 
-  if(!code) return false;
+
+  if(!code)
+    return false;
+
 
   const link =
     links.find(
-      item => item.code === code
+      item =>
+        item.code === code
     );
 
-  if(!link) return false;
 
-  if(isExpired(link)){
+  if(!link){
 
-    alert("Shortlink ini sudah expired.");
+    showPage(
+      "create"
+    );
 
-    return false;
+    toast(
+      "Shortlink tidak ditemukan."
+    );
+
+    return true;
 
   }
 
-  redirectTarget =
-    link.url;
 
-  $("app").style.display = "none";
+  if(expired(link)){
+
+    showPage(
+      "create"
+    );
+
+    toast(
+      "Shortlink ini sudah expired."
+    );
+
+    return true;
+
+  }
+
+
+  redirectLink =
+    link;
+
+
+  document
+    .querySelector(".header")
+    .style.display =
+    "none";
+
+  document
+    .querySelector("main")
+    .style.display =
+    "none";
+
 
   $("redirectPage")
-    .classList.add("active");
+    .classList.add(
+      "active"
+    );
 
-  $("redirectTarget").textContent =
+
+  $("redirectTarget")
+    .textContent =
     link.url;
 
-  let count = 5;
 
-  $("countdown").textContent =
-    count;
+  startCountdown();
 
-  $("continueRedirect").textContent =
-    "Continue in " + count + "s";
-
-  $("continueRedirect").disabled =
-    true;
-
-  clearInterval(redirectTimer);
-
-  redirectTimer =
-    setInterval(() => {
-
-      count--;
-
-      $("countdown").textContent =
-        count;
-
-      if(count <= 0){
-
-        clearInterval(redirectTimer);
-
-        $("continueRedirect").disabled =
-          false;
-
-        $("continueRedirect").textContent =
-          "Continue to destination ↗";
-
-      }else{
-
-        $("continueRedirect").textContent =
-          "Continue in " + count + "s";
-
-      }
-
-    },1000);
-
-  $("continueRedirect").onclick =
-    () => {
-
-      const today =
-        new Date()
-          .toISOString()
-          .slice(0,10);
-
-      link.clicks =
-        Number(link.clicks || 0) + 1;
-
-      if(!link.clickDates)
-        link.clickDates = {};
-
-      link.clickDates[today] =
-        Number(
-          link.clickDates[today] || 0
-        ) + 1;
-
-      saveLinks();
-
-      location.href =
-        redirectTarget;
-
-    };
 
   return true;
 
 }
 
 
-/* SETTINGS */
+/* COUNTDOWN */
 
-$("settingsBtn").addEventListener(
-  "click",
-  () => {
+function startCountdown(){
 
-    toast(
-      "Settings tersedia pada versi backend."
+  let count = 5;
+
+
+  $("countNumber")
+    .textContent =
+    count;
+
+
+  $("continueButton")
+    .disabled =
+    true;
+
+
+  $("continueButton")
+    .textContent =
+    "Continue in " +
+    count +
+    "s";
+
+
+  clearInterval(
+    redirectTimer
+  );
+
+
+  redirectTimer =
+    setInterval(
+      () => {
+
+        count--;
+
+
+        $("countNumber")
+          .textContent =
+          count;
+
+
+        if(count <= 0){
+
+          clearInterval(
+            redirectTimer
+          );
+
+
+          $("continueButton")
+            .disabled =
+            false;
+
+
+          $("continueButton")
+            .textContent =
+            "Continue to destination ↗";
+
+
+        }else{
+
+          $("continueButton")
+            .textContent =
+            "Continue in " +
+            count +
+            "s";
+
+        }
+
+      },
+      1000
     );
 
-  }
-);
+}
 
 
-/* THEME */
+/* CONTINUE */
 
-$("themeBtn").addEventListener(
-  "click",
+$("continueButton").onclick =
   () => {
 
-    toast("Dark theme aktif");
+    if(
+      !redirectLink
+    )
+      return;
 
-  }
-);
+
+    location.href =
+      redirectLink.url;
+
+  };
 
 
-/* INITIALIZE */
+/* INITIAL */
 
-if(!checkRedirect()){
+if(
+  !checkRedirect()
+){
 
-  renderDashboard();
-
-  renderAllLinks();
-
-  renderAnalytics();
+  renderLinks();
 
 }
 
