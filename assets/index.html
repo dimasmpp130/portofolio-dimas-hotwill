@@ -16,10 +16,8 @@
   --text:#f4f6fa;
   --muted:#8e97a8;
   --accent:#8b5cf6;
-  --accent2:#6d4aff;
   --green:#22c55e;
   --red:#ef4444;
-  --shadow:0 20px 60px rgba(0,0,0,.35);
 }
 
 *{
@@ -64,7 +62,7 @@ a{
 .header{
   height:72px;
   border-bottom:1px solid rgba(255,255,255,.055);
-  background:rgba(8,10,15,.82);
+  background:rgba(8,10,15,.86);
   backdrop-filter:blur(14px);
   position:sticky;
   top:0;
@@ -188,10 +186,10 @@ main{
 }
 
 .card{
-  background:linear-gradient(180deg,rgba(18,22,32,.96),rgba(12,15,22,.96));
+  background:linear-gradient(180deg,rgba(18,22,32,.97),rgba(12,15,22,.97));
   border:1px solid var(--line);
   border-radius:18px;
-  box-shadow:var(--shadow);
+  box-shadow:0 20px 60px rgba(0,0,0,.35);
 }
 
 .create-card{
@@ -210,10 +208,6 @@ main{
   font-size:12px;
   font-weight:700;
   margin-bottom:8px;
-}
-
-.input-wrap{
-  position:relative;
 }
 
 input,
@@ -259,7 +253,7 @@ select:focus{
   border:0;
   box-shadow:none;
   background:transparent;
-  padding-left:5px;
+  padding-left:6px;
 }
 
 .row{
@@ -281,12 +275,17 @@ select:focus{
 }
 
 .create-btn:hover{
+  filter:brightness(1.07);
   transform:translateY(-1px);
-  filter:brightness(1.06);
 }
 
 .create-btn:active{
   transform:translateY(0);
+}
+
+.create-btn.loading{
+  opacity:.7;
+  pointer-events:none;
 }
 
 .features{
@@ -468,7 +467,7 @@ select:focus{
 .modal{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.72);
+  background:rgba(0,0,0,.74);
   backdrop-filter:blur(7px);
   display:none;
   align-items:center;
@@ -552,7 +551,7 @@ select:focus{
 
 .short-result{
   margin:18px 0;
-  padding:13px;
+  padding:14px;
   background:#090c12;
   border:1px solid #262c37;
   border-radius:10px;
@@ -570,6 +569,7 @@ select:focus{
   font-size:13px;
   font-weight:800;
   word-break:break-all;
+  line-height:1.5;
 }
 
 .modal-actions{
@@ -614,7 +614,7 @@ select:focus{
 }
 
 .redirect-page{
-  min-height:calc(100vh - 72px);
+  min-height:100vh;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -702,6 +702,23 @@ select:focus{
   font-size:10px;
 }
 
+.error-card{
+  text-align:center;
+}
+
+.error-icon{
+  width:54px;
+  height:54px;
+  display:grid;
+  place-items:center;
+  margin:0 auto 17px;
+  border-radius:50%;
+  color:#ff8888;
+  background:rgba(239,68,68,.08);
+  border:1px solid rgba(239,68,68,.16);
+  font-size:21px;
+}
+
 .toast{
   position:fixed;
   left:50%;
@@ -728,11 +745,8 @@ select:focus{
   transform:translate(-50%,0);
 }
 
-.hidden{
-  display:none!important;
-}
-
 @media(max-width:650px){
+
   .header{
     height:64px;
   }
@@ -798,71 +812,98 @@ select:focus{
 
 <header class="header" id="mainHeader">
   <div class="container header-inner">
-    <a href="#" class="brand" onclick="showPage('create');return false;">
+
+    <a href="#" class="brand" id="brandHome">
       <div class="brand-icon">D</div>
       <span>DIMZLINK</span>
     </a>
 
     <nav class="nav">
-      <button class="active" id="navCreate" onclick="showPage('create')">Create Link</button>
-      <button id="navLinks" onclick="showPage('links')">My Links</button>
+      <button class="active" id="navCreate">Create Link</button>
+      <button id="navLinks">My Links</button>
     </nav>
+
   </div>
 </header>
 
 <main id="mainApp">
 
   <section class="page active" id="createPage">
+
     <div class="container">
 
       <div class="hero">
+
         <div class="badge">
           <i></i>
           Premium URL Shortener
         </div>
 
-        <h1>Make your links <span>short & simple.</span></h1>
+        <h1>
+          Make your links
+          <span>short & simple.</span>
+        </h1>
 
         <p>
           Create clean, memorable shortlinks with custom aliases,
           expiration settings and a simple redirect experience.
         </p>
+
       </div>
 
       <div class="card create-card">
 
-        <form id="createForm">
+        <form id="createForm" novalidate>
 
           <div class="form-group">
-            <label class="label">Destination URL</label>
+
+            <label class="label" for="destination">
+              Destination URL
+            </label>
+
             <input
               type="url"
               id="destination"
               placeholder="https://example.com/your-long-url"
               autocomplete="off"
+              inputmode="url"
               required
             >
+
           </div>
 
           <div class="row">
 
             <div class="form-group">
-              <label class="label">Custom Alias</label>
+
+              <label class="label" for="alias">
+                Custom Alias
+              </label>
 
               <div class="alias-wrap">
-                <span class="alias-prefix" id="aliasPrefix">dimzlink.local/</span>
+
+                <span class="alias-prefix" id="aliasPrefix">
+                  dimzlink/
+                </span>
+
                 <input
                   type="text"
                   id="alias"
                   placeholder="my-link"
                   maxlength="40"
                   autocomplete="off"
+                  spellcheck="false"
                 >
+
               </div>
+
             </div>
 
             <div class="form-group">
-              <label class="label">Expiration</label>
+
+              <label class="label" for="expiration">
+                Expiration
+              </label>
 
               <select id="expiration">
                 <option value="never">Never</option>
@@ -871,17 +912,23 @@ select:focus{
                 <option value="30">30 Days</option>
                 <option value="90">90 Days</option>
               </select>
+
             </div>
 
           </div>
 
-          <button class="create-btn" type="submit">
+          <button
+            class="create-btn"
+            id="createBtn"
+            type="submit"
+          >
             Create Short Link
           </button>
 
         </form>
 
         <div class="features">
+
           <div class="feature">
             <strong>Clean URLs</strong>
             <span>Short and easy to remember</span>
@@ -896,6 +943,7 @@ select:focus{
             <strong>QR Ready</strong>
             <span>Generate QR instantly</span>
           </div>
+
         </div>
 
       </div>
@@ -905,17 +953,22 @@ select:focus{
       </div>
 
     </div>
+
   </section>
 
   <section class="page" id="linksPage">
+
     <div class="container">
 
       <div class="section-title">
         <h2>My Links</h2>
-        <p>Manage your created shortlinks from this device.</p>
+        <p>
+          Manage your created shortlinks from this device.
+        </p>
       </div>
 
       <div class="links-tools">
+
         <input
           type="search"
           id="searchLinks"
@@ -923,68 +976,35 @@ select:focus{
           autocomplete="off"
         >
 
-        <div class="count" id="linkCount">0 Links</div>
+        <div class="count" id="linkCount">
+          0 Links
+        </div>
+
       </div>
 
       <div class="links-list" id="linksList"></div>
 
     </div>
+
   </section>
 
 </main>
 
-<section class="page" id="redirectPage">
-
-  <div class="redirect-page">
-
-    <div class="card redirect-card">
-
-      <div class="redirect-logo">D</div>
-
-      <h1>Your destination is ready</h1>
-
-      <p>
-        Please wait a moment while we prepare your destination.
-      </p>
-
-      <div class="ad-box redirect-ad">
-        ADVERTISEMENT
-      </div>
-
-      <div class="progress">
-        <div class="progress-bar" id="progressBar"></div>
-      </div>
-
-      <div class="countdown" id="countdownText">
-        Preparing your link...
-      </div>
-
-      <button
-        class="continue-btn"
-        id="continueBtn"
-        disabled
-      >
-        Continue to destination
-      </button>
-
-      <div class="redirect-note">
-        You will continue automatically when the timer finishes.
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
+<section class="page" id="redirectPage"></section>
 
 <div class="modal" id="successModal">
+
   <div class="modal-box">
 
     <div class="success-content">
 
-      <div class="success-icon">✓</div>
+      <div class="success-icon">
+        ✓
+      </div>
 
-      <h3>Shortlink created</h3>
+      <h3>
+        Shortlink created
+      </h3>
 
       <p>
         Your shortlink has been created successfully.
@@ -992,79 +1012,178 @@ select:focus{
       </p>
 
       <div class="short-result">
-        <div class="short-result-label">YOUR SHORTLINK</div>
-        <div class="short-result-url" id="createdShortUrl"></div>
+
+        <div class="short-result-label">
+          YOUR SHORTLINK
+        </div>
+
+        <div
+          class="short-result-url"
+          id="createdShortUrl"
+        ></div>
+
       </div>
 
       <div class="modal-actions">
-        <button class="primary" id="copyCreatedBtn">
+
+        <button
+          class="primary"
+          id="copyCreatedBtn"
+          type="button"
+        >
           Copy Shortlink
         </button>
 
-        <button id="openCreatedBtn">
+        <button
+          id="openCreatedBtn"
+          type="button"
+        >
           Open Link
         </button>
 
-        <button class="full" id="qrCreatedBtn">
+        <button
+          class="full"
+          id="qrCreatedBtn"
+          type="button"
+        >
           Generate QR Code
         </button>
+
       </div>
 
     </div>
 
   </div>
+
 </div>
 
 <div class="modal" id="qrModal">
+
   <div class="modal-box">
 
     <div class="modal-head">
-      <h3>QR Code</h3>
-      <button class="close" onclick="closeModal('qrModal')">×</button>
+
+      <h3>
+        QR Code
+      </h3>
+
+      <button
+        class="close"
+        id="closeQrBtn"
+        type="button"
+      >
+        ×
+      </button>
+
     </div>
 
     <div class="qr-box">
-      <img id="qrImage" src="" alt="QR Code">
+
+      <img
+        id="qrImage"
+        src=""
+        alt="QR Code"
+      >
 
       <button
         class="small-btn primary"
         style="width:100%;height:42px"
         id="downloadQrBtn"
+        type="button"
       >
         Download QR
       </button>
+
     </div>
 
   </div>
+
 </div>
 
-<div class="toast" id="toast"></div>
+<div
+  class="toast"
+  id="toast"
+  aria-live="polite"
+></div>
 
 <script>
-const STORAGE_KEY="dimzlink_links_v3";
+"use strict";
 
-let links=JSON.parse(localStorage.getItem(STORAGE_KEY)||"[]");
+const STORAGE_KEY="dimzlink_links_v4";
+
+let links=[];
 let currentCreatedUrl="";
 let currentQrUrl="";
+let toastTimer=null;
 
 const $=id=>document.getElementById(id);
 
-function getBaseUrl(){
-  return location.origin+location.pathname.replace(/\/[^\/]*$/,"/");
-}
+function loadLinks(){
 
-function getShortUrl(alias){
-  return getBaseUrl()+"?s="+encodeURIComponent(alias);
+  try{
+
+    const saved=localStorage.getItem(STORAGE_KEY);
+
+    if(!saved){
+      links=[];
+      return;
+    }
+
+    const parsed=JSON.parse(saved);
+
+    links=Array.isArray(parsed)?parsed:[];
+
+  }catch(error){
+
+    links=[];
+
+  }
 }
 
 function saveLinks(){
-  localStorage.setItem(STORAGE_KEY,JSON.stringify(links));
+
+  try{
+
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify(links)
+    );
+
+    return true;
+
+  }catch(error){
+
+    showToast(
+      "Penyimpanan browser tidak tersedia"
+    );
+
+    return false;
+  }
 }
 
-function normalizeUrl(url){
-  url=url.trim();
+function getBaseUrl(){
 
-  if(!/^https?:\/\//i.test(url)){
+  return window.location.href.split("?")[0].split("#")[0];
+
+}
+
+function getShortUrl(alias){
+
+  return getBaseUrl()+
+    "?s="+
+    encodeURIComponent(alias);
+
+}
+
+function normalizeUrl(value){
+
+  let url=String(value||"").trim();
+
+  if(!url){
+    return "";
+  }
+
+  if(!/^[a-z][a-z0-9+.-]*:\/\//i.test(url)){
     url="https://"+url;
   }
 
@@ -1072,331 +1191,81 @@ function normalizeUrl(url){
 }
 
 function validUrl(url){
+
   try{
-    const u=new URL(url);
-    return u.protocol==="http:"||u.protocol==="https:";
-  }catch{
+
+    const parsed=new URL(url);
+
+    return(
+      parsed.protocol==="http:"||
+      parsed.protocol==="https:"
+    );
+
+  }catch(error){
+
     return false;
+
   }
 }
 
 function cleanAlias(value){
-  return value
+
+  return String(value||"")
     .toLowerCase()
     .trim()
     .replace(/\s+/g,"-")
     .replace(/[^a-z0-9_-]/g,"")
     .slice(0,40);
+
 }
 
 function randomAlias(){
-  return Math.random().toString(36).slice(2,8);
+
+  return(
+    Math.random()
+      .toString(36)
+      .slice(2,8)+
+    Math.random()
+      .toString(36)
+      .slice(2,5)
+  );
+
 }
 
 function isExpired(link){
-  if(!link.expireAt) return false;
-  return Date.now()>link.expireAt;
+
+  if(!link.expireAt){
+    return false;
+  }
+
+  return Date.now()>Number(link.expireAt);
+
 }
 
 function formatDate(timestamp){
-  if(!timestamp) return "Never";
 
-  return new Date(timestamp).toLocaleDateString("id-ID",{
-    day:"2-digit",
-    month:"short",
-    year:"numeric"
-  });
-}
-
-function showToast(message){
-  const toast=$("toast");
-
-  toast.textContent=message;
-  toast.classList.add("show");
-
-  clearTimeout(window.toastTimer);
-
-  window.toastTimer=setTimeout(()=>{
-    toast.classList.remove("show");
-  },2200);
-}
-
-function showPage(page){
-
-  if(page==="redirect") return;
-
-  $("createPage").classList.toggle("active",page==="create");
-  $("linksPage").classList.toggle("active",page==="links");
-
-  $("navCreate").classList.toggle("active",page==="create");
-  $("navLinks").classList.toggle("active",page==="links");
-
-  $("mainHeader").style.display="block";
-  $("mainApp").style.display="block";
-  $("redirectPage").classList.remove("active");
-
-  if(page==="links"){
-    renderLinks();
+  if(!timestamp){
+    return "Never";
   }
-
-  window.scrollTo(0,0);
-}
-
-function openSuccessModal(shortUrl){
-
-  currentCreatedUrl=shortUrl;
-
-  $("createdShortUrl").textContent=shortUrl;
-  $("successModal").classList.add("show");
-}
-
-function closeModal(id){
-  $(id).classList.remove("show");
-}
-
-async function copyText(text){
-
-  try{
-    await navigator.clipboard.writeText(text);
-    showToast("Shortlink berhasil disalin");
-  }catch{
-
-    const temp=document.createElement("textarea");
-
-    temp.value=text;
-    document.body.appendChild(temp);
-    temp.select();
-
-    try{
-      document.execCommand("copy");
-      showToast("Shortlink berhasil disalin");
-    }catch{
-      showToast("Gagal menyalin link");
-    }
-
-    temp.remove();
-  }
-}
-
-$("createForm").addEventListener("submit",function(e){
-
-  e.preventDefault();
-
-  let destination=normalizeUrl($("destination").value);
-  let alias=cleanAlias($("alias").value);
-
-  if(!validUrl(destination)){
-    showToast("URL tujuan tidak valid");
-    return;
-  }
-
-  if(!alias){
-    alias=randomAlias();
-  }
-
-  if(links.some(x=>x.alias.toLowerCase()===alias.toLowerCase())){
-    showToast("Alias tersebut sudah digunakan");
-    return;
-  }
-
-  const expiration=$("expiration").value;
-
-  let expireAt=null;
-
-  if(expiration!=="never"){
-    expireAt=Date.now()+(
-      Number(expiration)*24*60*60*1000
-    );
-  }
-
-  const item={
-    id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),
-    alias,
-    destination,
-    createdAt:Date.now(),
-    expireAt
-  };
-
-  links.unshift(item);
-
-  saveLinks();
-
-  const shortUrl=getShortUrl(alias);
-
-  $("createForm").reset();
-
-  openSuccessModal(shortUrl);
-
-  renderLinks();
-});
-
-$("copyCreatedBtn").addEventListener("click",function(){
-  if(currentCreatedUrl){
-    copyText(currentCreatedUrl);
-  }
-});
-
-$("openCreatedBtn").addEventListener("click",function(){
-  if(currentCreatedUrl){
-    window.open(currentCreatedUrl,"_blank");
-  }
-});
-
-$("qrCreatedBtn").addEventListener("click",function(){
-
-  if(!currentCreatedUrl) return;
-
-  closeModal("successModal");
-  showQr(currentCreatedUrl);
-});
-
-function showQr(url){
-
-  currentQrUrl=url;
-
-  const qr=
-    "https://api.qrserver.com/v1/create-qr-code/?size=500x500&data="+
-    encodeURIComponent(url);
-
-  $("qrImage").src=qr;
-  $("qrModal").classList.add("show");
-}
-
-$("downloadQrBtn").addEventListener("click",async function(){
-
-  if(!currentQrUrl) return;
-
-  const qr=
-    "https://api.qrserver.com/v1/create-qr-code/?size=1000x1000&data="+
-    encodeURIComponent(currentQrUrl);
 
   try{
 
-    const response=await fetch(qr);
-    const blob=await response.blob();
-
-    const url=URL.createObjectURL(blob);
-
-    const a=document.createElement("a");
-
-    a.href=url;
-    a.download="dimzlink-qr.png";
-
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-
-    URL.revokeObjectURL(url);
-
-  }catch{
-    window.open(qr,"_blank");
-  }
-});
-
-function renderLinks(){
-
-  const query=$("searchLinks").value.toLowerCase().trim();
-
-  const filtered=links.filter(link=>{
-    return (
-      link.alias.toLowerCase().includes(query) ||
-      link.destination.toLowerCase().includes(query)
-    );
-  });
-
-  $("linkCount").textContent=filtered.length+" Links";
-
-  if(!filtered.length){
-
-    $("linksList").innerHTML=`
-      <div class="card empty">
-        ${
-          links.length
-          ?"No links found."
-          :"You haven't created any shortlinks yet."
+    return new Date(Number(timestamp))
+      .toLocaleDateString(
+        "id-ID",
+        {
+          day:"2-digit",
+          month:"short",
+          year:"numeric"
         }
-      </div>
-    `;
+      );
 
-    return;
+  }catch(error){
+
+    return "Unknown";
+
   }
 
-  $("linksList").innerHTML=filtered.map(link=>{
-
-    const expired=isExpired(link);
-    const shortUrl=getShortUrl(link.alias);
-
-    return `
-      <div class="card link-card">
-
-        <div class="link-top">
-
-          <div>
-            <div class="short-url">${escapeHtml(shortUrl)}</div>
-
-            <div class="original-url">
-              ${escapeHtml(link.destination)}
-            </div>
-          </div>
-
-          <div class="status ${expired?"expired":"active"}">
-            ${expired?"Expired":"Active"}
-          </div>
-
-        </div>
-
-        <div class="link-meta">
-          <span>Created ${formatDate(link.createdAt)}</span>
-          <span>
-            ${link.expireAt
-              ?"Expires "+formatDate(link.expireAt)
-              :"Never expires"}
-          </span>
-        </div>
-
-        <div class="link-actions">
-
-          <button
-            class="small-btn primary"
-            onclick="copyText('${escapeJs(shortUrl)}')"
-          >
-            Copy
-          </button>
-
-          <button
-            class="small-btn"
-            onclick="window.open('${escapeJs(shortUrl)}','_blank')"
-          >
-            Open
-          </button>
-
-          <button
-            class="small-btn"
-            onclick="shareLink('${escapeJs(shortUrl)}')"
-          >
-            Share
-          </button>
-
-          <button
-            class="small-btn"
-            onclick="showQr('${escapeJs(shortUrl)}')"
-          >
-            QR
-          </button>
-
-          <button
-            class="small-btn danger"
-            onclick="deleteLink('${escapeJs(link.id)}')"
-          >
-            Delete
-          </button>
-
-        </div>
-
-      </div>
-    `;
-
-  }).join("");
 }
 
 function escapeHtml(value){
@@ -1407,81 +1276,587 @@ function escapeHtml(value){
     .replace(/>/g,"&gt;")
     .replace(/"/g,"&quot;")
     .replace(/'/g,"&#039;");
+
 }
 
-function escapeJs(value){
+function escapeAttribute(value){
 
   return String(value)
-    .replace(/\\/g,"\\\\")
-    .replace(/'/g,"\\'")
-    .replace(/\n/g,"\\n")
-    .replace(/\r/g,"\\r");
+    .replace(/&/g,"&amp;")
+    .replace(/"/g,"&quot;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;");
+
 }
 
-async function shareLink(url){
+function showToast(message){
 
-  if(navigator.share){
+  const toast=$("toast");
 
-    try{
-      await navigator.share({
-        title:"DIMZLINK",
-        text:"Check this shortlink",
-        url
-      });
-
-      return;
-
-    }catch{}
+  if(!toast){
+    return;
   }
 
-  copyText(url);
+  toast.textContent=message;
+  toast.classList.add("show");
+
+  clearTimeout(toastTimer);
+
+  toastTimer=setTimeout(()=>{
+    toast.classList.remove("show");
+  },2400);
+
+}
+
+function showPage(page){
+
+  if(page!=="create" && page!=="links"){
+    return;
+  }
+
+  $("createPage").classList.toggle(
+    "active",
+    page==="create"
+  );
+
+  $("linksPage").classList.toggle(
+    "active",
+    page==="links"
+  );
+
+  $("navCreate").classList.toggle(
+    "active",
+    page==="create"
+  );
+
+  $("navLinks").classList.toggle(
+    "active",
+    page==="links"
+  );
+
+  $("mainHeader").style.display="block";
+  $("mainApp").style.display="block";
+  $("redirectPage").classList.remove("active");
+
+  if(page==="links"){
+    renderLinks();
+  }
+
+  window.scrollTo(0,0);
+
+}
+
+function openSuccessModal(shortUrl){
+
+  currentCreatedUrl=shortUrl;
+
+  $("createdShortUrl").textContent=shortUrl;
+
+  $("successModal").classList.add("show");
+
+}
+
+function closeModal(id){
+
+  const modal=$(id);
+
+  if(modal){
+    modal.classList.remove("show");
+  }
+
+}
+
+async function copyText(text){
+
+  if(!text){
+    return;
+  }
+
+  try{
+
+    if(
+      navigator.clipboard &&
+      window.isSecureContext
+    ){
+
+      await navigator.clipboard.writeText(text);
+
+      showToast("Shortlink berhasil disalin");
+
+      return;
+    }
+
+  }catch(error){}
+
+  try{
+
+    const textarea=document.createElement("textarea");
+
+    textarea.value=text;
+    textarea.setAttribute("readonly","");
+    textarea.style.position="fixed";
+    textarea.style.opacity="0";
+
+    document.body.appendChild(textarea);
+
+    textarea.select();
+    textarea.setSelectionRange(
+      0,
+      textarea.value.length
+    );
+
+    const success=document.execCommand("copy");
+
+    textarea.remove();
+
+    if(success){
+
+      showToast("Shortlink berhasil disalin");
+
+    }else{
+
+      showToast("Silakan salin link secara manual");
+
+    }
+
+  }catch(error){
+
+    showToast("Silakan salin link secara manual");
+
+  }
+
+}
+
+function renderLinks(){
+
+  const query=$("searchLinks").value
+    .toLowerCase()
+    .trim();
+
+  const filtered=links.filter(link=>{
+
+    return(
+      String(link.alias||"")
+        .toLowerCase()
+        .includes(query) ||
+
+      String(link.destination||"")
+        .toLowerCase()
+        .includes(query)
+    );
+
+  });
+
+  $("linkCount").textContent=
+    filtered.length+
+    (filtered.length===1?" Link":" Links");
+
+  if(!filtered.length){
+
+    $("linksList").innerHTML=`
+
+      <div class="card empty">
+
+        ${
+          links.length
+          ?"No links found."
+          :"You haven't created any shortlinks yet."
+        }
+
+      </div>
+
+    `;
+
+    return;
+  }
+
+  $("linksList").innerHTML="";
+
+  filtered.forEach(link=>{
+
+    const expired=isExpired(link);
+    const shortUrl=getShortUrl(link.alias);
+
+    const card=document.createElement("div");
+
+    card.className="card link-card";
+
+    card.innerHTML=`
+
+      <div class="link-top">
+
+        <div>
+
+          <div class="short-url">
+            ${escapeHtml(shortUrl)}
+          </div>
+
+          <div class="original-url">
+            ${escapeHtml(link.destination)}
+          </div>
+
+        </div>
+
+        <div class="status ${expired?"expired":"active"}">
+          ${expired?"Expired":"Active"}
+        </div>
+
+      </div>
+
+      <div class="link-meta">
+
+        <span>
+          Created ${formatDate(link.createdAt)}
+        </span>
+
+        <span>
+          ${
+            link.expireAt
+            ?"Expires "+formatDate(link.expireAt)
+            :"Never expires"
+          }
+        </span>
+
+      </div>
+
+      <div class="link-actions">
+
+        <button
+          class="small-btn primary copy-link"
+          type="button"
+        >
+          Copy
+        </button>
+
+        <button
+          class="small-btn open-link"
+          type="button"
+        >
+          Open
+        </button>
+
+        <button
+          class="small-btn share-link"
+          type="button"
+        >
+          Share
+        </button>
+
+        <button
+          class="small-btn qr-link"
+          type="button"
+        >
+          QR
+        </button>
+
+        <button
+          class="small-btn danger delete-link"
+          type="button"
+        >
+          Delete
+        </button>
+
+      </div>
+    `;
+
+    card.querySelector(".copy-link")
+      .addEventListener("click",()=>{
+        copyText(shortUrl);
+      });
+
+    card.querySelector(".open-link")
+      .addEventListener("click",()=>{
+        window.open(shortUrl,"_blank");
+      });
+
+    card.querySelector(".share-link")
+      .addEventListener("click",()=>{
+        shareLink(shortUrl);
+      });
+
+    card.querySelector(".qr-link")
+      .addEventListener("click",()=>{
+        showQr(shortUrl);
+      });
+
+    card.querySelector(".delete-link")
+      .addEventListener("click",()=>{
+
+        deleteLink(link.id);
+
+      });
+
+    $("linksList").appendChild(card);
+
+  });
+
 }
 
 function deleteLink(id){
 
-  const index=links.findIndex(x=>x.id===id);
+  const index=links.findIndex(
+    link=>String(link.id)===String(id)
+  );
 
-  if(index===-1) return;
+  if(index===-1){
+    return;
+  }
 
   links.splice(index,1);
 
-  saveLinks();
+  if(!saveLinks()){
+    return;
+  }
+
   renderLinks();
 
   showToast("Shortlink dihapus");
+
 }
 
-$("searchLinks").addEventListener("input",renderLinks);
+async function shareLink(url){
+
+  if(
+    navigator.share &&
+    typeof navigator.share==="function"
+  ){
+
+    try{
+
+      await navigator.share({
+        title:"DIMZLINK",
+        text:"Check this shortlink",
+        url:url
+      });
+
+      return;
+
+    }catch(error){
+
+      if(error &&
+         error.name==="AbortError"){
+        return;
+      }
+
+    }
+
+  }
+
+  copyText(url);
+
+}
+
+function showQr(url){
+
+  if(!url){
+    return;
+  }
+
+  currentQrUrl=url;
+
+  const qrUrl=
+    "https://api.qrserver.com/v1/create-qr-code/"+
+    "?size=500x500&data="+
+    encodeURIComponent(url);
+
+  $("qrImage").src=qrUrl;
+
+  $("qrModal").classList.add("show");
+
+}
+
+async function downloadQr(){
+
+  if(!currentQrUrl){
+    return;
+  }
+
+  const qrUrl=
+    "https://api.qrserver.com/v1/create-qr-code/"+
+    "?size=1000x1000&data="+
+    encodeURIComponent(currentQrUrl);
+
+  try{
+
+    const response=await fetch(qrUrl);
+
+    if(!response.ok){
+      throw new Error("QR request failed");
+    }
+
+    const blob=await response.blob();
+
+    const objectUrl=
+      URL.createObjectURL(blob);
+
+    const link=document.createElement("a");
+
+    link.href=objectUrl;
+    link.download="dimzlink-qr.png";
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    link.remove();
+
+    setTimeout(()=>{
+      URL.revokeObjectURL(objectUrl);
+    },1000);
+
+  }catch(error){
+
+    window.open(qrUrl,"_blank");
+
+  }
+
+}
+
+function showRedirectError(title,message){
+
+  $("mainHeader").style.display="none";
+  $("mainApp").style.display="none";
+
+  $("redirectPage").innerHTML=`
+
+    <div class="redirect-page">
+
+      <div class="card redirect-card error-card">
+
+        <div class="error-icon">
+          !
+        </div>
+
+        <h1>
+          ${escapeHtml(title)}
+        </h1>
+
+        <p>
+          ${escapeHtml(message)}
+        </p>
+
+      </div>
+
+    </div>
+
+  `;
+
+  $("redirectPage").classList.add("active");
+
+}
 
 function startRedirect(alias){
 
-  const link=links.find(
-    x=>x.alias.toLowerCase()===alias.toLowerCase()
-  );
+  const decodedAlias=String(alias||"").trim();
 
-  if(!link || isExpired(link)){
+  if(!decodedAlias){
 
-    $("mainHeader").style.display="none";
-    $("mainApp").style.display="none";
-    $("redirectPage").classList.add("active");
+    showRedirectError(
+      "Link unavailable",
+      "This shortlink is not available."
+    );
 
-    $("redirectPage").innerHTML=`
-      <div class="redirect-page">
-        <div class="card redirect-card">
-          <div class="redirect-logo">D</div>
-          <h1>Link unavailable</h1>
-          <p>
-            This shortlink does not exist or has expired.
-          </p>
-        </div>
-      </div>
-    `;
+    return;
+  }
+
+  const link=links.find(item=>{
+
+    return(
+      String(item.alias||"")
+        .toLowerCase()===decodedAlias.toLowerCase()
+    );
+
+  });
+
+  if(!link){
+
+    showRedirectError(
+      "Link unavailable",
+      "This shortlink does not exist."
+    );
+
+    return;
+  }
+
+  if(isExpired(link)){
+
+    showRedirectError(
+      "Link expired",
+      "This shortlink is no longer available."
+    );
+
+    return;
+  }
+
+  if(!validUrl(link.destination)){
+
+    showRedirectError(
+      "Invalid destination",
+      "The destination of this shortlink is not available."
+    );
 
     return;
   }
 
   $("mainHeader").style.display="none";
   $("mainApp").style.display="none";
+
+  $("redirectPage").innerHTML=`
+
+    <div class="redirect-page">
+
+      <div class="card redirect-card">
+
+        <div class="redirect-logo">
+          D
+        </div>
+
+        <h1>
+          Your destination is ready
+        </h1>
+
+        <p>
+          Please wait a moment while we prepare
+          your destination.
+        </p>
+
+        <div class="ad-box redirect-ad">
+          ADVERTISEMENT
+        </div>
+
+        <div class="progress">
+          <div
+            class="progress-bar"
+            id="progressBar"
+          ></div>
+        </div>
+
+        <div
+          class="countdown"
+          id="countdownText"
+        >
+          Preparing your link...
+        </div>
+
+        <button
+          class="continue-btn"
+          id="continueBtn"
+          disabled
+          type="button"
+        >
+          Continue to destination
+        </button>
+
+        <div class="redirect-note">
+          You will continue when the timer finishes.
+        </div>
+
+      </div>
+
+    </div>
+
+  `;
+
   $("redirectPage").classList.add("active");
 
   let seconds=5;
@@ -1490,21 +1865,24 @@ function startRedirect(alias){
   const progress=$("progressBar");
   const button=$("continueBtn");
 
+  progress.style.width="100%";
+
   countdown.textContent=
     "Advertisement · Continue in "+seconds+"s";
-
-  progress.style.width="100%";
 
   const timer=setInterval(()=>{
 
     seconds--;
 
-    progress.style.width=(seconds/5*100)+"%";
+    progress.style.width=
+      Math.max(0,seconds/5*100)+"%";
 
     if(seconds>0){
 
       countdown.textContent=
-        "Advertisement · Continue in "+seconds+"s";
+        "Advertisement · Continue in "+
+        seconds+
+        "s";
 
     }else{
 
@@ -1514,28 +1892,272 @@ function startRedirect(alias){
         "Your destination is ready";
 
       button.disabled=false;
+
       button.classList.add("ready");
 
-      button.textContent="Continue to destination";
+      button.textContent=
+        "Continue to destination";
 
     }
 
   },1000);
 
-  button.onclick=function(){
+  button.addEventListener("click",()=>{
 
-    if(button.disabled) return;
+    if(button.disabled){
+      return;
+    }
 
-    window.location.href=link.destination;
-  };
+    window.location.href=
+      link.destination;
+
+  });
+
 }
 
-function init(){
+function handleCreate(event){
+
+  event.preventDefault();
+
+  const button=$("createBtn");
+
+  if(button.classList.contains("loading")){
+    return;
+  }
+
+  button.classList.add("loading");
+  button.textContent="Creating...";
+
+  try{
+
+    let destination=
+      normalizeUrl($("destination").value);
+
+    let alias=
+      cleanAlias($("alias").value);
+
+    const expiration=
+      $("expiration").value;
+
+    if(!destination){
+
+      showToast("Masukkan URL tujuan");
+
+      return;
+    }
+
+    if(!validUrl(destination)){
+
+      showToast(
+        "URL tujuan tidak valid"
+      );
+
+      return;
+    }
+
+    if(!alias){
+      alias=randomAlias();
+    }
+
+    const aliasExists=links.some(link=>{
+
+      return(
+        String(link.alias||"")
+          .toLowerCase()===
+        alias.toLowerCase()
+      );
+
+    });
+
+    if(aliasExists){
+
+      showToast(
+        "Alias tersebut sudah digunakan"
+      );
+
+      return;
+    }
+
+    let expireAt=null;
+
+    if(expiration!=="never"){
+
+      expireAt=
+        Date.now()+
+        Number(expiration)*
+        24*
+        60*
+        60*
+        1000;
+
+    }
+
+    const newLink={
+
+      id:
+        Date.now().toString(36)+
+        Math.random()
+          .toString(36)
+          .slice(2,8),
+
+      alias:alias,
+
+      destination:destination,
+
+      createdAt:Date.now(),
+
+      expireAt:expireAt
+
+    };
+
+    links.unshift(newLink);
+
+    const saved=saveLinks();
+
+    if(!saved){
+
+      links.shift();
+
+      return;
+    }
+
+    const shortUrl=
+      getShortUrl(newLink.alias);
+
+    $("createForm").reset();
+
+    $("expiration").value="never";
+
+    renderLinks();
+
+    openSuccessModal(shortUrl);
+
+  }catch(error){
+
+    console.error(
+      "DIMZLINK create error:",
+      error
+    );
+
+    showToast(
+      "Gagal membuat shortlink. Coba lagi."
+    );
+
+  }finally{
+
+    button.classList.remove("loading");
+
+    button.textContent=
+      "Create Short Link";
+
+  }
+
+}
+
+function initialize(){
+
+  loadLinks();
 
   $("aliasPrefix").textContent=
-    location.host+"/";
+    window.location.host+
+    window.location.pathname;
 
-  const params=new URLSearchParams(location.search);
+  $("brandHome").addEventListener(
+    "click",
+    event=>{
+      event.preventDefault();
+      showPage("create");
+    }
+  );
+
+  $("navCreate").addEventListener(
+    "click",
+    ()=>{
+      showPage("create");
+    }
+  );
+
+  $("navLinks").addEventListener(
+    "click",
+    ()=>{
+      showPage("links");
+    }
+  );
+
+  $("createForm").addEventListener(
+    "submit",
+    handleCreate
+  );
+
+  $("searchLinks").addEventListener(
+    "input",
+    renderLinks
+  );
+
+  $("copyCreatedBtn").addEventListener(
+    "click",
+    ()=>{
+      copyText(currentCreatedUrl);
+    }
+  );
+
+  $("openCreatedBtn").addEventListener(
+    "click",
+    ()=>{
+      if(currentCreatedUrl){
+        window.open(
+          currentCreatedUrl,
+          "_blank"
+        );
+      }
+    }
+  );
+
+  $("qrCreatedBtn").addEventListener(
+    "click",
+    ()=>{
+      if(currentCreatedUrl){
+        closeModal("successModal");
+        showQr(currentCreatedUrl);
+      }
+    }
+  );
+
+  $("closeQrBtn").addEventListener(
+    "click",
+    ()=>{
+      closeModal("qrModal");
+    }
+  );
+
+  $("downloadQrBtn").addEventListener(
+    "click",
+    downloadQr
+  );
+
+  $("successModal").addEventListener(
+    "click",
+    event=>{
+      if(event.target===event.currentTarget){
+        closeModal("successModal");
+      }
+    }
+  );
+
+  $("qrModal").addEventListener(
+    "click",
+    event=>{
+      if(event.target===event.currentTarget){
+        closeModal("qrModal");
+      }
+    }
+  );
+
+  const params=
+    new URLSearchParams(
+      window.location.search
+    );
+
   const alias=params.get("s");
 
   if(alias){
@@ -1544,29 +2166,15 @@ function init(){
 
   }else{
 
-    renderLinks();
+    showPage("create");
 
   }
+
 }
 
-$("successModal").addEventListener("click",function(e){
-
-  if(e.target===this){
-    closeModal("successModal");
-  }
-
-});
-
-$("qrModal").addEventListener("click",function(e){
-
-  if(e.target===this){
-    closeModal("qrModal");
-  }
-
-});
-
-init();
+initialize();
 </script>
 
 </body>
 </html>
+
