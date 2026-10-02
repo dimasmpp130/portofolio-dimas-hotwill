@@ -309,7 +309,8 @@ body{
     </div>
 
     <div class="ad-slot">
-      ADVERTISEMENT — SLOT 1
+      <script async="async" data-cfasync="false" src="https://pl31582805.profitableratecpmnetwork.com/fed2058e1962999b60696b4485804a97/invoke.js"></script>
+<div id="container-fed2058e1962999b60696b4485804a97"></div>
     </div>
 
     <div class="icon">
@@ -344,7 +345,18 @@ body{
     </div>
 
     <div class="ad-slot">
-      ADVERTISEMENT — SLOT 2
+      <script>
+(function(rijscq){
+var d = document,
+    s = d.createElement('script'),
+    l = d.currentScript || d.scripts[d.scripts.length - 1];
+s.settings = rijscq || {};
+s.src = "\/\/peacefulbicycle.com\/b-X.VpsndaGBll0PY\/WGcG\/re\/ml9xuqZiUvlHk\/PzT\/ci0ROrDNAaziNZDME\/tzNUzcQa4\/M\/D_MV0nNVQV";
+s.async = true;
+s.referrerPolicy = 'no-referrer-when-downgrade';
+l.parentNode.insertBefore(s, l);
+})({})
+</script>
     </div>
 
   </div>
