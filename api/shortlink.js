@@ -195,18 +195,30 @@ body{
 }
 
 .ad-slot{
-  min-height:90px;
   width:100%;
-  border:1px dashed #cfd6e2;
-  background:#fafbfd;
-  border-radius:14px;
-  margin:18px 0;
+  max-width:728px;
+  margin:16px auto;
+  overflow:hidden;
+  display:block;
+}
+
+.ad-slot-inner{
+  width:100%;
+  min-height:90px;
   display:flex;
   align-items:center;
   justify-content:center;
-  color:#9aa2ae;
-  font-size:11px;
-  text-align:center;
+  overflow:hidden;
+}
+
+@media(max-width:600px){
+  .ad-slot{
+    max-width:100%;
+  }
+
+  .ad-slot-inner{
+    min-height:90px;
+  }
 }
 
 .icon{
@@ -286,10 +298,6 @@ body{
     padding:17px;
   }
 
-  .ad-slot{
-    min-height:80px;
-  }
-
 }
 </style>
 </head>
@@ -309,8 +317,10 @@ body{
     </div>
 
     <div class="ad-slot">
+      <div class="ad-slot-inner">
       <script async="async" data-cfasync="false" src="https://pl31582805.profitableratecpmnetwork.com/fed2058e1962999b60696b4485804a97/invoke.js"></script>
 <div id="container-fed2058e1962999b60696b4485804a97"></div>
+      </div>
     </div>
 
     <div class="icon">
@@ -345,7 +355,8 @@ body{
     </div>
 
     <div class="ad-slot">
-      <script>
+      <div class="ad-slot-inner">
+        <script>
 (function(rijscq){
 var d = document,
     s = d.createElement('script'),
@@ -358,6 +369,7 @@ l.parentNode.insertBefore(s, l);
 })({})
 </script>
     </div>
+  </div>
 
   </div>
 
