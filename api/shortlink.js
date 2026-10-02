@@ -367,17 +367,15 @@ l.parentNode.insertBefore(s, l);
     <div class="ad-slot">
       <div class="ad-slot-inner">
         <script>
-(function(rijscq){
-var d = document,
-    s = d.createElement('script'),
-    l = d.currentScript || d.scripts[d.scripts.length - 1];
-s.settings = rijscq || {};
-s.src = "\/\/peacefulbicycle.com\/b-X.VpsndaGBll0PY\/WGcG\/re\/ml9xuqZiUvlHk\/PzT\/ci0ROrDNAaziNZDME\/tzNUzcQa4\/M\/D_MV0nNVQV";
-s.async = true;
-s.referrerPolicy = 'no-referrer-when-downgrade';
-l.parentNode.insertBefore(s, l);
-})({})
+  atOptions = {
+    'key' : '9a03d8670e24875ed43378e89e1ae7ff',
+    'format' : 'iframe',
+    'height' : 250,
+    'width' : 300,
+    'params' : {}
+  };
 </script>
+<script src="https://www.highrevenueformat.com/9a03d8670e24875ed43378e89e1ae7ff/invoke.js"></script>
     </div>
   </div>
 
