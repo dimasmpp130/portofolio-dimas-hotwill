@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="theme-color" content="#f5f4f1">
+<meta name="description" content="DIMZLINK - Simple URL Shortener">
+<title>DIMZLINK — URL Shortener</title>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+:root{
+  --bg:#f1f0ed;
+  --card:#faf9f7;
+  --card2:#fff;
+  --text:#17181c;
+  --muted:#777a82;
+  --line:rgba(20,22,27,.095);
+  --violet:#7067ce;
+  --cyan:#238f86;
+  --green:#369464;
+  --red:#bd6060;
+  --shadow:0 14px 35px rgba(20,22,27,.07)
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+
+html{
+  width:100%;
+  overflow-x:hidden
+}
+
+body{
+  min-height:100vh;
+  background:var(--bg);
+  color:var(--text);
+  font:13px Arial,Helvetica,sans-serif;
+  -webkit-font-smoothing:antialiased
+}
+
+button,input,select{font:inherit}
+
+button,a{
+  -webkit-tap-highlight-color:transparent
+}
+
+button{cursor:pointer}
+
+.wrap{
+  width:min(760px,calc(100% - 28px));
+  margin:auto
+}
+
+.top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:18px 0
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  color:var(--text);
+  text-decoration:none
+}
+
+.logo{
+  width:38px;
+  height:38px;
+  display:grid;
+  place-items:center;
+  border:1px solid var(--line);
+  border-radius:11px;
+  background:var(--card2);
+  color:var(--violet)
+}
+
+.brand strong{
+  font-size:13px
+}
+
+.brand small{
+  display:block;
+  margin-top:3px;
+  color:var(--muted);
+  font-size:9px
+}
+
+.back{
+  width:36px;
+  height:36px;
+  display:grid;
+  place-items:center;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:var(--card2);
+  color:var(--muted);
+  text-decoration:none
+}
+
+.hero{
+  padding:42px 0 20px;
+  text-align:center
+}
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  margin-bottom:13px;
+  padding:6px 9px;
+  border:1px solid rgba(112,103,206,.15);
+  border-radius:20px;
+  background:rgba(112,103,206,.06);
+  color:var(--violet);
+  font-size:9px;
+  font-weight:700;
+  letter-spacing:.7px;
+  text-transform:uppercase
+}
+
+.hero h1{
+  font-size:clamp(30px,7vw,48px);
+  letter-spacing:-1.8px;
+  line-height:1.05
+}
+
+.hero h1 span{
+  color:var(--violet)
+}
+
+.hero p{
+  max-width:500px;
+  margin:12px auto 0;
+  color:var(--muted);
+  font-size:11px;
+  line-height:1.7
+}
+
+.card{
+  margin-top:22px;
+  padding:20px;
+  border:1px solid var(--line);
+  border-radius:17px;
+  background:var(--card);
+  box-shadow:var(--shadow)
+}
+
+.field{
+  margin-bottom:14px
+}
+
+.field label{
+  display:block;
+  margin-bottom:7px;
+  color:var(--text);
+  font-size:10px;
+  font-weight:700
+}
+
+.field label span{
+  color:var(--muted);
+  font-weight:400
+}
+
+.input-wrap{
+  position:relative
+}
+
+.input-wrap i{
+  position:absolute;
+  left:12px;
+  top:50%;
+  color:var(--muted);
+  transform:translateY(-50%)
+}
+
+input,select{
+  width:100%;
+  height:43px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  outline:0;
+  background:var(--card2);
+  color:var(--text);
+  padding:0 12px;
+  font-size:11px
+}
+
+.input-wrap input{
+  padding-left:36px
+}
+
+input:focus,select:focus{
+  border-color:var(--violet);
+  box-shadow:0 0 0 3px rgba(112,103,206,.07)
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px
+}
+
+.create{
+  width:100%;
+  height:45px;
+  margin-top:4px;
+  border:0;
+  border-radius:10px;
+  background:var(--violet);
+  color:#fff;
+  font-size:11px;
+  font-weight:700
+}
+
+.create:disabled{
+  opacity:.6;
+  cursor:wait
+}
+
+.status{
+  display:none;
+  margin-top:12px;
+  padding:11px;
+  border-radius:10px;
+  font-size:10px;
+  line-height:1.5
+}
+
+.status.show{
+  display:block
+}
+
+.status.error{
+  border:1px solid rgba(189,96,96,.18);
+  background:rgba(189,96,96,.06);
+  color:var(--red)
+}
+
+.status.success{
+  border:1px solid rgba(54,148,100,.18);
+  background:rgba(54,148,100,.06);
+  color:var(--green)
+}
+
+.result{
+  display:none;
+  margin-top:16px;
+  padding:16px;
+  border:1px solid var(--line);
+  border-radius:13px;
+  background:var(--card2)
+}
+
+.result.show{
+  display:block
+}
+
+.result-title{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  color:var(--green);
+  font-size:11px;
+  font-weight:700
+}
+
+.short-url{
+  margin-top:10px;
+  padding:11px;
+  border:1px solid var(--line);
+  border-radius:9px;
+  background:#f4f3f0;
+  color:var(--text);
+  font-size:11px;
+  word-break:break-all
+}
+
+.actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:9px
+}
+
+.action{
+  min-height:40px;
+  border:1px solid var(--line);
+  border-radius:9px;
+  background:var(--card2);
+  color:var(--text);
+  font-size:10px;
+  font-weight:700
+}
+
+.action.primary{
+  background:var(--violet);
+  border-color:var(--violet);
+  color:#fff
+}
+
+.close-full{
+  width:100%;
+  height:42px;
+  margin-top:8px;
+  border:1px solid var(--line);
+  border-radius:9px;
+  background:#f1f0ed;
+  color:var(--text);
+  font-size:10px;
+  font-weight:700
+}
+
+.info{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  margin-top:12px
+}
+
+.info-item{
+  padding:11px;
+  border:1px solid var(--line);
+  border-radius:11px;
+  background:var(--card)
+}
+
+.info-item i{
+  color:var(--violet);
+  font-size:12px
+}
+
+.info-item strong{
+  display:block;
+  margin-top:7px;
+  font-size:9px
+}
+
+.info-item span{
+  display:block;
+  margin-top:3px;
+  color:var(--muted);
+  font-size:8px;
+  line-height:1.4
+}
+
+footer{
+  padding:25px 0 30px;
+  text-align:center;
+  color:var(--muted);
+  font-size:9px
+}
+
+@media(max-width:520px){
+  .wrap{
+    width:calc(100% - 22px)
+  }
+
+  .hero{
+    padding-top:27px
+  }
+
+  .card{
+    padding:15px
+  }
+
+  .grid{
+    grid-template-columns:1fr
+  }
+
+  .info{
+    grid-template-columns:1fr
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+
+<header class="top">
+  <a class="brand" href="/">
+    <span class="logo">
+      <i class="fa-solid fa-link"></i>
+    </span>
+    <span>
+      <strong>DIMZLINK</strong>
+      <small>Simple URL Shortener</small>
+    </span>
+  </a>
+
+  <a class="back" href="/" aria-label="Kembali">
+    <i class="fa-solid fa-arrow-left"></i>
+  </a>
+</header>
+
+<main>
+
+<section class="hero">
+  <div class="badge">
+    <i class="fa-solid fa-bolt"></i>
+    Fast & Simple
+  </div>
+
+  <h1>DIMZ<span>LINK</span></h1>
+
+  <p>
+    Buat shortlink sederhana dengan alias sendiri atau biarkan
+    sistem membuatkannya secara otomatis.
+  </p>
+</section>
+
+<section class="card">
+
+  <form id="shortForm">
+
+    <div class="field">
+      <label>
+        Destination URL
+        <span>— wajib</span>
+      </label>
+
+      <div class="input-wrap">
+        <i class="fa-solid fa-globe"></i>
+        <input
+          id="destination"
+          type="url"
+          placeholder="https://example.com/..."
+          autocomplete="off"
+          required
+        >
+      </div>
+    </div>
+
+    <div class="grid">
+
+      <div class="field">
+        <label>
+          Custom Alias
+          <span>— opsional</span>
+        </label>
+
+        <div class="input-wrap">
+          <i class="fa-solid fa-hashtag"></i>
+          <input
+            id="alias"
+            type="text"
+            placeholder="contoh123"
+            minlength="4"
+            maxlength="32"
+            pattern="[A-Za-z0-9_-]+"
+            autocomplete="off"
+          >
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Expiration</label>
+
+        <select id="expiration">
+          <option value="never">Never</option>
+          <option value="1d">1 Hari</option>
+          <option value="7d">7 Hari</option>
+          <option value="30d">30 Hari</option>
+          <option value="custom">Tanggal Custom</option>
+        </select>
+      </div>
+
+    </div>
+
+    <div
+      class="field"
+      id="customDateWrap"
+      style="display:none"
+    >
+      <label>Tanggal Expired</label>
+
+      <input
+        id="customDate"
+        type="datetime-local"
+      >
+    </div>
+
+    <button class="create" id="createBtn" type="submit">
+      <i class="fa-solid fa-link"></i>
+      Create Shortlink
+    </button>
+
+  </form>
+
+  <div class="status" id="status"></div>
+
+  <div class="result" id="result">
+
+    <div class="result-title">
+      <i class="fa-solid fa-circle-check"></i>
+      Shortlink berhasil dibuat
+    </div>
+
+    <div class="short-url" id="shortUrl"></div>
+
+    <div class="actions">
+      <button class="action primary" id="copyBtn" type="button">
+        <i class="fa-solid fa-copy"></i>
+        Copy
+      </button>
+
+      <button class="action" id="openBtn" type="button">
+        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+        Open
+      </button>
+    </div>
+
+    <button class="close-full" id="closeResult" type="button">
+      Close
+    </button>
+
+  </div>
+
+</section>
+
+<section class="info">
+
+  <div class="info-item">
+    <i class="fa-solid fa-database"></i>
+    <strong>Redis</strong>
+    <span>Penyimpanan alias online.</span>
+  </div>
+
+  <div class="info-item">
+    <i class="fa-solid fa-link"></i>
+    <strong>/alias</strong>
+    <span>Tanpa ?s= pada URL.</span>
+  </div>
+
+  <div class="info-item">
+    <i class="fa-solid fa-clock"></i>
+    <strong>Expiry</strong>
+    <span>Bisa menentukan masa aktif.</span>
+  </div>
+
+</section>
+
+</main>
+
+<footer>
+  © <span id="year"></span> DIMMZZZSUM_ENAK · DIMZLINK
+</footer>
+
+</div>
+
+<script>
+const form = document.getElementById("shortForm");
+const destination = document.getElementById("destination");
+const alias = document.getElementById("alias");
+const expiration = document.getElementById("expiration");
+const customDateWrap = document.getElementById("customDateWrap");
+const customDate = document.getElementById("customDate");
+const createBtn = document.getElementById("createBtn");
+const statusBox = document.getElementById("status");
+const result = document.getElementById("result");
+const shortUrl = document.getElementById("shortUrl");
+const copyBtn = document.getElementById("copyBtn");
+const openBtn = document.getElementById("openBtn");
+const closeResult = document.getElementById("closeResult");
+
+document.getElementById("year").textContent = new Date().getFullYear();
+
+expiration.addEventListener("change", () => {
+  customDateWrap.style.display =
+    expiration.value === "custom" ? "block" : "none";
+});
+
+function showStatus(message, type) {
+  statusBox.textContent = message;
+  statusBox.className = "status show " + type;
+}
+
+function hideStatus() {
+  statusBox.className = "status";
+}
+
+function getExpiry() {
+  if (expiration.value === "never") return null;
+
+  if (expiration.value === "1d") {
+    return Date.now() + 86400000;
+  }
+
+  if (expiration.value === "7d") {
+    return Date.now() + 604800000;
+  }
+
+  if (expiration.value === "30d") {
+    return Date.now() + 2592000000;
+  }
+
+  if (expiration.value === "custom") {
+    if (!customDate.value) {
+      throw new Error("Silakan pilih tanggal expired.");
+    }
+
+    const timestamp = new Date(customDate.value).getTime();
+
+    if (!Number.isFinite(timestamp) || timestamp <= Date.now()) {
+      throw new Error("Tanggal expired harus berada di masa depan.");
+    }
+
+    return timestamp;
+  }
+
+  return null;
+}
+
+form.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  hideStatus();
+  result.classList.remove("show");
+
+  const url = destination.value.trim();
+  const customAlias = alias.value.trim();
+
+  if (!/^https?:\/\//i.test(url)) {
+    showStatus(
+      "URL harus diawali http:// atau https://.",
+      "error"
+    );
+    return;
+  }
+
+  if (customAlias && !/^[A-Za-z0-9_-]{4,32}$/.test(customAlias)) {
+    showStatus(
+      "Alias harus 4–32 karakter dan hanya boleh huruf, angka, _ atau -.",
+      "error"
+    );
+    return;
+  }
+
+  let expiresAt;
+
+  try {
+    expiresAt = getExpiry();
+  } catch (error) {
+    showStatus(error.message, "error");
+    return;
+  }
+
+  createBtn.disabled = true;
+  createBtn.innerHTML =
+    '<i class="fa-solid fa-spinner fa-spin"></i> Membuat...';
+
+  try {
+    const response = await fetch("/api/shortlink", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        url,
+        alias: customAlias || null,
+        expiresAt
+      })
+    });
+
+    const data = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+      throw new Error(
+        data.error || "Gagal membuat shortlink."
+      );
+    }
+
+    shortUrl.textContent = data.shortUrl;
+    openBtn.onclick = () => {
+      window.location.href = data.shortUrl;
+    };
+
+    result.classList.add("show");
+
+    showStatus(
+      "Shortlink berhasil disimpan ke Redis.",
+      "success"
+    );
+
+    form.reset();
+    customDateWrap.style.display = "none";
+
+  } catch (error) {
+    showStatus(
+      error.message || "Terjadi kesalahan.",
+      "error"
+    );
+  } finally {
+    createBtn.disabled = false;
+    createBtn.innerHTML =
+      '<i class="fa-solid fa-link"></i> Create Shortlink';
+  }
+});
+
+copyBtn.addEventListener("click", async () => {
+  const value = shortUrl.textContent.trim();
+
+  if (!value) return;
+
+  try {
+    await navigator.clipboard.writeText(value);
+
+    copyBtn.innerHTML =
+      '<i class="fa-solid fa-check"></i> Copied';
+
+    setTimeout(() => {
+      copyBtn.innerHTML =
+        '<i class="fa-solid fa-copy"></i> Copy';
+    }, 1500);
+
+  } catch {
+    const area = document.createElement("textarea");
+    area.value = value;
+    document.body.appendChild(area);
+    area.select();
+    document.execCommand("copy");
+    area.remove();
+
+    copyBtn.innerHTML =
+      '<i class="fa-solid fa-check"></i> Copied';
+
+    setTimeout(() => {
+      copyBtn.innerHTML =
+        '<i class="fa-solid fa-copy"></i> Copy';
+    }, 1500);
+  }
+});
+
+closeResult.addEventListener("click", () => {
+  result.classList.remove("show");
+  hideStatus();
+});
+</script>
+
+</body>
+</html>
