@@ -347,7 +347,7 @@ l.parentNode.insertBefore(s, l);
 
     <div class="timer">
       Tunggu
-      <strong id="count">5</strong>
+      <strong id="count">7</strong>
       detik
     </div>
 
@@ -357,7 +357,7 @@ l.parentNode.insertBefore(s, l);
       type="button"
       disabled
     >
-      🔒 Lanjutkan (5)
+      🪐 Tunggu sebentar yaa..
     </button>
 
     <div class="status" id="status">
@@ -401,7 +401,7 @@ l.parentNode.insertBefore(s, l);
     if(seconds>0){
 
       button.disabled=true;
-      button.textContent="🔒 Lanjutkan ("+seconds+")";
+      button.textContent="🪐 Tunggu sebentar yaa..";
 
       return;
     }
@@ -465,7 +465,7 @@ module.exports=async function handler(req,res){
     ){
 
       return json(res,500,{
-        error:"Redis belum dikonfigurasi di Vercel."
+        error:"Redis belum dikonfigurasi."
       });
 
     }
