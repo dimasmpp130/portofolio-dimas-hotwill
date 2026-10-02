@@ -1,468 +1,769 @@
 const { Redis } = require("@upstash/redis");
-
-const redisUrl =
-  process.env.DIMZLINK_KV_REST_API_URL ||
-  process.env.KV_REST_API_URL ||
-  process.env.UPSTASH_REDIS_REST_URL;
-
-const redisToken =
-  process.env.DIMZLINK_KV_REST_API_TOKEN ||
-  process.env.KV_REST_API_TOKEN ||
-  process.env.UPSTASH_REDIS_REST_TOKEN;
-
-if (!redisUrl || !redisToken) {
-  throw new Error("Redis environment variable belum tersedia.");
-}
+const crypto = require("crypto");
 
 const redis = new Redis({
-  url: redisUrl,
-  token: redisToken
+  url: process.env.DIMZLINK_KV_REST_API_URL,
+  token: process.env.DIMZLINK_KV_REST_API_TOKEN
 });
 
-const KEY_PREFIX = "dimzlink:";
-const ALIAS_PATTERN = /^[A-Za-z0-9_-]{4,32}$/;
+const ALIAS_REGEX=/^[A-Za-z0-9_-]{4,32}$/;
 
-function json(res, status, data) {
+const RESERVED=new Set([
+  "api",
+  "www",
+  "admin",
+  "login",
+  "logout",
+  "shortlink",
+  "favicon",
+  "robots",
+  "sitemap",
+  "media",
+  "static",
+  "assets"
+]);
+
+function json(res,status,data){
+
   res.status(status);
-  res.setHeader("Content-Type", "application/json; charset=utf-8");
-  res.end(JSON.stringify(data));
+
+  res.setHeader(
+    "Content-Type",
+    "application/json; charset=utf-8"
+  );
+
+  res.setHeader(
+    "Cache-Control",
+    "no-store, no-cache, must-revalidate"
+  );
+
+  return res.end(JSON.stringify(data));
 }
 
-function randomAlias(length = 7) {
-  const chars =
-    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+function getQuery(req,name){
 
-  let output = "";
+  const value=req.query?.[name];
 
-  for (let i = 0; i < length; i++) {
-    output += chars[Math.floor(Math.random() * chars.length)];
+  if(Array.isArray(value)){
+    return value[0];
   }
 
-  return output;
+  return value;
 }
 
-function getBaseUrl(req) {
-  const forwardedHost = req.headers["x-forwarded-host"];
-  const host =
-    forwardedHost ||
+function generateAlias(){
+
+  const chars=
+    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+  const bytes=crypto.randomBytes(7);
+
+  let result="";
+
+  for(let i=0;i<7;i++){
+
+    result+=chars[bytes[i]%chars.length];
+
+  }
+
+  return result;
+}
+
+function generateDeleteToken(){
+
+  return crypto.randomBytes(24).toString("hex");
+
+}
+
+function normalizeExpiry(value){
+
+  if(!value){
+    return null;
+  }
+
+  const date=new Date(value);
+
+  if(Number.isNaN(date.getTime())){
+    return null;
+  }
+
+  return date.getTime();
+
+}
+
+function getBaseUrl(req){
+
+  const proto=
+    req.headers["x-forwarded-proto"] ||
+    (process.env.VERCEL ? "https" : "http");
+
+  const host=
     req.headers.host ||
-    "";
+    process.env.VERCEL_URL;
 
-  const forwardedProto = req.headers["x-forwarded-proto"];
-  const protocol =
-    forwardedProto ||
-    (host.includes("localhost") ? "http" : "https");
+  return `${proto}://${host}`;
 
-  return `${protocol}://${host}`;
 }
 
-function redirectPage(destination) {
-  const safeDestination = JSON.stringify(destination)
-    .replace(/</g, "\\u003c")
-    .replace(/>/g, "\\u003e")
-    .replace(/&/g, "\\u0026");
+function htmlEscape(value){
+
+  return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+async function getLink(alias){
+
+  const key=`dimzlink:${alias}`;
+
+  const data=await redis.get(key);
+
+  if(!data){
+    return null;
+  }
+
+  if(typeof data==="string"){
+
+    try{
+      return JSON.parse(data);
+    }catch{
+      return null;
+    }
+
+  }
+
+  return data;
+
+}
+
+function redirectPage(alias){
+
+  const safeAlias=htmlEscape(alias);
 
   return `<!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-<meta name="theme-color" content="#f1f0ed">
-<title>DIMZLINK — Continue</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#f5f7fb">
+<meta name="robots" content="noindex,nofollow">
+<title>DIMZLINK — Please Wait</title>
 
 <style>
 *{
+  box-sizing:border-box;
   margin:0;
   padding:0;
-  box-sizing:border-box
-}
-
-html,body{
-  width:100%;
-  min-height:100%;
-  overflow:hidden
 }
 
 body{
   min-height:100vh;
+  background:#f5f7fb;
+  color:#18202b;
+  font-family:Arial,Helvetica,sans-serif;
+  display:flex;
+  justify-content:center;
+}
+
+.wrap{
+  width:min(470px,calc(100% - 28px));
+  padding:24px 0 35px;
+}
+
+.card{
+  background:#fff;
+  border:1px solid #e5e9f0;
+  border-radius:20px;
+  padding:22px;
+  box-shadow:0 15px 45px rgba(20,35,60,.08);
+}
+
+.brand{
+  text-align:center;
+  font-size:20px;
+  font-weight:800;
+}
+
+.brand-sub{
+  color:#737b87;
+  font-size:11px;
+  margin-top:3px;
+}
+
+.ad-slot{
+  min-height:90px;
+  width:100%;
+  border:1px dashed #cfd6e2;
+  background:#fafbfd;
+  border-radius:14px;
+  margin:18px 0;
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:16px;
-  background:#f1f0ed;
-  color:#17181c;
-  font:13px Arial,Helvetica,sans-serif
-}
-
-.box{
-  width:min(430px,100%);
-  padding:25px 20px;
-  border:1px solid rgba(20,22,27,.095);
-  border-radius:18px;
-  background:#faf9f7;
-  box-shadow:0 15px 40px rgba(20,22,27,.08);
-  text-align:center
+  color:#9aa2ae;
+  font-size:11px;
+  text-align:center;
 }
 
 .icon{
-  width:48px;
-  height:48px;
-  display:grid;
-  place-items:center;
-  margin:0 auto 15px;
-  border-radius:13px;
-  background:rgba(112,103,206,.08);
-  color:#7067ce;
-  font-size:18px
+  width:58px;
+  height:58px;
+  border-radius:18px;
+  background:#eff6ff;
+  color:#2563eb;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin:4px auto 14px;
+  font-size:25px;
 }
 
-h1{
-  font-size:20px;
-  letter-spacing:-.5px
-}
-
-p{
-  margin-top:8px;
-  color:#777a82;
-  font-size:11px;
-  line-height:1.6
-}
-
-.count{
-  margin-top:19px;
-  font-size:35px;
+.title{
+  text-align:center;
+  font-size:19px;
   font-weight:800;
-  color:#7067ce
 }
 
-.progress{
+.desc{
+  text-align:center;
+  color:#737b87;
+  font-size:12px;
+  margin-top:5px;
+}
+
+.timer{
+  text-align:center;
+  margin:18px 0 13px;
+  font-size:14px;
+  color:#64748b;
+}
+
+.timer strong{
+  color:#2563eb;
+  font-size:22px;
+}
+
+.continue{
   width:100%;
-  height:5px;
-  margin-top:13px;
-  overflow:hidden;
-  border-radius:20px;
-  background:#e5e3df
+  height:49px;
+  border:0;
+  border-radius:12px;
+  background:#2563eb;
+  color:#fff;
+  font-weight:750;
+  font-size:13px;
+  transition:opacity .15s,background .15s;
 }
 
-.bar{
-  width:0;
-  height:100%;
-  border-radius:20px;
-  background:#7067ce;
-  transition:width 1s linear
+.continue:disabled{
+  opacity:.45;
+  cursor:not-allowed;
+  background:#64748b;
 }
 
-.close{
-  width:100%;
-  height:43px;
-  margin-top:18px;
-  border:1px solid rgba(20,22,27,.095);
-  border-radius:10px;
-  background:#f1f0ed;
-  color:#17181c;
-  font-size:11px;
-  font-weight:700;
-  cursor:pointer
+.continue:not(:disabled):hover{
+  background:#1d4ed8;
 }
 
-.note{
-  margin-top:11px;
-  color:#999ca3;
-  font-size:9px
+.status{
+  text-align:center;
+  color:#737b87;
+  font-size:10px;
+  margin-top:9px;
+}
+
+@media(max-width:500px){
+
+  .wrap{
+    padding-top:15px;
+  }
+
+  .card{
+    padding:17px;
+  }
+
+  .ad-slot{
+    min-height:80px;
+  }
+
 }
 </style>
 </head>
 
 <body>
 
-<main class="box">
+<div class="wrap">
 
-  <div class="icon">
-    <span>↗</span>
+  <div class="card">
+
+    <div class="brand">
+      DIMZLINK
+    </div>
+
+    <div class="brand-sub">
+      Simple URL Shortener
+    </div>
+
+    <div class="ad-slot">
+      ADVERTISEMENT — SLOT 1
+    </div>
+
+    <div class="icon">
+      🔗
+    </div>
+
+    <div class="title">
+      Link sedang disiapkan
+    </div>
+
+    <div class="desc">
+      Tunggu sampai timer selesai untuk melanjutkan.
+    </div>
+
+    <div class="timer">
+      Tunggu
+      <strong id="count">5</strong>
+      detik
+    </div>
+
+    <button
+      id="continueBtn"
+      class="continue"
+      type="button"
+      disabled
+    >
+      🔒 Lanjutkan (5)
+    </button>
+
+    <div class="status" id="status">
+      Tombol akan aktif setelah timer selesai.
+    </div>
+
+    <div class="ad-slot">
+      ADVERTISEMENT — SLOT 2
+    </div>
+
   </div>
 
-  <h1>Link siap dilanjutkan</h1>
-
-  <p>
-    Tunggu sebentar, kamu akan diarahkan ke halaman tujuan.
-  </p>
-
-  <div class="count" id="count">5</div>
-
-  <div class="progress">
-    <div class="bar" id="bar"></div>
-  </div>
-
-  <button class="close" id="close">
-    Close
-  </button>
-
-  <div class="note">
-    DIMZLINK
-  </div>
-
-</main>
+</div>
 
 <script>
-const destination = ${safeDestination};
+(function(){
 
-let seconds = 5;
+  const alias=${JSON.stringify(alias)};
 
-const count = document.getElementById("count");
-const bar = document.getElementById("bar");
-const closeButton = document.getElementById("close");
+  const count=document.getElementById("count");
+  const button=document.getElementById("continueBtn");
+  const status=document.getElementById("status");
 
-let timer = setInterval(() => {
-  seconds--;
+  let seconds=5;
 
-  count.textContent = seconds;
-  bar.style.width = ((5 - seconds) / 5 * 100) + "%";
+  function update(){
 
-  if (seconds <= 0) {
-    clearInterval(timer);
-    window.location.replace(destination);
+    count.textContent=seconds;
+
+    if(seconds>0){
+
+      button.disabled=true;
+      button.textContent="🔒 Lanjutkan ("+seconds+")";
+
+      return;
+    }
+
+    button.disabled=false;
+    button.textContent="✓ Lanjutkan";
+
+    status.textContent="Link sudah siap. Silakan lanjutkan.";
+
   }
-}, 1000);
 
-closeButton.addEventListener("click", () => {
-  clearInterval(timer);
-  window.location.href = "/";
-});
+  update();
+
+  const timer=setInterval(()=>{
+
+    seconds--;
+
+    update();
+
+    if(seconds<=0){
+
+      clearInterval(timer);
+
+    }
+
+  },1000);
+
+  button.addEventListener("click",()=>{
+
+    if(button.disabled){
+      return;
+    }
+
+    button.disabled=true;
+    button.textContent="Membuka...";
+
+    window.location.href=
+      "/api/shortlink?alias="+
+      encodeURIComponent(alias)+
+      "&go=1";
+
+  });
+
+})();
 </script>
 
 </body>
 </html>`;
+
 }
 
-async function createShortlink(req, res) {
-  if (req.method !== "POST") {
-    return json(res, 405, {
-      error: "Method tidak diizinkan."
-    });
-  }
+module.exports=async function handler(req,res){
 
-  try {
-    const body =
-      typeof req.body === "string"
-        ? JSON.parse(req.body || "{}")
-        : req.body || {};
+  try{
 
-    const url = String(body.url || "").trim();
-    let alias = String(body.alias || "").trim();
-    const expiresAt =
-      body.expiresAt === null ||
-      body.expiresAt === undefined ||
-      body.expiresAt === ""
-        ? null
-        : Number(body.expiresAt);
+    if(
+      !process.env.DIMZLINK_KV_REST_API_URL ||
+      !process.env.DIMZLINK_KV_REST_API_TOKEN
+    ){
 
-    if (!url) {
-      return json(res, 400, {
-        error: "Destination URL wajib diisi."
+      return json(res,500,{
+        error:"Redis belum dikonfigurasi di Vercel."
       });
+
     }
 
-    let parsedUrl;
+    if(req.method==="POST"){
 
-    try {
-      parsedUrl = new URL(url);
-    } catch {
-      return json(res, 400, {
-        error: "Destination URL tidak valid."
-      });
-    }
+      let body=req.body;
 
-    if (!["http:", "https:"].includes(parsedUrl.protocol)) {
-      return json(res, 400, {
-        error: "URL hanya boleh menggunakan HTTP atau HTTPS."
-      });
-    }
+      if(typeof body==="string"){
 
-    if (alias) {
-      if (!ALIAS_PATTERN.test(alias)) {
-        return json(res, 400, {
-          error:
-            "Alias harus 4–32 karakter dan hanya boleh huruf, angka, _ atau -."
-        });
+        try{
+          body=JSON.parse(body);
+        }catch{
+          body={};
+        }
+
       }
-    } else {
-      let found = false;
 
-      for (let i = 0; i < 10; i++) {
-        const generated = randomAlias(7);
-        const exists = await redis.exists(
-          KEY_PREFIX + generated
+      body=body||{};
+
+      const url=String(body.url||"").trim();
+
+      let alias=String(body.alias||"").trim();
+
+      const expiresAt=normalizeExpiry(body.expiresAt);
+
+      if(!url){
+
+        return json(res,400,{
+          error:"URL tujuan wajib diisi."
+        });
+
+      }
+
+      if(url.length>2048){
+
+        return json(res,400,{
+          error:"URL terlalu panjang."
+        });
+
+      }
+
+      let parsedUrl;
+
+      try{
+        parsedUrl=new URL(url);
+      }catch{
+
+        return json(res,400,{
+          error:"URL tidak valid."
+        });
+
+      }
+
+      if(
+        parsedUrl.protocol!=="http:" &&
+        parsedUrl.protocol!=="https:"
+      ){
+
+        return json(res,400,{
+          error:"URL harus menggunakan HTTP atau HTTPS."
+        });
+
+      }
+
+      if(alias){
+
+        if(!ALIAS_REGEX.test(alias)){
+
+          return json(res,400,{
+            error:
+              "Alias harus 4-32 karakter dan hanya boleh menggunakan huruf, angka, _ atau -."
+          });
+
+        }
+
+        if(RESERVED.has(alias.toLowerCase())){
+
+          return json(res,400,{
+            error:"Alias tersebut tidak dapat digunakan."
+          });
+
+        }
+
+      }
+
+      if(expiresAt!==null){
+
+        if(expiresAt<=Date.now()){
+
+          return json(res,400,{
+            error:"Tanggal expiry harus berada di masa depan."
+          });
+
+        }
+
+      }
+
+      let finalAlias=alias;
+
+      const maxTry=8;
+
+      for(let attempt=0;attempt<maxTry;attempt++){
+
+        if(!finalAlias){
+          finalAlias=generateAlias();
+        }
+
+        const key=`dimzlink:${finalAlias}`;
+
+        const deleteToken=generateDeleteToken();
+
+        const record={
+          url,
+          alias:finalAlias,
+          createdAt:new Date().toISOString(),
+          expiresAt:expiresAt
+            ? new Date(expiresAt).toISOString()
+            : null,
+          deleteToken
+        };
+
+        const options={
+          nx:true
+        };
+
+        if(expiresAt!==null){
+
+          const ttl=Math.ceil(
+            (expiresAt-Date.now())/1000
+          );
+
+          if(ttl<1){
+
+            return json(res,400,{
+              error:"Expiry terlalu dekat."
+            });
+
+          }
+
+          options.ex=ttl;
+
+        }
+
+        const result=await redis.set(
+          key,
+          JSON.stringify(record),
+          options
         );
 
-        if (!exists) {
-          alias = generated;
-          found = true;
-          break;
+        if(result==="OK"){
+
+          const shortUrl=
+            `${getBaseUrl(req)}/${finalAlias}`;
+
+          return json(res,201,{
+            success:true,
+            alias:finalAlias,
+            shortUrl,
+            expiresAt:record.expiresAt,
+            deleteToken
+          });
+
         }
+
+        if(alias){
+
+          return json(res,409,{
+            error:"Alias sudah digunakan."
+          });
+
+        }
+
+        finalAlias="";
+
       }
 
-      if (!found) {
-        return json(res, 500, {
-          error: "Gagal membuat alias otomatis."
-        });
-      }
-    }
-
-    const key = KEY_PREFIX + alias;
-
-    const existing = await redis.get(key);
-
-    if (existing) {
-      return json(res, 409, {
-        error: "Alias tersebut sudah digunakan."
+      return json(res,500,{
+        error:"Gagal membuat alias. Silakan coba lagi."
       });
+
     }
 
-    let ttl = null;
+    if(req.method==="DELETE"){
 
-    if (expiresAt !== null) {
-      if (!Number.isFinite(expiresAt)) {
-        return json(res, 400, {
-          error: "Waktu expired tidak valid."
-        });
+      let body=req.body;
+
+      if(typeof body==="string"){
+
+        try{
+          body=JSON.parse(body);
+        }catch{
+          body={};
+        }
+
       }
 
-      ttl = Math.floor(
-        (expiresAt - Date.now()) / 1000
-      );
+      body=body||{};
 
-      if (ttl <= 0) {
-        return json(res, 400, {
-          error: "Tanggal expired harus berada di masa depan."
+      const alias=String(body.alias||"").trim();
+      const deleteToken=String(body.deleteToken||"").trim();
+
+      if(!ALIAS_REGEX.test(alias)){
+
+        return json(res,400,{
+          error:"Alias tidak valid."
         });
+
       }
-    }
 
-    const record = {
-      url: parsedUrl.toString(),
-      createdAt: Date.now(),
-      expiresAt:
-        expiresAt === null ? null : expiresAt
-    };
+      if(!deleteToken){
 
-    if (ttl !== null) {
-      await redis.set(key, record, {
-        ex: ttl
+        return json(res,401,{
+          error:"Delete token diperlukan."
+        });
+
+      }
+
+      const key=`dimzlink:${alias}`;
+
+      const data=await getLink(alias);
+
+      if(!data){
+
+        return json(res,404,{
+          error:"Shortlink tidak ditemukan."
+        });
+
+      }
+
+      if(data.deleteToken!==deleteToken){
+
+        return json(res,403,{
+          error:"Token tidak valid."
+        });
+
+      }
+
+      await redis.del(key);
+
+      return json(res,200,{
+        success:true
       });
-    } else {
-      await redis.set(key, record);
+
     }
 
-    const baseUrl = getBaseUrl(req);
+    if(req.method==="GET"){
 
-    return json(res, 201, {
-      success: true,
-      alias,
-      shortUrl: `${baseUrl}/${encodeURIComponent(alias)}`,
-      expiresAt:
-        expiresAt === null ? null : expiresAt
-    });
+      const alias=String(
+        getQuery(req,"alias")||""
+      ).trim();
 
-  } catch (error) {
-    console.error("CREATE SHORTLINK ERROR:", error);
+      if(!ALIAS_REGEX.test(alias)){
 
-    return json(res, 500, {
-      error: "Terjadi kesalahan pada server."
-    });
-  }
-}
+        return json(res,400,{
+          error:"Alias tidak valid."
+        });
 
-async function openShortlink(req, res, alias) {
-  try {
-    if (!alias || !ALIAS_PATTERN.test(alias)) {
-      return res.status(404).end("Shortlink tidak ditemukan.");
-    }
+      }
 
-    const key = KEY_PREFIX + alias;
-    const record = await redis.get(key);
+      const data=await getLink(alias);
 
-    if (!record) {
-      res.status(404);
-      res.setHeader(
-        "Content-Type",
-        "text/html; charset=utf-8"
-      );
+      if(!data){
 
-      return res.end(`<!DOCTYPE html>
+        res.status(404);
+        res.setHeader(
+          "Content-Type",
+          "text/html; charset=utf-8"
+        );
+
+        return res.end(`
+<!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>DIMZLINK — 404</title>
+<title>DIMZLINK — Not Found</title>
 <style>
 body{
   margin:0;
   min-height:100vh;
-  display:grid;
-  place-items:center;
-  padding:20px;
-  background:#f1f0ed;
-  color:#17181c;
-  font:13px Arial
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#f5f7fb;
+  color:#18202b;
+  font-family:Arial,sans-serif;
 }
 .box{
-  width:min(420px,100%);
-  padding:30px 20px;
-  border:1px solid rgba(20,22,27,.1);
-  border-radius:17px;
-  background:#faf9f7;
+  width:min(420px,calc(100% - 30px));
+  padding:28px;
+  background:#fff;
+  border:1px solid #e5e9f0;
+  border-radius:18px;
   text-align:center;
-  box-shadow:0 15px 40px rgba(0,0,0,.06)
 }
 h1{
-  font-size:52px;
-  margin:0;
-  color:#7067ce
+  margin:0 0 7px;
+  font-size:20px;
 }
 p{
-  color:#777a82;
-  line-height:1.7;
-  font-size:11px
-}
-a{
-  display:block;
-  width:100%;
-  padding:11px 0;
-  margin-top:18px;
-  border-radius:9px;
-  background:#7067ce;
-  color:#fff;
-  text-decoration:none;
-  font-weight:700
+  color:#737b87;
+  font-size:13px;
 }
 </style>
 </head>
 <body>
 <div class="box">
-<h1>404</h1>
-<p>
-Shortlink tidak ditemukan, sudah expired,
-atau belum pernah dibuat.
-</p>
-<a href="/">Kembali ke halaman utama</a>
+<h1>Shortlink tidak ditemukan</h1>
+<p>Link mungkin sudah dihapus atau sudah expired.</p>
 </div>
 </body>
-</html>`);
-    }
+</html>
+        `);
 
-    if (
-      record.expiresAt &&
-      Number(record.expiresAt) <= Date.now()
-    ) {
-      await redis.del(key);
+      }
 
-      res.status(410);
-      res.setHeader(
-        "Content-Type",
-        "text/html; charset=utf-8"
-      );
+      if(
+        data.expiresAt &&
+        new Date(data.expiresAt).getTime()<=Date.now()
+      ){
 
-      return res.end(`<!DOCTYPE html>
+        await redis.del(`dimzlink:${alias}`);
+
+        res.status(410);
+        res.setHeader(
+          "Content-Type",
+          "text/html; charset=utf-8"
+        );
+
+        return res.end(`
+<!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
@@ -472,108 +773,92 @@ atau belum pernah dibuat.
 body{
   margin:0;
   min-height:100vh;
-  display:grid;
-  place-items:center;
-  padding:20px;
-  background:#f1f0ed;
-  color:#17181c;
-  font:13px Arial
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#f5f7fb;
+  font-family:Arial,sans-serif;
 }
 .box{
-  width:min(420px,100%);
-  padding:30px 20px;
-  border:1px solid rgba(20,22,27,.1);
-  border-radius:17px;
-  background:#faf9f7;
-  text-align:center
+  width:min(420px,calc(100% - 30px));
+  padding:28px;
+  background:#fff;
+  border:1px solid #e5e9f0;
+  border-radius:18px;
+  text-align:center;
 }
 h1{
-  margin:0;
-  font-size:27px;
-  color:#7067ce
+  font-size:20px;
 }
 p{
-  color:#777a82;
-  line-height:1.7;
-  font-size:11px
-}
-a{
-  display:block;
-  margin-top:18px;
-  padding:11px;
-  border-radius:9px;
-  background:#7067ce;
-  color:#fff;
-  text-decoration:none;
-  font-weight:700
+  color:#737b87;
+  font-size:13px;
 }
 </style>
 </head>
 <body>
 <div class="box">
-<h1>Link Expired</h1>
-<p>
-Masa aktif shortlink ini sudah berakhir.
-</p>
-<a href="/">Kembali ke halaman utama</a>
+<h1>Shortlink sudah expired</h1>
+<p>Masa berlaku link ini sudah berakhir.</p>
 </div>
 </body>
-</html>`);
+</html>
+        `);
+
+      }
+
+      const go=String(getQuery(req,"go")||"");
+
+      if(go==="1"){
+
+        try{
+          await redis.incr(`dimzlink:clicks:${alias}`);
+        }catch{}
+
+        res.statusCode=302;
+
+        res.setHeader(
+          "Location",
+          data.url
+        );
+
+        res.setHeader(
+          "Cache-Control",
+          "no-store, no-cache, must-revalidate"
+        );
+
+        return res.end();
+
+      }
+
+      res.status(200);
+
+      res.setHeader(
+        "Content-Type",
+        "text/html; charset=utf-8"
+      );
+
+      res.setHeader(
+        "Cache-Control",
+        "no-store, no-cache, must-revalidate"
+      );
+
+      return res.end(redirectPage(alias));
+
     }
 
-    res.status(200);
-    res.setHeader(
-      "Content-Type",
-      "text/html; charset=utf-8"
-    );
+    return json(res,405,{
+      error:"Method tidak didukung."
+    });
 
-    return res.end(
-      redirectPage(record.url)
-    );
+  }catch(error){
 
-  } catch (error) {
-    console.error("OPEN SHORTLINK ERROR:", error);
+    console.error(error);
 
-    res.status(500);
-    res.setHeader(
-      "Content-Type",
-      "text/html; charset=utf-8"
-    );
+    return json(res,500,{
+      error:"Terjadi kesalahan pada server."
+    });
 
-    return res.end(`
-<!DOCTYPE html>
-<html lang="id">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>DIMZLINK — Error</title>
-</head>
-<body>
-<p>Terjadi kesalahan pada server.</p>
-</body>
-</html>
-`);
-  }
-}
-
-module.exports = async function handler(req, res) {
-  const alias =
-    req.query?.alias ||
-    "";
-
-  if (req.method === "POST") {
-    return createShortlink(req, res);
   }
 
-  if (req.method === "GET" && alias) {
-    return openShortlink(
-      req,
-      res,
-      String(alias)
-    );
-  }
-
-  return json(res, 405, {
-    error: "Method tidak diizinkan."
-  });
 };
