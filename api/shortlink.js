@@ -356,8 +356,16 @@ body{
 
     <div class="ad-slot">
       <div class="ad-slot-inner">
-        <script async="async" data-cfasync="false" src="https://pl31582805.profitableratecpmnetwork.com/fed2058e1962999b60696b4485804a97/invoke.js"></script>
-        <div id="container-fed2058e1962999b60696b4485804a97"></div>
+        <script>
+  atOptions = {
+    'key' : '9a03d8670e24875ed43378e89e1ae7ff',
+    'format' : 'iframe',
+    'height' : 250,
+    'width' : 300,
+    'params' : {}
+  };
+    </script>
+    <script src="https://www.highrevenueformat.com/9a03d8670e24875ed43378e89e1ae7ff/invoke.js"></script>
     </div>
   </div>
 
